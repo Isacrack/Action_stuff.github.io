@@ -1,0 +1,2496 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversor de skins · Actions &amp; Stuff Expresiones</title>
+<style>/* Conversor de skins «Actions & Stuff — Expresiones» — hoja de estilos */
+:root{
+  --bg:#0f1418; --bg2:#161d23; --card:#1c252c; --card2:#222e36; --line:#2f3d47;
+  --tx:#e8eef2; --tx2:#a9b8c2; --tx3:#7d8f9b;
+  --ac:#57c78a; --ac2:#3aa36b; --acsoft:#16311f;
+  --wa:#e8b455; --wa2:#3a2f16; --er:#e8796a; --er2:#3a1f1c;
+  --pu:#7aa2f7; --br:#c98b56;
+  --r:10px; --sh:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:linear-gradient(180deg,#0f1418,#121a20 60%,#0f1418); color:var(--tx);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+h1,h2,h3{margin:0; line-height:1.25; font-weight:650}
+p{margin:.5em 0}
+a{color:var(--ac)}
+code,kbd,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Roboto Mono",monospace}
+.wrap{max-width:1180px; margin:0 auto; padding:0 18px 64px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- cabecera ---------- */
+header.top{padding:28px 0 6px}
+header.top h1{font-size:clamp(1.35rem,3.4vw,2rem); letter-spacing:-.02em}
+header.top h1 span{color:var(--ac)}
+header.top p{color:var(--tx2); max-width:70ch; margin-top:8px}
+.badges{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+.badge{font-size:.78rem; padding:4px 9px; border:1px solid var(--line); border-radius:999px; color:var(--tx2); background:var(--bg2)}
+.badge b{color:var(--tx); font-weight:600}
+
+/* ---------- tarjetas ---------- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--sh); padding:18px; margin-top:16px}
+.card>h2{font-size:1.02rem; display:flex; align-items:center; gap:10px; margin-bottom:4px}
+.card>h2 .num{display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px; background:var(--acsoft); color:var(--ac); font-size:.78rem; font-weight:700; border:1px solid #245139}
+.card>h2+.hint{color:var(--tx3); font-size:.86rem; margin:0 0 12px}
+.cols{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; align-items:start}
+@media (max-width:900px){.cols{grid-template-columns:1fr}}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px}
+
+/* ---------- soltar archivo ---------- */
+.drop{border:2px dashed var(--line); border-radius:12px; padding:26px 18px; text-align:center; background:var(--bg2); transition:border-color .15s, background .15s}
+.drop.over{border-color:var(--ac); background:var(--acsoft)}
+.drop p{margin:6px 0 12px; color:var(--tx2)}
+.drop .mono{font-size:.82rem; color:var(--tx3)}
+.btn{display:inline-flex; align-items:center; gap:8px; cursor:pointer; border-radius:8px; border:1px solid var(--line);
+  background:var(--card2); color:var(--tx); padding:9px 14px; font:inherit; font-size:.92rem; font-weight:550; transition:.12s}
+.btn:hover{background:#2a3841; border-color:#3d4f5b}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, [role=gridcell]:focus-visible{
+  outline:2px solid var(--ac); outline-offset:2px}
+.btn.pri{background:var(--ac2); border-color:#2c7d53; color:#08160e}
+.btn.pri:hover{background:var(--ac)}
+.btn.sm{padding:6px 10px; font-size:.84rem}
+.btn[disabled]{opacity:.45; cursor:not-allowed}
+.btn.link{background:none; border-color:transparent; color:var(--ac); padding:6px 8px; text-decoration:underline}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.sep{height:1px; background:var(--line); margin:16px 0}
+
+/* ---------- datos del análisis ---------- */
+.kv{display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:.9rem; margin:0}
+.kv dt{color:var(--tx3)}
+.kv dd{margin:0; color:var(--tx); font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.86rem}
+.pill{display:inline-block; font-size:.76rem; padding:2px 8px; border-radius:999px; border:1px solid var(--line); background:var(--bg2); color:var(--tx2)}
+.pill.alta{color:var(--ac); border-color:#245139; background:var(--acsoft)}
+.pill.media{color:var(--wa); border-color:#4a3c18; background:var(--wa2)}
+.pill.baja,.pill.no{color:var(--er); border-color:#4a2721; background:var(--er2)}
+.notes{margin:10px 0 0; padding:0; list-style:none; font-size:.88rem}
+.notes li{padding:7px 10px 7px 26px; border-radius:8px; background:var(--bg2); border:1px solid var(--line); margin-bottom:6px; position:relative; color:var(--tx2)}
+.notes li::before{content:"i"; position:absolute; left:9px; top:7px; width:12px; height:12px; border-radius:50%; border:1px solid var(--tx3); color:var(--tx3); font-size:9px; line-height:11px; text-align:center; font-weight:700}
+.notes li.warn::before{content:"!"; border-color:var(--wa); color:var(--wa)}
+.notes li.err::before{content:"×"; border-color:var(--er); color:var(--er)}
+.notes li.ok::before{content:"✓"; border-color:var(--ac); color:var(--ac)}
+
+/* ---------- editor de la cara ---------- */
+.editor{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start}
+.facegrid{--s:34px; display:grid; grid-template-columns:repeat(8,var(--s)); grid-template-rows:repeat(8,var(--s)); gap:1px;
+  background:var(--line); padding:1px; border-radius:8px}
+@media (max-width:520px){.facegrid{--s:10.5vw}}
+.facegrid [role=gridcell]{position:relative; border:0; padding:0; cursor:crosshair; border-radius:2px; background:#101820; image-rendering:pixelated; touch-action:none; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent}
+.facegrid [role=gridcell]::after{content:""; position:absolute; inset:0; box-shadow:inset 0 0 0 0 transparent}
+.facegrid [role=gridcell].is-pup::after{box-shadow:inset 0 0 0 3px var(--pu)}
+.facegrid [role=gridcell].is-brow::after{box-shadow:inset 0 0 0 3px var(--br)}
+.facegrid [role=gridcell].is-box::after{box-shadow:inset 0 0 0 3px var(--ac)}
+.facegrid [role=gridcell].is-box.is-pup::after{box-shadow:inset 0 0 0 3px var(--ac), inset 0 0 0 6px var(--pu)}
+.facegrid [role=gridcell].is-box.is-brow::after{box-shadow:inset 0 0 0 3px var(--ac), inset 0 0 0 6px var(--br)}
+.facegrid [role=gridcell][data-side="L"]{border-radius:0 2px 2px 0}
+.tools{min-width:210px; flex:1 1 210px}
+.modes{display:flex; flex-direction:column; gap:6px; margin-bottom:12px}
+.mode{display:flex; gap:9px; align-items:flex-start; padding:9px 11px; border:1px solid var(--line); border-radius:9px; background:var(--bg2); cursor:pointer}
+.mode input{margin-top:3px}
+.mode strong{font-size:.9rem; display:block}
+.mode span{font-size:.8rem; color:var(--tx3); display:block}
+.mode.on{border-color:var(--ac); background:var(--acsoft)}
+.legend{font-size:.82rem; color:var(--tx3); margin-top:10px}
+.legend .k{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; vertical-align:middle}
+.sw{width:26px;height:9px;border-radius:2px;background:var(--pu);display:inline-block}
+
+/* ---------- campos ---------- */
+label.f{display:block; font-size:.83rem; color:var(--tx2); margin-bottom:11px}
+label.f select,label.f input[type=text]{width:100%; margin-top:4px; padding:8px 9px; border-radius:8px; border:1px solid var(--line); background:var(--bg2); color:var(--tx); font:inherit; font-size:.88rem}
+label.f select:focus,input[type=text]:focus{outline:2px solid var(--ac); outline-offset:1px}
+.chk{display:flex; gap:9px; align-items:flex-start; font-size:.87rem; color:var(--tx2); margin-bottom:9px; cursor:pointer}
+.chk input{margin-top:3px}
+.chk strong{color:var(--tx); font-weight:600; font-size:.89rem}
+.colrow{display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--tx2); margin-bottom:9px}
+input[type=color]{width:40px; height:28px; padding:2px; border:1px solid var(--line); background:var(--bg2); border-radius:7px; cursor:pointer}
+.auto{font-size:.78rem; color:var(--tx3)}
+fieldset{border:1px solid var(--line); border-radius:9px; padding:12px 13px 5px; margin:0 0 12px}
+legend{font-size:.8rem; color:var(--tx3); padding:0 6px}
+
+/* ---------- vista previa ---------- */
+.preview{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start}
+.screen{background:var(--bg2); border:1px solid var(--line); border-radius:12px; padding:12px; text-align:center}
+.screen canvas{image-rendering:pixelated; display:block; border-radius:6px; background:#0a0e11}
+.screen .cap{font-size:.78rem; color:var(--tx3); margin-top:8px; min-height:2.6em}
+.layers{display:flex; gap:12px; flex-wrap:wrap; min-height:170px}
+.layer{background:var(--bg2); border:1px solid var(--line); border-radius:10px; padding:9px; text-align:center; width:118px}
+.layer canvas{image-rendering:pixelated; width:96px; height:96px; border-radius:5px; background:
+  repeating-conic-gradient(#1b2429 0% 25%, #212c32 0% 50%) 50%/16px 16px}
+.layer .nm{font-size:.75rem; color:var(--tx2); margin-top:7px; display:block}
+.layer .dl{font-size:.75rem; color:var(--ac); background:none; border:0; padding:2px; cursor:pointer; text-decoration:underline}
+.tabs{display:flex; gap:6px; margin-bottom:10px}
+.tabs button{border:1px solid var(--line); background:var(--bg2); color:var(--tx2); border-radius:999px; padding:5px 12px; font:inherit; font-size:.85rem; cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--acsoft); border-color:#245139; color:var(--ac); font-weight:600}
+.states{display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 8px}
+.states button{border:1px solid var(--line); background:var(--bg2); color:var(--tx2); border-radius:999px; padding:5px 11px;
+  font:inherit; font-size:.83rem; cursor:pointer}
+.states button:hover{background:#2a3841; color:var(--tx)}
+.states button[aria-pressed=true]{background:var(--acsoft); border-color:#245139; color:var(--ac); font-weight:600}
+.states button[disabled]{opacity:.4; cursor:not-allowed}
+#pvHint{min-height:1.2em}
+.atlas{position:relative; background:var(--bg2); border:1px solid var(--line); border-radius:12px; padding:12px}
+.atlas canvas{image-rendering:pixelated; width:100%; max-width:430px; display:block}
+.atlas .cap{font-size:.78rem; color:var(--tx3); margin-top:8px}
+footer.bot{margin-top:26px; color:var(--tx3); font-size:.82rem; border-top:1px solid var(--line); padding-top:14px}
+footer.bot p{margin:.4em 0}
+.status{min-height:22px; font-size:.88rem; color:var(--tx2)}
+.status.ok{color:var(--ac)} .status.err{color:var(--er)} .status.warn{color:var(--wa)}
+.skin-list{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+.skin-list button{padding:4px; border:1px solid var(--line); background:var(--bg2); border-radius:8px; cursor:pointer}
+.skin-list canvas{image-rendering:pixelated; width:40px; height:40px; display:block; border-radius:4px}
+.skin-list button:hover{border-color:var(--ac)}
+.hidden{display:none !important}
+summary{cursor:pointer; color:var(--tx2); font-size:.88rem}
+details{margin-top:10px}
+table.data{width:100%; border-collapse:collapse; font-size:.83rem; font-family:ui-monospace,Menlo,Consolas,monospace}
+table.data th,table.data td{text-align:left; padding:5px 8px; border-bottom:1px solid var(--line)}
+table.data th{color:var(--tx3); font-weight:500}
+
+/* ---------- lista del pack de skins ---------- */
+.packlist{list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; max-height:340px; overflow:auto}
+.packlist li{display:flex; align-items:center; gap:9px; background:var(--bg2); border:1px solid var(--line); border-radius:9px; padding:7px 9px}
+.packlist img{width:40px; height:40px; image-rendering:pixelated; border-radius:5px; background:#0a0e11; flex:none}
+.packlist input[type=text]{flex:1 1 90px; min-width:70px; padding:6px 8px; border-radius:7px; border:1px solid var(--line); background:var(--card); color:var(--tx); font:inherit; font-size:.85rem}
+.packlist select{padding:6px 7px; border-radius:7px; border:1px solid var(--line); background:var(--card); color:var(--tx); font:inherit; font-size:.82rem}
+.packlist .mini{border:1px solid var(--line); background:var(--card); color:var(--tx2); border-radius:7px; width:26px; height:26px; cursor:pointer; font-size:.85rem; line-height:1; padding:0}
+.packlist .mini:hover{background:#2a3841; color:var(--tx)}
+.packlist .n{margin-left:auto; color:var(--tx3); font-size:.75rem; font-family:ui-monospace,Menlo,monospace}
+
+/* ---------- guía de tipos ---------- */
+.guia{display:flex; gap:22px; flex-wrap:wrap; margin:4px 0 12px}
+.guia-t{font-size:.83rem; color:var(--tx3); font-weight:600; margin:0 0 7px}
+.guiarow{display:flex; gap:9px; flex-wrap:wrap}
+.guia-btn{border:1px solid var(--line); background:var(--bg2); border-radius:9px; padding:6px; cursor:pointer; color:var(--tx2);
+  font:inherit; font-size:.72rem; text-align:center; width:64px}
+.guia-btn canvas{image-rendering:pixelated; display:block; margin:0 auto 4px; border-radius:3px; background:#0a0e11}
+.guia-btn:hover{border-color:var(--ac); color:var(--tx)}
+.guia-btn[aria-pressed=true]{border-color:var(--ac); background:var(--acsoft); color:var(--ac); font-weight:600}
+.guia-btn.no{opacity:.55}
+.guia-btn.no canvas{filter:grayscale(1)}
+#hoja{display:block; width:100%; max-width:980px; border:1px solid var(--line); border-radius:10px; background:#0f1418; margin-top:4px}
+img.layout{width:100%; max-width:640px; margin:10px 0; image-rendering:pixelated; border:1px solid var(--line); border-radius:8px; background:#0a0e11; display:block}
+
+/* ayuda plegable: «¿y si no pestañea?» */
+details.ayuda{margin-top:12px; border:1px solid var(--line); border-radius:10px; background:var(--bg2); padding:10px 12px}
+details.ayuda summary{cursor:pointer; font-size:.88rem; color:var(--tx2); font-weight:600}
+details.ayuda summary::marker{color:var(--tx3)}
+details.ayuda ol{margin:8px 0 2px; padding-left:20px}
+details.ayuda li{margin-bottom:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>Conversor de skins · <span>Actions &amp; Stuff Expresiones</span></h1>
+    <p>Convierte una skin de Minecraft <strong>64×64</strong> en una skin con las capas que necesita el addon
+      <em>Actions &amp; Stuff</em>: la <strong>cara de parpadeo</strong>, la <strong>cara trasera</strong> y los
+      <strong>cubos de ojos y cejas</strong> que colocan la plantilla oficial.</p>
+    <div class="badges">
+      <span class="badge">Todo en tu navegador · <b>no se sube nada</b></span>
+      <span class="badge">Entrada: <b>64×64</b> (Java o Bedrock)</span>
+      <span class="badge">Salida: <b>PNG 64×64</b> o <b>pack .mcpack</b></span>
+      <span class="badge">PC / <b>Bedrock 1.21+</b></span>
+    </div>
+  </header>
+
+  <!-- 1 · CARGA -->
+  <section class="card" aria-labelledby="t1">
+    <h2 id="t1"><span class="num">1</span> Carga tu skin</h2>
+    <p class="hint">Se analiza en tu equipo: la imagen no sale del navegador.</p>
+    <div class="drop" id="drop">
+      <p><strong>Arrastra aquí el archivo .png</strong> o<br>pégalo con <kbd>Ctrl</kbd>+<kbd>V</kbd> (⌘+V en Mac)</p>
+      <label class="btn pri" for="file">Elegir archivo…</label>
+      <input id="file" type="file" accept="image/png,image/*" class="sr">
+      <p class="mono">Debe ser 64×64. Las skins antiguas de 64×32 no tienen las zonas de A&amp;S.</p>
+    </div>
+    <div class="row" id="examples" style="margin-top:12px"></div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- 2 · REVISIÓN Y CORRECCIÓN -->
+  <section class="card hidden" id="paso2" aria-labelledby="t2">
+    <h2 id="t2"><span class="num">2</span> Revisa y corrige el dibujo de la cara</h2>
+    <p class="hint">La rejilla es la cara de tu skin (8×8). Lo que marques aquí es lo que se convierte en cubos.
+      Con el ratón puedes arrastrar para marcar varios píxeles.</p>
+    <div class="cols">
+      <div>
+        <div class="editor">
+          <div class="facegrid" id="grid" role="group" aria-label="Cara de la skin, rejilla de 8 por 8"></div>
+          <div class="tools">
+            <div class="modes" role="radiogroup" aria-label="Qué se está editando">
+              <label class="mode on"><input type="radio" name="mode" value="pup" checked>
+                <span><strong>Pupilas</strong><span>los píxeles del ojo que miran</span></span></label>
+              <label class="mode"><input type="radio" name="mode" value="brow">
+                <span><strong>Cejas</strong><span>los píxeles de la ceja</span></span></label>
+              <label class="mode"><input type="radio" name="mode" value="box">
+                <span><strong>Zona del ojo</strong><span>lo que se tapa al parpadear</span></span></label>
+            </div>
+            <div class="row">
+              <button class="btn sm" id="reset" data-need-skin type="button">Volver al automático</button>
+              <button class="btn sm" id="clear" data-need-skin type="button">Borrar todo</button>
+            </div>
+            <div class="row" style="margin-top:8px">
+              <button class="btn sm" id="fixbox" data-need-skin type="button">Ajustar la zona del ojo</button>
+            </div>
+            <p class="legend"><span class="k" style="background:#7aa2f7"></span>pupila ·
+              <span class="k" style="background:#c98b56"></span>ceja ·
+              <span class="k" style="background:#57c78a"></span>zona del ojo</p>
+            <p class="legend">Atajos: haz clic o arrastra para marcar; con el teclado, flechas para moverte y
+              <kbd>Espacio</kbd> para alternar.</p>
+          </div>
+        </div>
+        <div class="row" id="chips" style="margin-top:12px"></div>
+      </div>
+      <div>
+        <h3 style="font-size:.95rem">Qué he reconocido</h3>
+        <ul class="notes" id="notes"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · AJUSTES -->
+  <section class="card hidden" data-solo-con-skin aria-labelledby="t3">
+    <h2 id="t3"><span class="num">3</span> Ajustes de la conversión</h2>
+    <p class="hint">Lo normal es dejarlo todo como está («auto»).</p>
+    <div class="grid3">
+      <label class="f">Tipo de ojo
+        <select id="eyeStyle"><option value="">auto (el que encaje)</option></select>
+      </label>
+      <label class="f">Tipo de ceja
+        <select id="browStyle"><option value="">auto (el que encaje)</option></select>
+      </label>
+      <div>
+        <label class="chk"><input type="checkbox" id="surprised" checked>
+          <span><strong>Fila de «sorpresa»</strong> — añade una fila de esclerótica justo encima del ojo en la cara trasera (como en las skins de ejemplo oficiales).</span></label>
+        <label class="chk"><input type="checkbox" id="paintEye" checked>
+          <span><strong>Pintar los cubos de los ojos</strong></span></label>
+        <label class="chk"><input type="checkbox" id="cleanSlots" checked>
+          <span><strong>Borrar el arte anterior de los cubos</strong> — limpia las zonas de ojos y cejas del atlas antes de pintar (recomendado si tu skin ya venía con expresiones).</span></label>
+        <label class="chk"><input type="checkbox" id="snapCubes" checked>
+          <span><strong>Ajustar a la plantilla si el ojo no encaja</strong> — si tus pupilas no están en la posición que
+            busca la plantilla, se dibujan en la variante más parecida para que el ojo salga y se mueva en el juego.</span></label>
+        <label class="chk"><input type="checkbox" id="paintBrow" checked>
+          <span><strong>Pintar los cubos de las cejas</strong></span></label>
+        <label class="chk"><input type="checkbox" id="respect" checked>
+          <span><strong>Respetar las capas que la skin ya trae</strong> — si tu skin ya tiene dibujadas la cara de
+            parpadeo o la cara trasera (por ejemplo, una skin ya convertida), se dejan tal cual y sólo se rellena lo
+            que falte. Desmárcalo para rehacerlas desde cero.</span></label>
+      </div>
+    </div>
+    <fieldset>
+      <legend>Hoja de estilos (como la plantilla oficial, con tu skin)</legend>
+      <p class="auto" style="margin:0 0 8px">Cada cuadrito es una de las variantes que trae la plantilla oficial
+        (1×1 tiene 4, 2×1 tiene 5, las cejas 5…). Se dibujan con <strong>tu cara</strong>: en amarillo, los píxeles que
+        usaría esa variante; en <strong>verde</strong>, las que ya coinciden con lo que has marcado. Pulsa una fila para
+        forzar ese tipo (y otra vez para volver a automático).</p>
+      <canvas id="hoja" aria-label="Hoja de estilos: tipos de ojos y cejas de la plantilla con tu skin"></canvas>
+      <div class="row" style="margin:8px 0 12px">
+        <button class="btn sm" id="hojaDl" data-need-skin type="button">Descargar la hoja (PNG)</button>
+        <span class="auto" id="hojaInfo"></span>
+      </div>
+      <details>
+        <summary>Ver la plantilla oficial que trae el ZIP de Oreville</summary>
+        <img id="guiaOficial" class="layout" alt="Plantilla oficial de Actions &amp; Stuff: tipos de ojos (1x1, 1x2, 2x1, 2x3, 3x1, Middle 3x1, 3x2), tipos de ceja (monobrow, 3x1, 2x1) y su sitio en la textura de 64x64">
+        <p class="auto">Los datos salen del archivo <span class="mono">Actions &amp; Stuff Expressions Template.geo.bbmodel</span>
+          del mismo ZIP (44 cubos de ojos y cejas, 74 rectángulos de textura): la hoja de arriba usa exactamente esas variantes.</p>
+      </details>
+    </fieldset>
+    <fieldset>
+      <legend>Colores de las capas</legend>
+      <div class="grid3">
+        <div class="colrow"><input type="checkbox" id="autoSclera" checked><label for="autoSclera">Esclerótica automática</label><input type="color" id="scleraColor" value="#ffffff" disabled></div>
+        <div class="colrow"><input type="checkbox" id="autoBrow" checked><label for="autoBrow">Ceja automática</label><input type="color" id="browColor" value="#333333" disabled></div>
+        <div class="colrow"><input type="checkbox" id="autoLid" checked><label for="autoLid">Párpado automático</label><input type="color" id="lidColor" value="#222222" disabled></div>
+      </div>
+      <div class="colrow"><input type="checkbox" id="forceArt"><label for="forceArt">Pintar el arte de los cubos con un color fijo (útil si tu cara no tiene dibujados los ojos)</label><input type="color" id="artColor" value="#3b2a1c" disabled></div>
+      <div class="grid2">
+        <label class="f">Estilo del parpadeo
+          <select id="blinkStyle">
+            <option value="oficial">Como las skins oficiales: ceja bajada 1 píxel + párpado</option>
+            <option value="simple">Sencillo: toda la zona del ojo con el color del párpado</option>
+          </select>
+        </label>
+        <div>
+          <label class="chk"><input type="checkbox" id="combineHat">
+            <span><strong>Combinar la capa de sombrero</strong> — copia en la cara de parpadeo y la cara trasera lo que se ve en Minecraft (cara + sombrero encima).</span></label>
+        </div>
+      </div>
+      <p class="auto">Si dejas «automática», cada color se toma de tu propia skin (el cubo copia el píxel de la cara).</p>
+    </fieldset>
+  </section>
+
+  <!-- 4 · VISTA PREVIA -->
+  <section class="card hidden" data-solo-con-skin aria-labelledby="t4">
+    <h2 id="t4"><span class="num">4</span> Vista previa</h2>
+    <p class="hint">Simulación de cómo se verá. No es el motor del juego: es una aproximación con las mismas capas.</p>
+    <div class="preview">
+      <div class="screen">
+        <canvas id="preview" width="256" height="256" aria-label="Vista previa de la cara"></canvas>
+        <p class="cap" id="pvState" role="status" aria-live="off">sin skin cargada</p>
+      </div>
+      <div style="flex:1 1 260px; min-width:240px">
+        <div class="tabs" role="group" aria-label="Qué se muestra">
+          <button type="button" id="viewAS" aria-pressed="true">Con A&amp;S</button>
+          <button type="button" id="viewVanilla" aria-pressed="false">Sin A&amp;S</button>
+        </div>
+        <div class="states" id="states" role="group" aria-label="Estado de los ojos y las cejas">
+          <button type="button" data-state="auto" aria-pressed="true">Automático</button>
+          <button type="button" data-state="normal">Normal</button>
+          <button type="button" data-state="blinkL">Cerrar el ojo de la izquierda (x0-3)</button>
+          <button type="button" data-state="blinkR">Cerrar el ojo de la derecha (x4-7)</button>
+          <button type="button" data-state="blinkBoth">Parpadear (los dos)</button>
+          <button type="button" data-state="lookL">Mirar a su izquierda</button>
+          <button type="button" data-state="lookR">Mirar a su derecha</button>
+          <button type="button" data-state="browUp">Cejas de sorpresa</button>
+        </div>
+        <p class="legend">Son los mismos interruptores del addon: <em>Blink - Left/Right Eye</em> cierra cada mitad de la cara
+          (x0-3 y x4-7 de la textura) y <em>Eyes - Look Left/Right</em> mueve las pupilas. En pantalla, «mirar a su izquierda»
+          mueve las pupilas hacia la derecha, como en el juego. El texto de debajo de la cara te dice qué estás viendo.</p>
+        <p class="status" id="pvHint" role="status"></p>
+        <div class="row"><button class="btn sm" id="pvToggle" data-need-skin type="button" aria-pressed="true">Pausar la vista previa</button></div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <h3 style="font-size:.95rem">Las tres capas</h3>
+    <div class="layers">
+      <div class="layer"><canvas id="L1" width="8" height="8" aria-label="Cara original"></canvas>
+        <span class="nm">cara original · sin A&amp;S</span><button class="dl" id="dlFace" data-need-skin type="button">descargar</button></div>
+      <div class="layer"><canvas id="L2" width="8" height="8" aria-label="Cara trasera"></canvas>
+        <span class="nm">backFace (x24-31, y0-7)</span><button class="dl" id="dlBack" data-need-skin type="button">descargar</button></div>
+      <div class="layer"><canvas id="L3" width="8" height="8" aria-label="Cara de parpadeo"></canvas>
+        <span class="nm">blinkFace (x0-7, y0-7)</span><button class="dl" id="dlBlink" data-need-skin type="button">descargar</button></div>
+    </div>
+  </section>
+
+  <!-- 5 · DESCARGA -->
+  <section class="card hidden" data-solo-con-skin aria-labelledby="t5">
+    <h2 id="t5"><span class="num">5</span> Descarga</h2>
+    <p class="hint">El PNG de 64×64 es lo que se sube a Minecraft (skin clásica de Bedrock). A la derecha lo ves tal
+      cual queda, limpio, sin marcas ni colores añadidos: <strong>la skin es el primero</strong>; la imagen del resultado
+      es solo para mirarla, <em>no</em> vale para subirla al juego (es más grande y no es una skin).</p>
+    <div class="cols">
+      <div>
+        <div class="row">
+          <button class="btn pri" id="dlSkin" data-need-skin type="button">Descargar skin convertida (64×64)</button>
+          <button class="btn" id="copy" data-need-skin type="button">Copiar al portapapeles</button>
+          <button class="btn" id="dlImagen" data-need-skin type="button">Descargar la imagen del resultado (PNG)</button>
+        </div>
+        <p class="legend">En el juego: <strong>Ajustes → Perfil → Skins → Subir skin</strong>. Después, en el addon:
+          <em>Create Character → Modelo clásico → Owned Skins</em> (sólo en PC/Bedrock 1.21+).</p>
+        <details class="ayuda">
+          <summary>¿Y si en el juego no pestañea?</summary>
+          <p class="legend">Las expresiones las pone el addon, no la skin: la skin sólo lleva los dibujos. Repasa esto
+            en este orden:</p>
+          <ol class="legend">
+            <li><strong>Actions &amp; Stuff 1.5 o superior</strong>: las expresiones llegaron en la 1.5. Con 1.3 o 1.4 no
+              hay pestañeo posible: hay que actualizar el pack.</li>
+            <li><strong>Ajustes → Recursos → Actions &amp; Stuff → icono ⚙️ → «Enable Expressions» activado.</strong>
+              Es una opción del propio pack y si está apagada no ocurre nada.</li>
+            <li><strong>Vibrant Visuals desactivado</strong>: el addon todavía no es compatible con él y deja de
+              funcionar.</li>
+            <li>La skin tiene que ser una <strong>skin clásica subida</strong> (Subir skin). Las del creador de
+              personajes o cosméticos del Marketplace no se reconocen.</li>
+            <li>En el pack, la <strong>resolución</strong> (16x/32x/64x) sólo cambia las texturas: las animaciones van
+              en las tres. Si algo se ve raro, prueba 64x.</li>
+            <li>En <strong>consola</strong> no hay expresiones (no se pueden subir skins). Desde la 1.10 los
+              <em>morphs</em> como Rana sí pestañean.</li>
+            <li>Para descartar: convierte una <strong>skin de ejemplo oficial</strong> (paso 1) y pruébala. Si esa
+              tampoco pestañea, el problema está en el addon o en los ajustes, no en la skin.</li>
+            <li>Y si quieres probar con el <strong>pack oficial completo</strong> (gratis, 33 skins): el botón está al
+              final del paso 6.</li>
+          </ol>
+        </details>
+      </div>
+      <div class="atlas">
+        <canvas id="atlas" width="384" height="384" aria-label="Tu skin convertida, 64×64, tal cual queda"></canvas>
+        <canvas id="rawout" width="64" height="64" class="sr" aria-hidden="true"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · PACK DE VARIAS SKINS -->
+  <section class="card" aria-labelledby="t6">
+    <h2 id="t6"><span class="num">6</span> Varias skins → pack <span class="mono">.mcpack</span></h2>
+    <p class="hint">Añade aquí las skins que vayas convirtiendo y descárgalas todas juntas como un pack de skins de Bedrock.</p>
+    <div class="cols">
+      <div>
+        <div class="row">
+          <button class="btn pri" id="packAdd" data-need-skin type="button">Añadir <span id="packAddName">la skin convertida</span></button>
+          <button class="btn sm" id="packClear" type="button">Vaciar la lista</button>
+        </div>
+        <p class="legend" id="packVacio">La lista está vacía: convierte una skin (pasos 1 y 2) y pulsa «Añadir».</p>
+        <ul class="packlist" id="packList"></ul>
+      </div>
+      <div>
+        <label class="f">Nombre del pack <input type="text" id="packName" value="Mis skins con expresiones"></label>
+        <label class="f">Nombre del archivo <input type="text" id="packFile" value="mis_skins_expresiones"></label>
+        <div class="row">
+          <button class="btn pri" id="packDl" type="button">Descargar <span class="mono">.mcpack</span></button>
+          <button class="btn" id="packZip" type="button">Descargar <span class="mono">.zip</span> (sólo los PNG)</button>
+        </div>
+        <p class="legend">El <b>.mcpack</b> se abre con Minecraft (doble clic o compartir → abrir con Minecraft) y aparece en
+          <em>Ajustes → Perfil → Skins</em> como un pack con todas las skins de la lista. Cada skin lleva su modelo
+          (clásico o Alex) y puedes cambiarlo. La lista se guarda en este navegador.</p>
+        <p class="status" id="packMsg" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <fieldset>
+      <legend>Programas para hacer lo mismo desde el ordenador (Python)</legend>
+      <p class="auto" style="margin:0 0 8px">Las dos versiones usan el mismo motor que esta página y dan exactamente el
+        mismo resultado (comprobado píxel a píxel). Necesitan Python 3.8 o superior; si no lo tienes, usa el instalador
+        <span class="mono">instalar_python.cmd</span> (Windows) o <span class="mono">instalar_python.sh</span>.</p>
+      <div class="row">
+        <a class="btn pri" href="conversor_actions_stuff_gui.py" download>🖥️ Versión con ventana (.py)</a>
+        <a class="btn" href="conversor_actions_stuff.py" download>⌨️ Versión de consola (.py)</a>
+      </div>
+      <p class="auto" style="margin:6px 0 0">Con ventana: <span class="mono">python conversor_actions_stuff_gui.py</span>
+        · de consola: <span class="mono">python conversor_actions_stuff.py mi_skin.png --info</span></p>
+    </fieldset>
+    <fieldset>
+      <legend>Pack oficial de Oreville (gratis)</legend>
+      <p class="auto" style="margin:0 0 8px">El pack de skins con expresiones que publica Oreville Studios es gratis:
+        sirve para probar que en tu juego las expresiones funcionan, y trae las 33 skins de ejemplo (rana, cole, endie…).</p>
+      <div class="row">
+        <a class="btn pri" href="https://orevillestudios.com/api/downloads/actions-and-stuff-expressions-skins-1-0-0"
+           download="Actions &amp; Stuff Expressions Skins.mcpack">⤓ Pack OFICIAL de skins con expresiones (.mcpack)</a>
+        <a class="btn pri" href="https://orevillestudios.com/api/downloads/actions-stuff-expressions-template"
+           download="Actions &amp; Stuff Expressions Template.zip">⤓ Plantilla OFICIAL (.zip: .bbmodel + hoja de estilos)</a>
+      </div>
+      <div class="row">
+        <a class="btn" href="oficial/Pack_Oficial_AS_Expresiones.mcpack" download>⤓ Pack oficial guardado en esta carpeta (.mcpack)</a>
+        <a class="btn" href="oficial/Plantilla_Oficial_AS_Expresiones.zip" download>⤓ Plantilla oficial guardada en esta carpeta (.zip)</a>
+      </div>
+      <p class="auto" style="margin:0 0 6px">La <strong>plantilla</strong> trae el <span class="mono">.bbmodel</span> para
+        Blockbench, la hoja de estilos y un Read Me: es lo que usa este conversor por dentro (los dos archivos son idénticos,
+        comprobado byte a byte), así que con ella puedes hacerlo a mano si quieres.</p>
+      <p class="auto" style="margin:0">El <strong>addon</strong> <em>Actions &amp; Stuff</em> (el de las animaciones) es de pago y se compra
+        en el Marketplace de Minecraft: búscalo dentro del juego como «Actions &amp; Stuff» (Oreville Studios).
+        Este conversor no lo incluye ni lo distribuye.</p>
+    </fieldset>
+  </section>
+
+  <!-- 7 · INFORME -->
+  <section class="card hidden" data-solo-con-skin aria-labelledby="t7">
+    <h2 id="t7"><span class="num">7</span> Informe de la conversión</h2>
+    <table class="data" id="rep"><tbody></tbody></table>
+    <details>
+      <summary>Qué hace exactamente esta herramienta (y qué no)</summary>
+      <ul class="notes" style="margin-top:10px">
+        <li class="ok">Copia tu cara en la <strong>cara de parpadeo</strong> (x0-7, y0-7) con la ceja bajada un píxel y el párpado cerrado.</li>
+        <li class="ok">Copia tu cara en la <strong>cara trasera</strong> (x24-31, y0-7) con la pupila sustituida por el color de la esclerótica.</li>
+        <li class="ok">Pinta los <strong>cubos</strong> de los huesos de ojos y cejas que coloca la plantilla oficial: cada cubo copia el píxel de tu cara que ocupa, y los que no se usan quedan transparentes.</li>
+        <li class="ok">La <strong>boca</strong> (si tu skin tiene) se copia tal cual en las tres capas. Es lo único que se puede hacer:
+          la plantilla de A&amp;S <strong>no tiene boca</strong> — no hay ningún hueso, cubo ni variable de boca (sólo parpadeo, mirada y
+          cejas de sorpresa), así que no se anima ni se puede animar con este sistema.</li>
+        <li class="warn">Los cubos sólo existen en las posiciones que trae la plantilla (columnas 0-2 y 5-7, filas 1-6, según el tipo). Si tu ojo está en otra columna, la herramienta lo dice y no inventa posiciones.</li>
+        <li class="warn">El modelo (Steve/Alex) no se puede cambiar: la conversión no toca los brazos. El dato que se muestra es sólo informativo.</li>
+        <li class="ok">El <strong>parpadeo de un solo ojo</strong> está soportado por la propia plantilla: la cara de parpadeo son
+          dos mitades (<em>blinkFace_left</em> y <em>blinkFace_right</em>) con su interruptor, y la ceja del ojo que se cierra se oculta
+          sola. Como las dos mitades viven en el mismo bloque x0-7, y0-7, con rellenar ese bloque ya funcionan los dos ojos.</li>
+        <li class="warn"><strong>La capa de sombrero</strong> (x40-47, y8-15): en Minecraft se dibuja encima de la cara, pero en A&amp;S
+          la cara trasera y la cara de parpadeo van <em>por delante</em> de ella (z −4.001 y −4.004 frente a −4), así que con las
+          expresiones activadas la parte del sombrero que tapa la cara deja de verse. Si tu skin dibuja ahí los ojos, los dientes o
+          una máscara, esta herramienta te avisa: o los marcas a mano en la rejilla, o activas «combinar la capa de sombrero» para
+          que las capas nuevas muestren lo mismo que se veía en Minecraft.</li>
+        <li class="warn">El parpadeo, la mirada y las cejas animadas los controla el addon con Molang
+          (<em>v.oreville_blink_left/right</em>, <em>v.oreville_look_left/right</em>, <em>v.oreville_suprised</em>); esto sólo prepara el dibujo.
+          Los botones de la vista previa imitan esos estados para que compruebes que tu dibujo aguanta todos.</li>
+        <li>Pruébalo siempre en el juego antes de publicar: los bordes de las capas dependen de cómo tengas dibujada la cara.</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer class="bot">
+    <p><strong>Versión final.</strong> Compatible con las plantillas oficiales de <em>Actions &amp; Stuff — Expresiones</em>
+      1.5, 1.10 y 1.11 (Bedrock 1.21.90 o superior, PC). Las capas que escribe (blinkFace, backFace y los cubos de
+      ojos y cejas) son las que definen el <span class="mono">Actions &amp; Stuff Expressions Template.geo.bbmodel</span>
+      y el pack oficial de skins.</p>
+    <p>Plantilla y addon <em>Actions &amp; Stuff</em> de Oreville Studios. Este conversor es una herramienta no oficial hecha a partir de
+      la plantilla pública de expresiones; no está afiliado a Oreville Studios ni a Mojang. Las 4 skins de ejemplo incluidas provienen de la plantilla oficial de Oreville Studios.</p>
+    <p>Funciona sin conexión y no envía tu skin a ningún servidor.</p>
+  </footer>
+</div>
+
+<script>// Generado desde el template oficial (Actions & Stuff Expressions Template.geo.bbmodel)
+// n: nombre del elemento | r: [[rect[x0,y0,x1,y1], [[fx,fy],...]], ...]  (cells en la cara 8x8)
+var AS_STYLES = [{"n":"eyebrowsLeft_2x1_1","r":[[[52,18,54,19],[[1,1],[2,1]]]]},{"n":"eyebrowsLeft_2x1_2","r":[[[52,19,54,20],[[1,2],[2,2]]]]},{"n":"eyebrowsLeft_2x1_3","r":[[[12,34,14,35],[[1,3],[2,3]]]]},{"n":"eyebrowsLeft_2x1_4","r":[[[12,35,14,36],[[1,4],[2,4]]]]},{"n":"eyebrowsLeft_2x1_5","r":[[[16,34,18,35],[[1,5],[2,5]]]]},{"n":"eyebrowsLeft_3x1_1","r":[[[36,17,39,18],[[0,1],[1,1],[2,1]]]]},{"n":"eyebrowsLeft_3x1_2","r":[[[36,18,39,19],[[0,2],[1,2],[2,2]]]]},{"n":"eyebrowsLeft_3x1_3","r":[[[36,19,39,20],[[0,3],[1,3],[2,3]]]]},{"n":"eyebrowsLeft_3x1_4","r":[[[12,32,15,33],[[0,4],[1,4],[2,4]]]]},{"n":"eyebrowsLeft_3x1_5","r":[[[12,33,15,34],[[0,5],[1,5],[2,5]]]]},{"n":"eyebrowsRight_2x1_1","r":[[[54,18,56,19],[[5,1],[6,1]]]]},{"n":"eyebrowsRight_2x1_2","r":[[[54,19,56,20],[[5,2],[6,2]]]]},{"n":"eyebrowsRight_2x1_3","r":[[[14,34,16,35],[[5,3],[6,3]]]]},{"n":"eyebrowsRight_2x1_4","r":[[[14,35,16,36],[[5,4],[6,4]]]]},{"n":"eyebrowsRight_2x1_5","r":[[[18,34,20,35],[[5,5],[6,5]]]]},{"n":"eyebrowsRight_3x1_1","r":[[[39,17,42,18],[[5,1],[6,1],[7,1]]]]},{"n":"eyebrowsRight_3x1_2","r":[[[39,18,42,19],[[5,2],[6,2],[7,2]]]]},{"n":"eyebrowsRight_3x1_3","r":[[[39,19,42,20],[[5,3],[6,3],[7,3]]]]},{"n":"eyebrowsRight_3x1_4","r":[[[15,32,18,33],[[5,4],[6,4],[7,4]]]]},{"n":"eyebrowsRight_3x1_5","r":[[[15,33,18,34],[[5,5],[6,5],[7,5]]]]},{"n":"monobrowLeft_1","r":[[[12,16,15,17],[[1,1],[2,1],[3,1]]]]},{"n":"monobrowLeft_2","r":[[[12,17,15,18],[[1,2],[2,2],[3,2]]]]},{"n":"monobrowLeft_3","r":[[[12,18,15,19],[[1,3],[2,3],[3,3]]]]},{"n":"monobrowLeft_4","r":[[[12,19,15,20],[[1,4],[2,4],[3,4]]]]},{"n":"monobrowLeft_5","r":[[[36,16,39,17],[[1,5],[2,5],[3,5]]]]},{"n":"monobrowRight_1","r":[[[15,16,18,17],[[4,1],[5,1],[6,1]]]]},{"n":"monobrowRight_2","r":[[[15,17,18,18],[[4,2],[5,2],[6,2]]]]},{"n":"monobrowRight_3","r":[[[15,18,18,19],[[4,3],[5,3],[6,3]]]]},{"n":"monobrowRight_4","r":[[[15,19,18,20],[[4,4],[5,4],[6,4]]]]},{"n":"monobrowRight_5","r":[[[39,16,42,17],[[4,5],[5,5],[6,5]]]]},{"n":"pupilsLeft_1x1","r":[[[43,16,44,17],[[5,4]]],[[43,17,44,18],[[5,5]]],[[43,18,44,19],[[6,4]]],[[43,19,44,20],[[6,5]]]]},{"n":"pupilsLeft_1x2","r":[[[3,18,4,20],[[6,3],[6,4]]],[[53,16,54,18],[[6,4],[6,5]]],[[55,16,56,18],[[6,5],[6,6]]]]},{"n":"pupilsLeft_2x1","r":[[[19,32,20,33],[[5,2]]],[[19,33,20,34],[[5,3]]],[[17,35,18,36],[[5,4]]],[[19,35,20,36],[[5,5]]],[[41,32,42,33],[[5,6]]]]},{"n":"pupilsLeft_2x3","r":[[[1,16,2,18],[[5,3],[5,4]]],[[1,18,2,20],[[5,4],[5,5]]],[[3,16,4,18],[[5,5],[5,6]]]]},{"n":"pupilsLeft_3x1","r":[[[19,16,20,17],[[5,4]]],[[19,17,20,18],[[5,5]]]]},{"n":"pupilsLeft_3x2","r":[[[2,32,4,34],[[5,3],[6,3],[5,4],[6,4]]],[[2,34,4,36],[[5,4],[6,4],[5,5],[6,5]]],[[38,32,40,34],[[5,5],[6,5],[5,6],[6,6]]]]},{"n":"pupilsLeft_middle_3x1","r":[[[19,18,20,19],[[6,4]]],[[19,19,20,20],[[6,5]]]]},{"n":"pupilsRight_1x1","r":[[[42,16,43,17],[[2,4]]],[[42,17,43,18],[[2,5]]],[[42,18,43,19],[[1,4]]],[[42,19,43,20],[[1,5]]]]},{"n":"pupilsRight_1x2","r":[[[2,18,3,20],[[1,3],[1,4]]],[[52,16,53,18],[[1,4],[1,5]]],[[54,16,55,18],[[1,5],[1,6]]]]},{"n":"pupilsRight_2x1","r":[[[18,32,19,33],[[2,2]]],[[18,33,19,34],[[2,3]]],[[16,35,17,36],[[2,4]]],[[18,35,19,36],[[2,5]]],[[40,32,41,33],[[2,6]]]]},{"n":"pupilsRight_2x3","r":[[[0,16,1,18],[[2,3],[2,4]]],[[0,18,1,20],[[2,4],[2,5]]],[[2,16,3,18],[[2,5],[2,6]]]]},{"n":"pupilsRight_3x1","r":[[[18,16,19,17],[[2,4]]],[[18,17,19,18],[[2,5]]]]},{"n":"pupilsRight_3x2","r":[[[0,32,2,34],[[1,3],[2,3],[1,4],[2,4]]],[[0,34,2,36],[[1,4],[2,4],[1,5],[2,5]]],[[36,32,38,34],[[1,5],[2,5],[1,6],[2,6]]]]},{"n":"pupilsRight_middle_3x1","r":[[[18,18,19,19],[[1,4]]],[[18,19,19,20],[[1,5]]]]}];
+if (typeof module === 'object' && module.exports) module.exports = AS_STYLES;
+</script>
+<script>/* ============================================================================
+   Núcleo del conversor de skins "Actions & Stuff — Expressions"
+   Reglas deducidas y verificadas contra las 33 skins de ejemplo oficiales y
+   contra el modelo real (Actions & Stuff Expressions Template.geo.bbmodel):
+
+     · Cara de parpadeo (x0-7, y0-7): la ceja se borra (se copia el píxel de
+       encima), se vuelve a dibujar 1 píxel más abajo y la fila inferior del
+       ojo se pinta con el tono del párpado.
+     · Cara trasera (x24-31, y0-7): igual que la cara pero con la pupila
+       sustituida por el color de la esclerótica (y la fila justo encima del
+       ojo también), y sin cejas.
+     · Cubos de los huesos: sólo hay que pintar los cubos cuyos píxeles de la
+       cara coinciden exactamente con el dibujo; el resto se quedan
+       transparentes (= invisibles). El arte de cada cubo ES el píxel de la
+       cara que ocupa (202 de 208 píxeles de los ejemplos ; los 6 restantes
+       son una errata conocida de una skin de ejemplo).
+
+   Sin dependencias del DOM: arrays RGBA (Uint8ClampedArray) de 64x64 o de 8x8.
+   ========================================================================== */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./styles-data.js'));
+  else root.ASCore = factory(root.AS_STYLES);
+})(typeof self !== 'undefined' ? self : this, function (STYLES) {
+  'use strict';
+  var util = {
+    lum: function (c) { return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; },
+    sat: function (c) { var mx = Math.max(c[0], c[1], c[2]), mn = Math.min(c[0], c[1], c[2]); return mx === 0 ? 0 : (mx - mn) / mx; },
+    dist: function (a, b) { var dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2]; return Math.sqrt(dr * dr + dg * dg + db * db); },
+    rgb: function (c) { return '#' + [c[0], c[1], c[2]].map(function (v) { return ('0' + (v | 0).toString(16)).slice(-2); }).join(''); },
+    hex2rgb: function (h) { h = h.replace('#', ''); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; },
+    mode: function (list) {
+      var m = new Map(), best = null, bn = 0;
+      list.forEach(function (c) { var k = (c[0] << 16) | (c[1] << 8) | c[2], n = (m.get(k) || 0) + 1; m.set(k, n); if (n > bn) { bn = n; best = [c[0], c[1], c[2]]; } });
+      return best || [0, 0, 0];
+    },
+    shade: function (c, f) { return [Math.round(c[0] * f), Math.round(c[1] * f), Math.round(c[2] * f)]; }
+  };
+
+
+  // ---------------------------------------------------------------- catálogo
+  // El modelo sólo contiene cubos; los que no se pintan son invisibles, así que
+  // basta con pintar los cubos cuyos píxeles de la cara coincidan con el dibujo.
+  // "cells" = píxeles de la cara 8x8 que ocupa cada cubo (datos del .bbmodel).
+  var CUBES = { eye: [], brow: [] };
+  STYLES.forEach(function (el) {
+    var m = /^(pupils|eyebrows|monobrow)(Left|Right)_?(.*)$/.exec(el.n);
+    if (!m) return;
+    var kind = m[1] === 'pupils' ? 'eye' : 'brow';
+    var style = m[1] === 'monobrow' ? 'Monobrow'
+      : (m[3] || '').replace(/_/g, ' ').replace(/^middle /, 'Middle ');
+    el.r.forEach(function (rr) {
+      CUBES[kind].push({ style: style, side: m[2] === 'Left' ? 'L' : 'R', rect: rr[0], cells: rr[1] });
+    });
+  });
+  function uniq(a) { var o = []; a.forEach(function (v) { if (o.indexOf(v) < 0) o.push(v); }); return o; }
+  // orden preferente: primero los estilos más finos (los que menos ocupan)
+  var EYE_ORDER = uniq(['1x1', '1x2', '2x1', 'Middle 3x1', '2x3', '3x1', '3x2']
+    .concat(CUBES.eye.map(function (c) { return c.style; })));
+  var EYE_STYLES = EYE_ORDER.slice();
+  var BROW_STYLES = uniq(CUBES.brow.map(function (c) { return c.style.replace(/ \d+$/, ''); }))
+    .sort(function (a, b) { return (b === 'Monobrow') - (a === 'Monobrow') || a.localeCompare(b); });
+
+  var key = function (x, y) { return y * 8 + x; };
+
+  // ---------------------------------------------------------------- detector
+  // Analiza la cara.  Se prueba primero con el color de piel de siempre (el más
+  // repetido en el centro bajo de la cara); si así no hay ojos, se reintenta con
+  // otros candidatos (la fila de arriba y los colores dominantes).  Hacen falta en
+  // skins como las caras de lobo con morro claro, donde ese primer color es el morro
+  // y no el pelaje: antes se rechazaban diciendo «no he reconocido los ojos».
+  function analyzeFace(face, opt) {
+    opt = opt || {};
+    function px(x, y) { var i = (y * 8 + x) * 4; return [face[i], face[i + 1], face[i + 2], face[i + 3]]; }
+    function modeIn(r0, r1, c0, c1) {
+      var l = [];
+      for (var y = r0; y < r1; y++) for (var x = c0; x < c1; x++) { var c = px(x, y); if (c[3] > 0) l.push(c); }
+      return l.length ? util.mode(l) : null;
+    }
+    function dominantes() {
+      var cuenta = {}, orden = [];
+      for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
+        var c = px(x, y); if (!c[3]) continue;
+        var k = c[0] + ',' + c[1] + ',' + c[2];
+        if (!cuenta[k]) { cuenta[k] = { c: c, n: 0 }; orden.push(k); }
+        cuenta[k].n++;
+      }
+      orden.sort(function (a, b) { return cuenta[b].n - cuenta[a].n; });
+      return orden.slice(0, 6).map(function (k) { return cuenta[k].c; });
+    }
+    var base = modeIn(4, 7, 2, 6) || modeIn(5, 8, 1, 7) || modeIn(0, 8, 0, 8);
+    if (!base) return null;
+    var cands = [base];
+    [modeIn(0, 1, 0, 8), modeIn(0, 2, 0, 8)].concat(dominantes()).forEach(function (c) {
+      if (!c) return;
+      if (!cands.some(function (o) { return o[0] === c[0] && o[1] === c[1] && o[2] === c[2]; })) cands.push(c);
+    });
+    for (var n = 0; n < cands.length; n++) {
+      var r = analizarConPiel(face, cands[n], { expand: opt.expand, strict: n > 0 });
+      if (r) {
+        if (n) r.notes.push('El color de piel se ha tomado de ' +
+          (n <= 2 ? 'la zona de arriba' : 'el color dominante de la cara') +
+          ': el centro de la cara lo ocupaba otro color (un morro u otro detalle).');
+        return r;
+      }
+    }
+    return null;
+  }
+
+  // El detector de siempre, con un color de piel ya decidido.  Con «strict» sólo se
+  // aceptan pares de ojos pequeños y exactamente simétricos (2 a 6 píxeles cada uno,
+  // de 3x3 como mucho) y no se amplía la caja: así una skin que antes se rechazaba no
+  // se acepta a medias.
+  function analizarConPiel(face, skin, opt) {
+    opt = opt || {};
+    function px(x, y) { var i = (y * 8 + x) * 4; return [face[i], face[i + 1], face[i + 2], face[i + 3]]; }
+    var sl = util.lum(skin), ss = util.sat(skin);
+    var ink = function (c) { return c[3] === 0 || util.dist(c, skin) > 85 || (util.dist(c, skin) > 32 && util.lum(c) < sl - 25); };
+    var browInk = function (c) { return c[3] === 0 || util.dist(c, skin) > 85 || (util.dist(c, skin) > 45 && util.lum(c) < sl - 55); };
+    var scl = function (c) { return c[3] > 0 && util.lum(c) > 185 && util.dist(c, skin) > 60; };
+    var pup = function (c) { return c[3] > 0 && !scl(c) && ink(c) && (util.lum(c) < 115 || util.sat(c) > ss + 0.12); };
+
+    function comps(pred) {
+      var pts = {};
+      for (var y = 1; y <= 6; y++) for (var x = 0; x <= 7; x++) if (pred(px(x, y))) pts[key(x, y)] = [x, y];
+      var out = [];
+      for (var k in pts) {
+        if (!pts[k]) continue;
+        var seed = pts[k], comp = [seed], stack = [seed]; pts[k] = null;
+        while (stack.length) {
+          var q = stack.pop();
+          for (var dx = -1; dx <= 1; dx++) for (var dy = -1; dy <= 1; dy++) {
+            var nx = q[0] + dx, ny = q[1] + dy, kk = key(nx, ny);
+            if (nx >= 0 && nx <= 7 && ny >= 0 && ny <= 7 && pts[kk]) { var n = pts[kk]; pts[kk] = null; stack.push(n); comp.push(n); }
+          }
+        }
+        var xs = comp.map(function (c) { return c[0]; }), ys = comp.map(function (c) { return c[1]; });
+        out.push({ cells: comp, box: [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)], n: comp.length });
+      }
+      return out;
+    }
+    var halfOf = function (cells) { var s = 0; cells.forEach(function (c) { s += c[0]; }); return (s / cells.length) < 3.5 ? 'R' : 'L'; };
+    function pairScore(A, B) {
+      var mir = [7 - B.box[2], 7 - B.box[0]];
+      var pen = Math.abs(mir[0] - A.box[0]) + Math.abs(mir[1] - A.box[2]) + Math.abs(A.box[1] - B.box[1]) + Math.abs(A.box[3] - B.box[3]);
+      var rowpen = Math.min(Math.abs(A.box[1] - 4), Math.abs(A.box[1] - 3)) * 4;
+      var width = (A.box[2] - A.box[0] + 1) + (B.box[2] - B.box[0] + 1);
+      return pen * 6 + Math.abs(A.n - B.n) * 2 + rowpen + Math.max(0, width - 4) * 6;
+    }
+    var anch = null, source = null;
+    [[comps(scl), 16, 'esclerótica'], [comps(pup), 20, 'pupila']].forEach(function (pair) {
+      if (anch) return;
+      var pool = pair[0], best = null;
+      pool.forEach(function (A) { pool.forEach(function (B) {
+        if (A === B || halfOf(A.cells) === halfOf(B.cells)) return;
+        var s = pairScore(A, B); if (!best || s < best[0]) best = [s, A, B];
+      }); });
+      if (best && best[0] <= pair[1]) { anch = [best[1], best[2]]; source = pair[2]; }
+    });
+    if (!anch) return null;
+    if (opt.strict) {
+      var A0 = anch[0], B0 = anch[1];
+      if (!(A0.n >= 2 && A0.n <= 6 && A0.n === B0.n)) return null;
+      if (![A0, B0].every(function (C) { return (C.box[2] - C.box[0]) <= 2 && (C.box[3] - C.box[1]) <= 2; })) return null;
+      var espejo = A0.cells.map(function (c) { return (7 - c[0]) + ',' + c[1]; }).sort().join('|');
+      var real = B0.cells.map(function (c) { return c[0] + ',' + c[1]; }).sort().join('|');
+      if (espejo !== real) return null;
+    }
+    var eyes = {};
+    anch.forEach(function (A) { eyes[halfOf(A.cells)] = A; });
+    if (!eyes.R || !eyes.L) return null;
+
+    var out = { skin: skin, eyes: {}, brows: {}, notes: [], anchor: source };
+    var fail = false;
+    ['R', 'L'].forEach(function (tag) {
+      var A = eyes[tag];
+      var axs = A.cells.map(function (c) { return c.slice(); });
+      var x0 = A.box[0], y0 = A.box[1], x1 = A.box[2], y1 = A.box[3];
+      var alo = tag === 'R' ? 1 : 4, ahi = tag === 'R' ? 3 : 6;
+      for (var i = 0; i < 2; i++) {
+        if (x0 > alo && pup(px(x0 - 1, Math.min(y1, 5))) && (x1 - x0) < 3) x0--;
+        if (x1 < ahi && pup(px(x1 + 1, Math.min(y1, 5))) && (x1 - x0) < 3) x1++;
+      }
+      var cols = []; for (var x = x0; x <= x1; x++) cols.push(x);
+      var ays = axs.map(function (c) { return c[1]; });
+      var pupils = {};
+      axs.forEach(function (c) { if (pup(px(c[0], c[1]))) pupils[key(c[0], c[1])] = c; });
+      ays.forEach(function (yy) { cols.forEach(function (xx) { if (pup(px(xx, yy))) pupils[key(xx, yy)] = [xx, yy]; }); });
+      var list = []; for (var k in pupils) list.push(pupils[k]);
+      [-1, 1].forEach(function (dir) {
+        if (!list.length) return;
+        var rows = list.map(function (c) { return c[1]; });
+        var nr = (dir > 0 ? Math.max.apply(null, rows) : Math.min.apply(null, rows)) + dir;
+        if (nr < 0 || nr > 7) return;
+        var ext = cols.filter(function (xx) { return pup(px(xx, nr)); });
+        if (!ext.length) return;
+        var inner = cols.filter(function (xx) { return pup(px(xx, nr - dir)); }).length;
+        if (ext.length > inner) return;
+        if ((x0 > 0 && pup(px(x0 - 1, nr))) || (x1 < 7 && pup(px(x1 + 1, nr)))) return;
+        ext.forEach(function (xx) { list.push([xx, nr]); });
+      });
+      list = list.filter(function (c) { return c[0] !== 0 && c[0] !== 3 && c[0] !== 4 && c[0] !== 7; });
+      if (!list.length) { fail = true; return; }
+      var xs = axs.concat(list).map(function (c) { return c[0]; }), ys = axs.concat(list).map(function (c) { return c[1]; });
+      out.eyes[tag] = {
+        box: [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)],
+        pupils: list, sclera: axs
+      };
+    });
+    if (fail || !out.eyes.R || !out.eyes.L) return null;
+
+    // --- ampliar la caja del ojo sobre píxeles claros contiguos (ojos tipo "bloque")
+    if (opt.expand !== false && !opt.strict) {
+      ['R', 'L'].forEach(function (tag) {
+        var e = out.eyes[tag], lo = tag === 'R' ? 0 : 4, hi = tag === 'R' ? 3 : 7;
+        var lim = sl + 25;
+        for (var step = 0; step < 3; step++) {
+          var b = e.box, grew = false;
+          for (var y = Math.max(0, b[1] - 1); y <= Math.min(7, b[3] + 1); y++)
+            for (var x = Math.max(lo, b[0] - 1); x <= Math.min(hi, b[2] + 1); x++) {
+              if (x >= b[0] && x <= b[2] && y >= b[1] && y <= b[3]) continue;
+              var c = px(x, y);
+              if (c[3] > 0 && util.lum(c) > lim && !e.pupils.some(function (p) { return p[0] === x && p[1] === y; })) {
+                e.box = [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)];
+                b = e.box; grew = true;
+              }
+            }
+          if (!grew) break;
+        }
+      });
+    }
+
+    // --- cejas: primera fila con tinta encima de la caja del ojo
+    ['R', 'L'].forEach(function (tag) {
+      var e = out.eyes[tag], b = e.box;
+      var lo = tag === 'R' ? 0 : 4, hi = tag === 'R' ? 3 : 7;
+      var scol = e.sclera.length ? px(e.sclera[0][0], e.sclera[0][1]) : null;
+      var found = null;
+      for (var dy = 1; dy <= 3 && !found; dy++) {
+        var yy = b[1] - dy; if (yy < 0) break;
+        var xs = [];
+        for (var x = Math.max(lo, b[0] - 1); x <= Math.min(hi, b[2] + 1); x++) { var c = px(x, yy); if (browInk(c) && !scl(c)) xs.push(x); }
+        if (!xs.length) continue;
+        var seed = util.mode(xs.map(function (x) { return px(x, yy); }));
+        xs = xs.filter(function (x) { return util.dist(px(x, yy), seed) < 45; });
+        if (!xs.length) continue;
+        var same = function (x) { return browInk(px(x, yy)) && !scl(px(x, yy)) && util.dist(px(x, yy), seed) < 45; };
+        while (Math.min.apply(null, xs) > lo && same(Math.min.apply(null, xs) - 1) && (Math.max.apply(null, xs) - Math.min.apply(null, xs)) < 3) xs.push(Math.min.apply(null, xs) - 1);
+        while (Math.max.apply(null, xs) < hi && same(Math.max.apply(null, xs) + 1) && (Math.max.apply(null, xs) - Math.min.apply(null, xs)) < 3) xs.push(Math.max.apply(null, xs) + 1);
+        var band = 0; for (var bx = 0; bx < 8; bx++) if (util.dist(px(bx, yy), seed) < 20) band++;
+        if (band >= 7) break;
+        if (scol && util.dist(px(Math.min.apply(null, xs), yy), scol) < 30) break;
+        found = { y: yy, xs: xs };
+      }
+      out.brows[tag] = found ? { cells: found.xs.map(function (x) { return [x, found.y]; }), y: found.y } : null;
+    });
+    var notes = out.notes;
+    var conf = 'alta';
+    if (!out.brows.R && !out.brows.L) { conf = 'media'; notes.push('No se han detectado cejas (puedes marcarlas a mano).'); }
+    if (out.eyes.R.box[1] < 1 || out.eyes.R.box[3] > 6) { conf = 'media'; notes.push('Los ojos están en una posición poco habitual.'); }
+    if (!out.eyes.R.sclera.length && !out.eyes.L.sclera.length) { conf = 'media'; notes.push('El ojo no tiene zona clara: el relleno usará el color del contorno del ojo o el de la piel.'); }
+    if (out.anchor === 'pupila') notes.push('Ojos localizados por el color de la pupila (no había zona clara).');
+    out.confidence = conf;
+    return out;
+  }
+
+  // ------------------------------------------------------------------ paleta
+  function faceOf(src) {
+    var f = new Uint8ClampedArray(8 * 8 * 4);
+    for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
+      var si = ((y + 8) * 64 + (x + 8)) * 4, di = (y * 8 + x) * 4;
+      f[di] = src[si]; f[di + 1] = src[si + 1]; f[di + 2] = src[si + 2]; f[di + 3] = src[si + 3];
+    }
+    return f;
+  }
+  function pxOf(face, x, y) { var i = (y * 8 + x) * 4; return [face[i], face[i + 1], face[i + 2], face[i + 3]]; }
+
+  // Capa de sombrero (x40-47, y8-15): en Minecraft se dibuja ENCIMA de la cara,
+  // pero en A&S la cara trasera (x24-31) tapa su parte delantera. Aquí sólo se
+  // lee para avisar y, si se pide, para combinarla con la cara.
+  function hatOf(src) {
+    var f = new Uint8ClampedArray(8 * 8 * 4);
+    for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
+      var si = ((y + 8) * 64 + (x + 40)) * 4, di = (y * 8 + x) * 4;
+      f[di] = src[si]; f[di + 1] = src[si + 1]; f[di + 2] = src[si + 2]; f[di + 3] = src[si + 3];
+    }
+    return f;
+  }
+  function hatStats(hat) {
+    var total = 0, enOjos = 0;
+    for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
+      if (!hat[(y * 8 + x) * 4 + 3]) continue;
+      total++;
+      if (y >= 3 && y <= 6) enOjos++;
+    }
+    return { total: total, enOjos: enOjos };
+  }
+
+  function paletteFor(face, det) {
+    var p = { skin: det.skin.slice(), perEye: {} };
+    ['R', 'L'].forEach(function (t) {
+      var e = det.eyes[t], b = det.brows[t];
+      if (!e || !e.box) return;
+      var pupilCells = e.pupils, bg = [];
+      for (var y = e.box[1]; y <= e.box[3]; y++) for (var x = e.box[0]; x <= e.box[2]; x++) {
+        if (!pupilCells.some(function (c) { return c[0] === x && c[1] === y; })) bg.push(pxOf(face, x, y));
+      }
+      p.perEye[t] = {
+        pupil: pupilCells.length ? util.mode(pupilCells.map(function (c) { return pxOf(face, c[0], c[1]); })) : util.shade(det.skin, 0.2),
+        sclera: bg.length ? util.mode(bg) : det.skin.slice(),      // color de fondo del ojo (esclerótica)
+        scleraRows: (function () {
+          var rows = {};
+          for (var yy = e.box[1]; yy <= e.box[3]; yy++) {
+            var col = [];
+            for (var xx = e.box[0]; xx <= e.box[2]; xx++) {
+              if (pupilCells.some(function (c) { return c[0] === xx && c[1] === yy; })) continue;
+              var c = pxOf(face, xx, yy); if (c[3] > 0) col.push(c);
+            }
+            rows[yy] = col.length ? util.mode(col) : null;
+          }
+          return rows;
+        })(),
+        brow: (b && b.cells.length) ? util.mode(b.cells.map(function (c) { return pxOf(face, c[0], c[1]); })) : null
+      };
+    });
+    // párpado: tono oscuro propio de la skin (última fila) o la piel oscurecida
+    var bottom = [];
+    for (var x = 1; x <= 6; x++) { var c = pxOf(face, x, 7); if (c[3] > 0) bottom.push(c); }
+    var chin = bottom.length ? util.mode(bottom) : null;
+    var darkest = bottom.slice().sort(function (a, b) { return util.lum(a) - util.lum(b); })[0];
+    if (darkest && util.lum(darkest) < util.lum(det.skin) - 15) p.lid = darkest.slice();
+    else if (chin && util.lum(chin) < util.lum(det.skin) - 15) p.lid = chin.slice();
+    else p.lid = util.shade(det.skin, 0.62);
+    return p;
+  }
+
+
+  // Encaja el dibujo (lista de celdas [x,y]) en los cubos disponibles.
+  // Primero los cubos grandes que quepan enteros en el dibujo, después los
+  // pequeños. Devuelve los cubos elegidos y las celdas que no tienen cubo.
+  function planCells(cells, kind, onlyStyle) {
+    var want = {};
+    cells.forEach(function (c) { want[key(c[0], c[1])] = 0; });
+    var pool = CUBES[kind].filter(function (cu) {
+      if (onlyStyle && cu.style !== onlyStyle && cu.style.indexOf(onlyStyle + ' ') !== 0) return false;
+      return cu.cells.every(function (c) { return want[key(c[0], c[1])] !== undefined; });
+    }).sort(function (a, b) { return b.cells.length - a.cells.length; });
+    var cubes = [];
+    pool.forEach(function (cu) {
+      if (!cu.cells.every(function (c) { return want[key(c[0], c[1])] === 0; })) return;
+      cu.cells.forEach(function (c) { want[key(c[0], c[1])] = 1; });
+      cubes.push(cu);
+    });
+    var missing = cells.filter(function (c) { return !want[key(c[0], c[1])]; });
+    return { cubes: cubes, missing: missing, style: cubes.length ? cubes[0].style : null };
+  }
+
+  // Plan de pintado: qué cubos se usan para los ojos y las cejas de cada lado.
+  /** El cubo de la familia más parecida (para cuando la pupila no encaja en ninguno). */
+  function cuboMasParecido(kind, cells, side, onlyStyle) {
+    var lista = CUBES[kind].filter(function (cu) {
+      if (cu.side !== side) return false;
+      if (onlyStyle && cu.style !== onlyStyle && cu.style.indexOf(onlyStyle + ' ') !== 0) return false;
+      return true;
+    });
+    function centro(cs) { var sx = 0, sy = 0; cs.forEach(function (c) { sx += c[0]; sy += c[1]; }); return [sx / cs.length, sy / cs.length]; }
+    var a = centro(cells), mejor = null;
+    lista.forEach(function (cu) {
+      var b = centro(cu.cells);
+      var d = Math.abs(cu.cells.length - cells.length) * 10 + Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (!mejor || d < mejor.d) mejor = { cu: cu, style: cu.style, d: d };
+    });
+    return mejor;
+  }
+
+  function planStyles(det, opts) {
+    opts = opts || {};
+    var plan = { eye: [], brow: [] };
+    ['R', 'L'].forEach(function (side) {
+      var e = det.eyes[side] || { pupils: [], box: null };
+      var pe = planCells(e.pupils, 'eye', opts.eyeStyle);
+      var item = { side: side, cells: e.pupils, cubes: pe.cubes, missing: pe.missing, style: pe.style };
+      // Si ninguna variante encaja, se ajusta a la más parecida: así el ojo se
+      // dibuja (y se mueve en el juego) en lugar de quedarse fuera. Los píxeles
+      // que se pintan son los de tu propia pupila, sólo cambia de sitio.
+      if (opts.snap !== false && !pe.cubes.length && e.pupils.length) {
+        var m = cuboMasParecido('eye', e.pupils, side, opts.eyeStyle);
+        if (m) { item.cubes = [m.cu]; item.style = m.style; item.snapped = true; item.missing = []; }
+      }
+      plan.eye.push(item);
+      var b = det.brows[side];
+      if (b && b.cells.length) {
+        var pb = planCells(b.cells, 'brow', opts.browStyle);
+        var itb = { side: side, cells: b.cells, cubes: pb.cubes, missing: pb.missing, style: pb.style };
+        if (opts.snap !== false && !pb.cubes.length && b.cells.length) {
+          var mb = cuboMasParecido('brow', b.cells, side, opts.browStyle);
+          if (mb) { itb.cubes = [mb.cu]; itb.style = mb.style; itb.snapped = true; itb.missing = []; }
+        }
+        plan.brow.push(itb);
+      }
+    });
+    return plan;
+  }
+
+  // ¿La zona (ox,oy) ya trae una cara de A&S dibujada?  Está pintada (>= 56 de 64
+  // píxeles opacos) y se parece a la cara de la skin (>= 40 de 64 idénticos).
+  // Medido en las 31 skins oficiales: parecidos de 46 a 62 y todas pintadas;
+  // una zona vacía da 0.  (El ejemplo bufferfish trae la cara trasera sin pintar.)
+  function alreadyHasLayer(src, face, ox, oy) {
+    var painted = 0, same = 0;
+    for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
+      var i = ((oy + y) * 64 + (ox + x)) * 4, j = (y * 8 + x) * 4;
+      if (src[i + 3] > 0) painted++;
+      if (src[i] === face[j] && src[i + 1] === face[j + 1] && src[i + 2] === face[j + 2] && src[i + 3] === face[j + 3]) same++;
+    }
+    return { ok: painted >= 56 && same >= 40, same: same };
+  }
+
+  // -------------------------------------------------------------- generador
+  // src: Uint8ClampedArray 64x64x4 | det: salida de analyzeFace | opt: opciones
+  function generateSkin(src, det, opt) {
+    opt = opt || {};
+    var out = new Uint8ClampedArray(src);
+    var face0 = faceOf(src);
+    var hat = hatOf(src);
+    var hatInfo = hatStats(hat);
+    // Si se pide, la cara que se copia en las capas es la que se veía en Minecraft
+    // (cara + sombrero encima); en A&S el sombrero queda tapado por estas capas.
+    var face = face0;
+    if (opt.combineHat) {
+      face = new Uint8ClampedArray(face0);
+      for (var hy = 0; hy < 8; hy++) for (var hx = 0; hx < 8; hx++) {
+        var hi = (hy * 8 + hx) * 4;
+        if (hat[hi + 3]) { face[hi] = hat[hi]; face[hi + 1] = hat[hi + 1]; face[hi + 2] = hat[hi + 2]; face[hi + 3] = 255; }
+      }
+    }
+    var pal = paletteFor(face, det);
+    if (opt.pupilColor) pal.perEye.R.pupil = pal.perEye.L.pupil = util.hex2rgb(opt.pupilColor);
+    if (opt.browColor) pal.perEye.R.brow = pal.perEye.L.brow = util.hex2rgb(opt.browColor);
+    if (opt.scleraColor) {
+      var sc = util.hex2rgb(opt.scleraColor);
+      ['R', 'L'].forEach(function (t) {
+        if (!pal.perEye[t]) return;
+        pal.perEye[t].sclera = sc;
+        pal.perEye[t].scleraRows = {};   // un color fijo manda sobre el calculado por filas
+      });
+    }
+    if (opt.lidColor) pal.lid = util.hex2rgb(opt.lidColor);
+    var log = [];
+    var stats = { back: 0, blink: 0, slots: 0, cleaned: 0, slotList: [], missing: [], unreachable: [], hat: hatInfo, combineHat: !!opt.combineHat, blinkStyle: opt.blinkStyle === 'simple' ? 'simple' : 'oficial', respected: { back: false, blink: false } };
+    function put(x, y, c) { var i = (y * 64 + x) * 4; out[i] = c[0]; out[i + 1] = c[1]; out[i + 2] = c[2]; out[i + 3] = 255; }
+    function copyFace(ox, oy) { for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) put(ox + x, oy + y, pxOf(face, x, y)); }
+
+    // ---- 1. backFace (x24-31, y0-7): cara sin pupila ni ceja ----
+    var hasBack = alreadyHasLayer(src, face0, 24, 0);
+    var respectBack = opt.respect !== false && hasBack.ok;
+    stats.respected.back = respectBack;
+    if (!respectBack) {
+    copyFace(24, 0);
+    ['R', 'L'].forEach(function (t) {
+      var e = det.eyes[t], pe = pal.perEye[t];
+      if (!e || !e.box || !pe) return;
+      var x0 = e.box[0], x1 = e.box[2], top = e.box[1], bot = e.box[3];
+      var yFrom = opt.surprised === false ? top : Math.max(0, top - 1);
+      var fillOf = {};
+      for (var y = bot; y >= yFrom; y--) fillOf[y] = pe.scleraRows[y] || fillOf[y + 1] || pe.sclera;
+      for (var yy = yFrom; yy <= bot; yy++)
+        for (var xx = x0; xx <= x1; xx++) { put(24 + xx, yy, fillOf[yy]); stats.back++; }
+      var b = det.brows[t];
+      if (b) b.cells.forEach(function (c) {
+        if (c[1] < yFrom || c[1] > bot) put(24 + c[0], c[1], det.skin);
+      });
+    });
+    }
+    log.push({ k: 'backFace', px: stats.back, txt: respectBack
+      ? ('Cara base (x24-31, y0-7): RESPETADA, la skin ya traía una cara parecida (' + hasBack.same + '/64 píxeles iguales)')
+      : 'Cara base (x24-31, y0-7): el ojo se rellena de esclerótica y la ceja desaparece' });
+
+    // ---- 2. blinkFace (x0-7, y0-7): ceja bajada 1 píxel + párpado ----
+    var hasBlink = alreadyHasLayer(src, face0, 0, 0);
+    var respectBlink = opt.respect !== false && hasBlink.ok && opt.blinkStyle !== 'simple';
+    stats.respected.blink = respectBlink;
+    if (!respectBlink) {
+    copyFace(0, 0);
+    ['R', 'L'].forEach(function (t) {
+      var e = det.eyes[t], pe = pal.perEye[t], b = det.brows[t];
+      if (!e || !e.box || !pe) return;
+      var x0 = e.box[0], x1 = e.box[2], top = e.box[1], bot = e.box[3];
+      if (b) b.cells.forEach(function (c) {
+        var up = c[1] > 0 ? pxOf(face, c[0], c[1] - 1) : null;
+        var isEye = (c[1] >= top && c[1] <= bot);
+        if (!isEye) put(c[0], c[1], (up && up[3] > 0) ? up : det.skin);
+        stats.blink++;
+      });
+      var hasBrow = !!(b && b.cells.length && pe.brow);
+      for (var yy = top; yy <= bot; yy++) {
+        // «oficial»: la ceja se ve bajada (color de ceja) y la fila de abajo es el párpado.
+        // «sencillo»: toda la zona del ojo con el color del párpado (como en los tutoriales).
+        var col = opt.blinkStyle === 'simple' ? pal.lid
+          : ((yy === bot || !hasBrow) ? pal.lid : pe.brow);
+        for (var xx = x0; xx <= x1; xx++) { put(xx, yy, col); stats.blink++; }
+      }
+    });
+    }
+    log.push({ k: 'blinkFace', px: stats.blink, txt: respectBlink
+      ? ('Cara de parpadeo (x0-7, y0-7): RESPETADA, la skin ya traía una cara parecida (' + hasBlink.same + '/64 píxeles iguales)')
+      : (hasBlink.ok && opt.blinkStyle === 'simple'
+         ? 'Cara de parpadeo (x0-7, y0-7): regenerada con parpadeo sencillo, como pediste, aunque la skin ya traía una'
+         : 'Cara de parpadeo (x0-7, y0-7): la ceja baja 1 píxel y el ojo se cierra') });
+
+    // ---- 3. cubos de los huesos: se copia el píxel de la cara tal cual ----
+    var plan = opt.plan || planStyles(det, opt);
+    // Si la skin ya traía arte en los cubos (por ejemplo, otra conversión o una
+    // skin oficial), se borra: si no, quedarían trozos del dibujo viejo en los
+    // cubos que este plan no usa, y en el juego se verían los dos a la vez.
+    if (opt.cleanSlots !== false) {
+      // Se limpia sólo el tipo que de verdad se va a pintar: si de los ojos no
+      // encaja ningún cubo, sus zonas se dejan intactas (borrarlas dejaría la
+      // cara sin ojos y sin nada en su lugar).
+      ['eye', 'brow'].forEach(function (kind) {
+        var pinta = plan[kind].some(function (it) { return it.cubes.length; });
+        var tiene = plan[kind].some(function (it) { return it.cells.length; });
+        if (!pinta) { if (tiene) stats.cleanedSkip = true; return; }
+        CUBES[kind].forEach(function (cu) {
+          for (var cy = cu.rect[1]; cy < cu.rect[3]; cy++) for (var cx = cu.rect[0]; cx < cu.rect[2]; cx++) {
+            var ci = (cy * 64 + cx) * 4;
+            if (out[ci + 3]) stats.cleaned++;
+            out[ci] = 0; out[ci + 1] = 0; out[ci + 2] = 0; out[ci + 3] = 0;
+          }
+        });
+      });
+      if (stats.cleaned) log.push({ k: 'limpio', txt: 'Arte anterior borrado de las zonas de los cubos', px: stats.cleaned });
+    }
+    var forced = opt.slotColor ? util.hex2rgb(opt.slotColor) : null;
+    ['eye', 'brow'].forEach(function (kind) {
+      var label = kind === 'eye' ? 'ojo' : 'ceja';
+      plan[kind].forEach(function (it) {
+        var names = [];
+        it.cubes.forEach(function (cu) {
+          var rx = cu.rect[0], ry = cu.rect[1], w = cu.rect[2] - rx;
+          cu.cells.forEach(function (c, i) {
+            // con «ajuste», el cubo se rellena con TUS píxeles de pupila en orden
+            var src = it.snapped ? it.cells[i % it.cells.length] : c;
+            put(rx + (i % w), ry + Math.floor(i / w), forced || pxOf(face, src[0], src[1]));
+            stats.slots++;
+          });
+          var nm = 'ojo/ceja ' + it.side + ' · ' + cu.style;
+          if (names.indexOf(nm) < 0) names.push(nm);
+        });
+        if (it.cells.length && !it.cubes.length) stats.unreachable.push(label + ' ' + it.side + ' (ningún cubo encaja con ' + it.cells.length + ' píxel' + (it.cells.length === 1 ? '' : 'es') + ')');
+        it.missing.forEach(function (c) { stats.missing.push(label + ' ' + it.side + ' (' + c[0] + ',' + c[1] + ')'); });
+        var est = it.style ? it.style.replace(/^(2x1|3x1) (\d)$/, '$1 (fila $2)') : '—';
+        it.estilos = uniq(it.cubes.map(function (cu) { return cu.style.replace(/^(2x1|3x1) (\d)$/, '$1 (fila $2)'); }));
+        if (it.cubes.length) stats.slotList.push(label + ' ' + it.side + ' · ' + est + ' (' + it.cubes.length + ' cubo' + (it.cubes.length > 1 ? 's' : '') + ')');
+        if (it.snapped) { stats.snapped = stats.snapped || []; stats.snapped.push(label + ' ' + it.side + ' → ' + est); }
+      });
+    });
+    log.push({ k: 'slots', txt: 'Cubos de los huesos de ojos y cejas', px: stats.slots });
+
+    return { data: out, palette: pal, plan: plan, log: log, stats: stats };
+  }
+
+  return {
+    analyzeFace: analyzeFace, generateSkin: generateSkin, paletteFor: paletteFor, hatOf: hatOf, hatStats: hatStats,
+    planStyles: planStyles, planCells: planCells, faceOf: faceOf, CUBES: CUBES,
+    eyeStyles: EYE_STYLES, browStyles: BROW_STYLES, util: util
+  };
+});
+</script>
+<script>/* ============================================================================
+   ASZip — escritor mínimo de archivos .zip (y por tanto .mcpack) en el
+   navegador. Sin dependencias.
+     · Guarda los archivos sin comprimir o con deflate-raw si el navegador lo
+       trae (CompressionStream), igual que el pack oficial de A&S.
+     · Nombres en UTF-8 (marca 0x0800) y fechas DOS correctas.
+   Uso:  ASZip.create([{ name: 'manifest.json', data: Uint8Array }]).then(bytes => ...)
+   ========================================================================== */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.ASZip = factory();
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  var CRC_TABLE = (function () {
+    var t = new Uint32Array(256);
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+
+  function crc32(bytes) {
+    var c = 0xFFFFFFFF;
+    for (var i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  var encoder = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
+  function utf8(str) {
+    if (encoder) return encoder.encode(str);
+    var out = [], i;
+    for (i = 0; i < str.length; i++) {
+      var c = str.charCodeAt(i);
+      if (c < 0x80) out.push(c);
+      else if (c < 0x800) out.push(0xC0 | (c >> 6), 0x80 | (c & 63));
+      else out.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
+    }
+    return new Uint8Array(out);
+  }
+
+  function hasDeflate() {
+    return typeof CompressionStream === 'function';
+  }
+  function deflateRaw(bytes) {
+    if (!hasDeflate()) return Promise.resolve(null);
+    try {
+      var cs = new CompressionStream('deflate-raw');
+      var w = cs.writable.getWriter();
+      w.write(bytes); w.close();
+      return new Response(cs.readable).arrayBuffer().then(function (buf) {
+        return new Uint8Array(buf);
+      })['catch'](function () { return null; });
+    } catch (e) { return Promise.resolve(null); }
+  }
+
+  function dosTime(d) {
+    return ((d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1)) & 0xFFFF;
+  }
+  function dosDate(d) {
+    return (((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate()) & 0xFFFF;
+  }
+
+  function concat(parts) {
+    var total = 0, i;
+    for (i = 0; i < parts.length; i++) total += parts[i].length;
+    var out = new Uint8Array(total), off = 0;
+    for (i = 0; i < parts.length; i++) { out.set(parts[i], off); off += parts[i].length; }
+    return out;
+  }
+
+  /**
+   * Crea el zip. files = [{ name, data (Uint8Array|string) }]
+   * Devuelve una promesa con los bytes del archivo.
+   */
+  function create(files, opts) {
+    opts = opts || {};
+    var now = opts.date || new Date();
+    var time = dosTime(now), date = dosDate(now);
+    var partes = [], central = [], offset = 0;
+
+    function siguiente(i) {
+      if (i >= files.length) return Promise.resolve();
+      var f = files[i];
+      var raw = typeof f.data === 'string' ? utf8(f.data) : f.data;
+      return deflateRaw(raw).then(function (comp) {
+        var method = 0, body = raw;
+        if (comp && comp.length && comp.length < raw.length) { method = 8; body = comp; }
+        var nameB = utf8(f.name);
+        var crc = crc32(raw);
+        var lh = new Uint8Array(30 + nameB.length);
+        var dv = new DataView(lh.buffer);
+        dv.setUint32(0, 0x04034b50, true);
+        dv.setUint16(4, 20, true);          // versión necesaria
+        dv.setUint16(6, 0x0800, true);      // nombres en UTF-8
+        dv.setUint16(8, method, true);      // 0 = sin comprimir, 8 = deflate
+        dv.setUint16(10, time, true);
+        dv.setUint16(12, date, true);
+        dv.setUint32(14, crc, true);
+        dv.setUint32(18, body.length, true);
+        dv.setUint32(22, raw.length, true);
+        dv.setUint16(26, nameB.length, true);
+        dv.setUint16(28, 0, true);
+        lh.set(nameB, 30);
+        partes.push(lh, body);
+        central.push({ name: nameB, method: method, crc: crc, csize: body.length, usize: raw.length, offset: offset });
+        offset += lh.length + body.length;
+        return siguiente(i + 1);
+      });
+    }
+
+    return siguiente(0).then(function () {
+      var cdStart = offset, cdSize = 0;
+      central.forEach(function (c) {
+        var e = new Uint8Array(46 + c.name.length);
+        var dv = new DataView(e.buffer);
+        dv.setUint32(0, 0x02014b50, true);
+        dv.setUint16(4, 20, true); dv.setUint16(6, 20, true);
+        dv.setUint16(8, 0x0800, true);
+        dv.setUint16(10, c.method, true);
+        dv.setUint16(12, time, true); dv.setUint16(14, date, true);
+        dv.setUint32(16, c.crc, true);
+        dv.setUint32(20, c.csize, true);
+        dv.setUint32(24, c.usize, true);
+        dv.setUint16(28, c.name.length, true);
+        dv.setUint16(30, 0, true);          // extra
+        dv.setUint16(32, 0, true);          // comentario
+        dv.setUint16(34, 0, true);          // disco
+        dv.setUint16(36, 0, true);          // atributos internos
+        dv.setUint32(38, 0, true);          // atributos externos
+        dv.setUint32(42, c.offset, true);
+        e.set(c.name, 46);
+        partes.push(e);
+        cdSize += e.length;
+      });
+      var end = new Uint8Array(22);
+      var dv = new DataView(end.buffer);
+      dv.setUint32(0, 0x06054b50, true);
+      dv.setUint16(4, 0, true); dv.setUint16(6, 0, true);
+      dv.setUint16(8, central.length, true);
+      dv.setUint16(10, central.length, true);
+      dv.setUint32(12, cdSize, true);
+      dv.setUint32(16, cdStart, true);
+      dv.setUint16(20, 0, true);
+      partes.push(end);
+      return concat(partes);
+    });
+  }
+
+  return {
+    create: create, crc32: crc32, utf8: utf8,
+    deflateDisponible: hasDeflate
+  };
+});
+</script>
+<script>/* Skins de muestra y plantilla oficial de Oreville Studios (créditos a sus autores). */
+window.AS_EXAMPLES = [
+  { nom: '10_cole.png', tip: 'Cole (ejemplo oficial): ojos 2×2 y cejas', src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAABJdJREFUeF7tW81rU0EQfzlq1KK0VZQKnqzaHutH8VZErHiwB0+K1b9A8KMgqKBQqB/gX6AVPdeDWBGpJ6lfx9RaRRAseGiDUrV6rMyGCZPN7s68bLbvJXm5PJK3Ozv729/Mzs5scu/G/qxEHp/ij0Vn7/ZNHc73e0fW5TyG9+6aAwDWdJp1+LdQwsb1HgCwTRLfufpnALQCA/ou5RWTZsb/qmfP8Fr1fH9zOUoFA2YKM0qhvoHekmJThZKivT11MYHUA4COrKu7U014fm5BPdG2fX1A6gFoaSc4OfLVuQ1y2xi3DXL71ODYjuS3QU7JkO9T4QR9TICLE7j3GQCNEAf4bJNNwQDYxob33IguXDyv3MHtW3ei8Q9XVCDDTZB73xAm0PIAhHSSiTOAiwNCboEgO/E4QJ9g4f5yOTCCkJgGQhD0cArfO/nGK79w9tF+Z2CE8n8t/Y76Dx5Q6kv0si1k1WAmAGi0JwVg/vu3ijG7tm4XkSkuAGievWfyNUWUudO7r6sVezB7VQmoJwBDp46qSU88fBqFAsCbARIAcOkkVEOKAgNWAwBvBrhygraDDvULGCTp/K4VAJGdRFEEPsD02dC2Xv3MmRL2zVHK6wIhJ6hvgfpvkDxBe6c01xVExWAMU3vpxLFd6gFwTcgXAJj80vLPqiHa8hvVbwD2qjIg7urFaW9aadPkqUwA4tyTQ6JdoS4mYJrQ8cv7Kn5+PPo2zrzLbW1U54Q1DQCYqDVNGHOX+A5zmvBdGhd4M2BqYrpKN7BBYACsOj6hkWs1qZOkbQeG+q2LjYUbbEAddioAoJoDGJzn1mcK7RsSAM4+47zPAGBMAOuP8EzEB0CcH/KD4TQdA2wfo9TiYjFq72iP8AlRKvgCsQ/gQmGKqoritCPys+eTIecfHTk8WCUfnR3oQgHo3rmr3FaaaGGDBQqQVGhQRIhw1M1HLxEAPgOEBAPPMVK6m3SJDYCe8ZHG3CGAAADAH/gskAgAVN5noBAA4O2WoAwIoXiaZLIMSJOyIXTJAAiBaiPJTD0DbHUG2+6D7aW7U+oBCM2mDABXVti2v9I+PnuwZHVt+nG6SfVyZoS4QeKkniSTNbXJACDFWgoQtzhNzQBX/B83PFa3xW30tMX+tI+tNFYr5fV+cF0Xz//09rqLAXEOSKJdIE5OAC5c6HcK6HfuQHX32IsVzBBv2ba5fD+B62cDnMsZiABA4SCMU8QEAPYHILj+FACsCcRZUR0ILmeQagDqxQBXjlAEQFImUC8GuBgkAsDl0EyXrLgL1igPMrufZ79UiderRHoDKJhIa3+cM/YGwLSL2K7V6crAyky/et3aAJjS6lDetrEAy2tNwwBbXQEvO+j0wLsB116e8GYvyPYWEsIEOLuF9y4GcHcVaa4gcQD0i1h6JcoGhjTW58BMHABdQakDDQqAK0egn8h8TSAEAJz+FDwjAzgBqDQIygAwnCalNMYyNwRO3P+Mdaa4TIBbwFQxYO7Tx4r6PkwUa/wmB4aguS5tc38IpwcyowlI/1IPgnxDYZgkeH6o9dMdQL8AhWBI7gZj0RT6cLmE/wfQGn3jP61WAAAAAElFTkSuQmCC' },
+  { nom: '13_Example_Skin_3.png', tip: 'Pupilas de 1 píxel, cejas finas', src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA6RJREFUeF7tWzFrFEEU3ivlokG5RFEi2NlcadRgF0RMsDCFVSziL7A7sLETrvMXJIXWsRAjIkklMSblBY0iCAYskkOJ5rCMfKtvmZudmTd7s3tzt842BzuzM+9973szb+a9q2w2D48ih6f9fd/4de3UmLF9sjFScZje+dMKADg2rpbh995fbEztAECnJLWZvg8ABAYMgAuAqhMXx7v8aXdnL6F2cAHDGhHWgGFfBFcaX4zbILeNcdsgt0/NNC/43wY5IYtsH/ptkIsTuPYAwLDHAZyFufahYMBkYyRqLXW6loL6QjXabB6yoXIpAHA5KwQAmMOUdxfg4oAit0CM7T0OkBVsLXWSwEg8D6Afgh5O4MX5Daf7hXtPrxgDIxr/58GvaOra1Vh8G7l0hkxNpgJAjPZsAdj99rVrzomz563IlBUAWp/qC9WeIspCAZi7OxsrvfzkRZQDADGzFuc34jH7ygAynQ3ViKJgQM4AxGLILuDMANOdoO6gIx6QtlvbSmr3CoCVn/xjgKrvidHj8WvOlejbiujz8oC4E5RjAPnd1morIn8XaQ6Kig8Jhneq/raKUz95fHo/MACYFHIFAMofdH6kphitnozfAYS+MiCr9bL0V1lapbw4JoC4//y61a6QiwuoFLr94HLX62eP3mXRO+mrozo3WGkAuDRd1+qKQE18xItd27jAmQGry+spAeGDYACsTr/oZLKmuEiKfafnprQAUOKGOogL9kAAIEoOMLiVW9YU/YcSAM4/s7QHAAwuQIc1VQ6yby6AOL/Ih8JpcQ74PpRu77ej2lgt+UUfRKlYC6wB4EJhU8oME758tVKk/tHNGzOp8WmxAwMgH/1SRwBke9FiFSwUqqHnwQMAng3gffrAAO8m8CxAYIBnA3ifPjDAuwk8CxAY4NkA3qcPDPBuAs8CBAZ4NoD36QMD8jYBCi7E3KFcSstdVDy+9fqIbojPnDud1Ctz3/WqR+4MUAFAwgEYThERAMoJZLnhyQrEQANQGgaILlE6BqiKrLgCa6Ip1odP7z+nWCtnieQOSJjY5v44l3B2AdWtsq6uUBYGvr3+5u3/DYDqWh3pbR0LKL1WGgbo8gpU7CDTg2oDHq7dcWYvxnYepAgX4PwW7aVhgFyIJWeidGDYpr44ML0zQBbQdgENAPRYGSoDHhjA+QjX7roI0mGJ+5+xLEdpXGDn4wdtjl8FPtUGcEXbnOGo3dkFXENhCKLL8auUcK0Nlsf8A6C8GG4JOpumAAAAAElFTkSuQmCC' },
+  { nom: '26_Example_Skin_16.png', tip: 'Pupilas de 1 píxel, sin cejas', src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA9dJREFUeF7tW71rFEEU3y311KBcoigR7SzuyvgR7IJIIhamsIpg/AusDNjYibHyL0gErWMhRkRiJTGa8g6NIggGLJJDiXpanryJb5nMzsyb3dm93dnMNXeZz/d+83tv3sybhO9mf/cCi0/n+6a2d/3QoLb+9My+0GJ6664hALBnSC7D341tbHT1AIBKSazT9fcAVJ0B4/dORDRtP/zDfjeu743KwjAs1gQWZ75EPmD41BATbH1tIxIQ6G1jAqUHwPuA3e4EeROQ7SnUNkZtg9Q+NTF7slgfYBsHUApS9c5vg1ScQNV7AFyPA6gVpupLz4CRWzVmxhCvtOa77Hdzuhb0etvhw+r9rjZOcB4ASgHb+tIzwFZBqn/hAFBxALWN2dYXHgeICrTmu9HZAM4EfCAEQY9GYNZvbmrFCpMbj89qA6O5qRU2z8+tX8Ho+XNsLkIurTyxyWQA8NEetWIo4Pq3rzsmHj563AiYpADgQa05XUsVUeYKwOS1S0zphUfPgrwA6AsDcOlMqMYzIA0AjWYjtq3CzRQ6S9EErBmgOwuoDjq8X2i32lJqgwmkAcDITv77AFnbAwP7WTFlStg35G1eHBCQFy9DxLLVpVaA9s7THJwU/0HBoEzW3lRxbCeOj+WlAUCnkC0AoPxW90dsioHaQVYGIPSVAUlXL0l72UrLlOfHBCBuPr1gtCtkYgIyha7cPrOj+Mndt0n0jtqqqE4NVhkARsaaSl35y1tohJe68Ns0LrBmwNLCckxAsEFgAKw6fkMj3WryTpJvOzY5qgQAEzfYgHfYpQCAlxzAoDy3qCm0dxIAyj6T1HsANCaAhzVZDrJvJgBxfp4fjCb5OcD2QenOZieoD9ajb2iDmSxjAKhQmPesLIoTjsjPXyzmqX8wfnEiNj46O5AF5MNvbMifHSjhjIIFahCX6z0ALq9eFrJ7BmSBostjeAa4vHpZyO4ZkAWKLo/hGeDy6mUhu2dAFii6PIZngMurl4XsngFZoMiPAQ8uxDcF/N/Ui5AHl1/28Ib4yLHD0fsEql9aPTJngAwAFA6AoBThAcCcQJIbnqRAlBqAyjAgrQk4wQDZIyvqgTXSFG52P73/HGOtmCUSG0DCxDT3R5mEtQnIbpVV/2AhCgO2vfz6ze4GQHatDultFQswvVYZBqjyCvjYQaQHvg248+qqNXthbOtB8jABym6hvjIMEB9iiZkoFRimqS8KzMIZIApo6kA9AClfhoqAewZQNkLV2zpBzO1T/2csylEZE1j7+EGZ45eBj28DqEfb1MJhvbUJ2IbCIIgqxy9TwvZtsDjmP/B/G25qmJexAAAAAElFTkSuQmCC' },
+  { nom: '07_bufferfish.png', tip: 'Dibujo a mano: hay que corregir a mano', src: 'data:image/png;base64,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' },
+];
+window.AS_LAYOUT = 'data:image/png;base64,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';</script>
+<script>/* ============================================================================
+   Interfaz del conversor de skins «Actions & Stuff — Expresiones»
+   Toda la lógica vive en ASCore (core.js); aquí sólo hay interfaz y estado.
+   ========================================================================== */
+(function () {
+  'use strict';
+  var AS = window.ASCore;
+  var EXAMPLES = window.AS_EXAMPLES || [];
+
+  /* ------------------------------------------------------------ ayudas DOM */
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function node(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function bbox(cells) {
+    if (!cells.length) return null;
+    var x0 = 9, y0 = 9, x1 = -1, y1 = -1;
+    cells.forEach(function (c) {
+      if (c[0] < x0) x0 = c[0]; if (c[0] > x1) x1 = c[0];
+      if (c[1] < y0) y0 = c[1]; if (c[1] > y1) y1 = c[1];
+    });
+    return [x0, y0, x1, y1];
+  }
+  function css(p) { return p[3] ? 'rgb(' + p[0] + ',' + p[1] + ',' + p[2] + ')' : 'transparent'; }
+  function at(data, x, y) { var i = (y * 64 + x) * 4; return [data[i], data[i + 1], data[i + 2], data[i + 3]]; }
+  function face8(data, x, y) { var i = (y * 8 + x) * 4; return [data[i], data[i + 1], data[i + 2], data[i + 3]]; }
+
+  /** Recorta una región a un canvas (para las miniaturas y las descargas). */
+  function canvasOf(data, w, h, crop) {
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var d = cropData(data, w, h, crop);
+    c.getContext('2d').putImageData(new ImageData(d, w, h), 0, 0);
+    return c;
+  }
+  function cropData(data, w, h, crop) {
+    var out = new Uint8ClampedArray(w * h * 4);
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+      var si = crop ? (((y + crop[1]) * 64) + (x + crop[0])) * 4 : (y * w + x) * 4;
+      var di = (y * w + x) * 4;
+      out[di] = data[si]; out[di + 1] = data[si + 1]; out[di + 2] = data[si + 2]; out[di + 3] = data[si + 3];
+    }
+    return out;
+  }
+
+  /* --------------------------------------------------------------- estado */
+  var S = {
+    nom: '', src: null, face: null, det: null,
+    pupils: { R: [], L: [] }, brows: { R: [], L: [] }, box: { R: [], L: [] }, boxTouched: false,
+    mode: 'pup', out: null, res: null, prev: null, hat: null,
+    playing: true, view: 'as', state: 'auto', t0: 0, raf: 0,
+    pack: [], packName: 'Mis skins con expresiones', packFile: 'mis_skins_expresiones'
+  };
+  var Z = 32;                     // píxeles de pantalla por píxel de textura
+  var statusEl = $('#status');
+  function say(msg, kind) { statusEl.textContent = msg || ''; statusEl.className = 'status' + (kind ? ' ' + kind : ''); }
+
+  /* ---------------------------------------------------------------- carga */
+  function loadFromUri(uri, name) {
+    var img = new Image();
+    img.onload = function () { accept(img, name); };
+    img.onerror = function () { say('No he podido leer esa imagen. ¿Seguro que es un PNG?', 'err'); };
+    img.src = uri;
+  }
+  function loadFile(f) {
+    if (!f) return;
+    if (!/^image\//.test(f.type || '')) { say('Ese archivo no es una imagen (' + (f.type || 'tipo desconocido') + ').', 'err'); return; }
+    var fr = new FileReader();
+    fr.onload = function () { loadFromUri(fr.result, f.name); };
+    fr.onerror = function () { say('No he podido leer el archivo.', 'err'); };
+    fr.readAsDataURL(f);
+  }
+
+  function accept(img, name) {
+    if (img.width !== 64 || img.height !== 64) {
+      say(img.width === 64 && img.height === 32
+        ? 'Esa skin es del formato antiguo 64×32: no tiene las zonas donde van las capas de A&S. Necesitas una skin 64×64.'
+        : 'Tamaño ' + img.width + '×' + img.height + ': Minecraft usa skins de 64×64 (o 64×32, que aquí no sirve).', 'err');
+      return;
+    }
+    var c = document.createElement('canvas');
+    c.width = 64; c.height = 64;
+    var ctx = c.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, 64, 64);
+    ctx.drawImage(img, 0, 0, 64, 64);
+    S.src = ctx.getImageData(0, 0, 64, 64).data;
+    S.nom = name || 'skin.png';
+    S.face = AS.faceOf(S.src);
+    S.hat = AS.hatOf(S.src);
+    S.det = AS.analyzeFace(S.face);
+    loadDetection();
+    say('«' + S.nom + '» cargada · 64×64 · modelo aparente: ' + modelName() +
+      (S.det ? ' · ojos localizados' : ' · ojos NO localizados, márcalos a mano'), S.det ? 'ok' : 'warn');
+    render();
+  }
+
+  function loadDetection() {
+    var d = S.det;
+    S.boxTouched = false;
+    ['R', 'L'].forEach(function (s) {
+      S.pupils[s] = d ? d.eyes[s].pupils.map(function (c) { return [c[0], c[1]]; }) : [];
+      S.brows[s] = (d && d.brows[s]) ? d.brows[s].cells.map(function (c) { return [c[0], c[1]]; }) : [];
+      S.box[s] = [];
+      if (d) {
+        var b = d.eyes[s].box;
+        for (var y = b[1]; y <= b[3]; y++) for (var x = b[0]; x <= b[2]; x++) S.box[s].push([x, y]);
+      }
+    });
+  }
+
+  function modelName() {
+    if (!S.src) return '—';
+    var op = 0, arm = 0, y, x;
+    for (y = 20; y < 32; y++) {
+      for (x = 52; x < 56; x++) if (S.src[(y * 64 + x) * 4 + 3]) op++;
+      for (x = 40; x < 52; x++) if (S.src[(y * 64 + x) * 4 + 3]) arm++;
+    }
+    if (op > 0) return 'clásico (brazos de 4 px)';
+    if (arm > 0) return 'delgado/Alex (brazos de 3 px)';
+    return 'sin datos de brazos';
+  }
+
+  /* -------------------------------------------------------- estado → datos */
+  function buildDet() {
+    var skin = (S.det && S.det.skin) ? S.det.skin.slice() : fallbackSkin();
+    var det = {
+      skin: skin, eyes: {}, brows: {}, notes: [],
+      anchor: S.det ? S.det.anchor : 'manual',
+      confidence: S.det ? S.det.confidence : 'manual'
+    };
+    ['R', 'L'].forEach(function (s) {
+      det.eyes[s] = { box: bbox(S.box[s]), pupils: S.pupils[s], sclera: S.box[s] };
+      det.brows[s] = S.brows[s].length ? { cells: S.brows[s], y: S.brows[s][0][1] } : null;
+    });
+    return det;
+  }
+  function fallbackSkin() {
+    var l = [], x, y, p;
+    for (y = 4; y < 7; y++) for (x = 2; x < 6; x++) { p = face8(S.face, x, y); if (p[3] > 0) l.push(p); }
+    if (!l.length) for (y = 0; y < 8; y++) for (x = 0; x < 8; x++) { p = face8(S.face, x, y); if (p[3] > 0) l.push(p); }
+    return l.length ? AS.util.mode(l) : [128, 128, 128];
+  }
+
+  function options() {
+    return {
+      eyeStyle: $('#eyeStyle').value || null,
+      browStyle: $('#browStyle').value || null,
+      surprised: $('#surprised').checked,
+      blinkStyle: $('#blinkStyle').value,
+      combineHat: $('#combineHat').checked,
+      cleanSlots: $('#cleanSlots').checked,
+      snap: $('#snapCubes').checked,
+      respect: $('#respect') ? $('#respect').checked : true,
+      slotColor: $('#forceArt').checked ? $('#artColor').value : null,
+      scleraColor: $('#autoSclera').checked ? null : $('#scleraColor').value,
+      browColor: $('#autoBrow').checked ? null : $('#browColor').value,
+      lidColor: $('#autoLid').checked ? null : $('#lidColor').value
+    };
+  }
+
+  function generate() {
+    if (!S.src) { S.out = null; S.res = null; S.prev = null; return; }
+    var det = buildDet(), os = options();
+    var plan = AS.planStyles(det, os);
+    if (!$('#paintEye').checked) plan.eye = [];
+    if (!$('#paintBrow').checked) plan.brow = [];
+    os.plan = plan;
+    var res = AS.generateSkin(S.src, det, os);
+    S.out = res.data; S.res = res;
+    S.prev = {
+      vanilla: S.face,
+      as: cropData(res.data, 8, 8, [24, 0]),
+      blink: cropData(res.data, 8, 8, [0, 0])
+    };
+  }
+
+  /* --------------------------------------------------------- rejilla 8x8 */
+  var grid = $('#grid');
+  (function buildGrid() {
+    for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'gridcell');
+      b.dataset.x = x; b.dataset.y = y;
+      b.tabIndex = (x === 0 && y === 0) ? 0 : -1;
+      b.setAttribute('aria-label', 'columna ' + x + ', fila ' + y);
+      grid.appendChild(b);
+    }
+    var down = false;
+    grid.addEventListener('pointerdown', function (e) {
+      var c = e.target.closest('[data-x]'); if (!c) return;
+      down = true;
+      toggleCell(+c.dataset.x, +c.dataset.y);
+      var b = grid.querySelector('[data-x="' + c.dataset.x + '"][data-y="' + c.dataset.y + '"]');
+      if (b) { $$('[data-x]', grid).forEach(function (x) { x.tabIndex = -1; }); b.tabIndex = 0; b.focus(); }
+    });
+    document.addEventListener('pointerup', function () { down = false; });
+    document.addEventListener('pointercancel', function () { down = false; });
+    grid.addEventListener('pointerover', function (e) {
+      if (!down) return;
+      var c = e.target.closest('[data-x]'); if (c) toggleCell(+c.dataset.x, +c.dataset.y);
+    });
+    grid.addEventListener('keydown', function (e) {
+      var c = e.target.closest('[data-x]'); if (!c) return;
+      var x = +c.dataset.x, y = +c.dataset.y, k = e.key, nx = x, ny = y;
+      if (k === ' ' || k === 'Enter') { e.preventDefault(); toggleCell(x, y); return; }
+      if (k === 'ArrowLeft') nx = Math.max(0, x - 1);
+      else if (k === 'ArrowRight') nx = Math.min(7, x + 1);
+      else if (k === 'ArrowUp') ny = Math.max(0, y - 1);
+      else if (k === 'ArrowDown') ny = Math.min(7, y + 1);
+      else return;
+      e.preventDefault();
+      var t = grid.querySelector('[data-x="' + nx + '"][data-y="' + ny + '"]');
+      if (!t) return;
+      $$('[data-x]', grid).forEach(function (b) { b.tabIndex = -1; });
+      t.tabIndex = 0; t.focus();
+    });
+  })();
+
+  function toggleCell(x, y) {
+    var side = x < 4 ? 'R' : 'L';
+    var set = S.mode === 'pup' ? S.pupils : (S.mode === 'brow' ? S.brows : S.box);
+    var i = -1;
+    set[side].forEach(function (c, j) { if (c[0] === x && c[1] === y) i = j; });
+    if (i >= 0) set[side].splice(i, 1); else set[side].push([x, y]);
+    if (S.mode === 'pup' && !S.boxTouched) ajustarCaja();
+    render();
+  }
+
+  /** Vuelve a calcular la zona del ojo (lo que se pinta en la cara trasera). */
+  function ajustarCaja() {
+    ['R', 'L'].forEach(function (side) {
+      var b = bbox(S.pupils[side]) || bbox(S.box[side]);
+      if (!b) { S.box[side] = []; return; }
+      var lim = side === 'R' ? [0, 3] : [4, 7];
+      var scl = null;
+      if (S.det) { var e = S.det.eyes[side]; if (e && e.sclera && e.sclera.length) scl = AS.util.mode(e.sclera.map(function (c) { return face8(S.face, c[0], c[1]); })); }
+      var out = [], x, y, p;
+      for (y = b[1]; y <= b[3]; y++) for (x = b[0]; x <= b[2]; x++) out.push([x, y]);
+      b[0] - 1 >= lim[0] && [b[0] - 1].forEach(function (xx) {
+        for (y = b[1]; y <= b[3]; y++) { p = face8(S.face, xx, y); if (p[3] > 0 && (!scl || AS.util.dist(p, scl) < 60)) out.push([xx, y]); }
+      });
+      b[2] + 1 <= lim[1] && [b[2] + 1].forEach(function (xx) {
+        for (y = b[1]; y <= b[3]; y++) { p = face8(S.face, xx, y); if (p[3] > 0 && (!scl || AS.util.dist(p, scl) < 60)) out.push([xx, y]); }
+      });
+      S.box[side] = out;
+    });
+  }
+
+  function paintGrid() {
+    var bR = bbox(S.box.R), bL = bbox(S.box.L);
+    $$('[data-x]', grid).forEach(function (b) {
+      var x = +b.dataset.x, y = +b.dataset.y, side = x < 4 ? 'R' : 'L', box = side === 'R' ? bR : bL;
+      b.style.background = css(face8(S.face, x, y));
+      var inBox = !!box && x >= box[0] && x <= box[2] && y >= box[1] && y <= box[3];
+      var isPup = S.pupils[side].some(function (c) { return c[0] === x && c[1] === y; });
+      var isBrow = S.brows[side].some(function (c) { return c[0] === x && c[1] === y; });
+      b.className = (inBox ? 'is-box ' : '') + (isPup ? 'is-pup ' : '') + (isBrow ? 'is-brow' : '');
+      b.setAttribute('aria-pressed', String(S.mode === 'pup' ? isPup : S.mode === 'brow' ? isBrow : inBox));
+      b.setAttribute('aria-label', 'columna ' + x + ', fila ' + y +
+        (isPup ? ', pupila' : '') + (isBrow ? ', ceja' : '') + (inBox ? ', zona del ojo' : '') +
+        '. Pulsa para alternar ' + ({ pup: 'pupila', brow: 'ceja', box: 'zona del ojo' })[S.mode] + '.');
+    });
+  }
+
+
+  /* --------------------------------------------------------- vista previa */
+  // Los dos ojos del personaje ocupan la mitad izquierda (columnas 0-3) y la
+  // derecha (4-7) de la cara. El modelo oficial tiene una cara de parpadeo por
+  // mitad (blinkFace_left / blinkFace_right) y oculta la ceja del ojo que se
+  // cierra, así que cada ojo se puede cerrar por separado.
+  var pv = $('#preview'), pvx = pv.getContext('2d');
+  var Z = 32;                                  // píxeles de pantalla por píxel de textura
+  var MITAD = { R: 0, L: 4 };                  // ojo 'R' del personaje = columnas 0-3
+
+  /** Estado que se dibuja ahora mismo (equivale a los toggles de la plantilla). */
+  function estadoEn(t) {
+    var st = { cerrado: { R: false, L: false }, mirar: 0, cejas: false };
+    switch (S.state) {
+      case 'normal': break;
+      case 'blinkL': st.cerrado.L = true; break;      // su ojo izquierdo = columnas 4-7
+      case 'blinkR': st.cerrado.R = true; break;      // su ojo derecho = columnas 0-3
+      case 'blinkBoth': st.cerrado.L = st.cerrado.R = true; break;
+      case 'lookL': st.mirar = 1; break;              // hacia su izquierda (en pantalla, a la derecha)
+      case 'lookR': st.mirar = -1; break;
+      case 'browUp': st.cejas = true; break;
+      case 'auto': {
+        var p = t % 7200;
+        if (p < 1500) { }
+        else if (p < 1780) { st.cerrado.L = st.cerrado.R = true; }
+        else if (p < 3600) { }
+        else if (p < 4600) { st.mirar = 1; }
+        else if (p < 5600) { st.mirar = -1; }
+        else if (p < 6400) { st.cerrado.L = true; }
+        else { st.cejas = true; }
+        break;
+      }
+    }
+    return st;
+  }
+
+  /** ¿Puede la pupila moverse 1 píxel sin salirse de la zona del ojo? */
+  function desplazable(side, dx) {
+    if (!dx) return 0;
+    var b = bbox(S.box[side]);
+    if (!b) return 0;
+    var cabe = S.pupils[side].every(function (c) { var x = c[0] + dx; return x >= b[0] && x <= b[2]; });
+    return cabe ? dx : 0;
+  }
+
+  function pintar(st) {
+    if (!S.res) return;
+    pvx.imageSmoothingEnabled = false;
+    pvx.clearRect(0, 0, pv.width, pv.height);
+    var base = new Uint8ClampedArray(S.view === 'vanilla' ? S.prev.vanilla : S.prev.as);
+    if (S.view === 'vanilla' && S.hat) {
+      // en Minecraft la capa de sombrero se dibuja sobre la cara
+      for (var yy = 0; yy < 8; yy++) for (var xx = 0; xx < 8; xx++) {
+        var hi = (yy * 8 + xx) * 4;
+        if (!S.hat[hi + 3]) continue;
+        base[hi] = S.hat[hi]; base[hi + 1] = S.hat[hi + 1]; base[hi + 2] = S.hat[hi + 2]; base[hi + 3] = 255;
+      }
+    }
+    if (S.view === 'as') {
+      // el ojo cerrado muestra su mitad de la cara de parpadeo
+      ['R', 'L'].forEach(function (sd) {
+        if (!st.cerrado[sd]) return;
+        var ox = MITAD[sd];
+        for (var y = 0; y < 8; y++) for (var x = 0; x < 4; x++) {
+          var i = ((y * 8) + ox + x) * 4;
+          base[i] = S.prev.blink[i]; base[i + 1] = S.prev.blink[i + 1];
+          base[i + 2] = S.prev.blink[i + 2]; base[i + 3] = S.prev.blink[i + 3];
+        }
+      });
+    }
+    var x, y, i;
+    for (y = 0; y < 8; y++) for (x = 0; x < 8; x++) {
+      i = (y * 8 + x) * 4;
+      if (!base[i + 3]) continue;
+      pvx.fillStyle = 'rgb(' + base[i] + ',' + base[i + 1] + ',' + base[i + 2] + ')';
+      pvx.fillRect(x * Z, y * Z, Z, Z);
+    }
+
+    var bloqueado = [];
+    var avisa = false;
+    if (S.view === 'as') {
+      S.res.plan.eye.forEach(function (it) {
+        if (st.cerrado[it.side]) return;
+        var dx = desplazable(it.side, st.mirar);
+        if (st.mirar && !dx) { bloqueado.push(it.side); avisa = true; }
+        it.cubes.forEach(function (cu) {
+          var w = cu.rect[2] - cu.rect[0];
+          cu.cells.forEach(function (c, k) {
+            var p = at(S.res.data, cu.rect[0] + (k % w), cu.rect[1] + Math.floor(k / w));
+            if (!p[3]) return;
+            pvx.fillStyle = 'rgb(' + p[0] + ',' + p[1] + ',' + p[2] + ')';
+            pvx.fillRect((c[0] + dx) * Z, c[1] * Z, Z, Z);
+          });
+        });
+      });
+      S.res.plan.brow.forEach(function (it) {
+        if (st.cerrado[it.side]) return;
+        var dy = st.cejas ? -1 : 0;
+        it.cubes.forEach(function (cu) {
+          var w = cu.rect[2] - cu.rect[0];
+          cu.cells.forEach(function (c, k) {
+            var p = at(S.res.data, cu.rect[0] + (k % w), cu.rect[1] + Math.floor(k / w));
+            if (!p[3]) return;
+            var ty = Math.max(0, c[1] + dy);
+            pvx.fillStyle = 'rgb(' + p[0] + ',' + p[1] + ',' + p[2] + ')';
+            pvx.fillRect(c[0] * Z, ty * Z, Z, Z);
+          });
+        });
+      });
+    }
+
+    var txt;
+    if (S.view === 'vanilla') txt = 'sin A&S: lo que ve un jugador con la skin normal';
+    else if (st.cerrado.R && st.cerrado.L) txt = 'parpadeando (los dos ojos cerrados)';
+    else if (st.cerrado.L) txt = 'ojo izquierdo de la pantalla cerrado (mitad x4-7 de la cara) · interruptor Blink - Right Eye';
+    else if (st.cerrado.R) txt = 'ojo derecho de la pantalla cerrado (mitad x0-3 de la cara) · interruptor Blink - Left Eye';
+    else if (st.mirar > 0) txt = 'mirando a su izquierda: las pupilas se mueven hacia la derecha de la pantalla (Look Left)';
+    else if (st.mirar < 0) txt = 'mirando a su derecha: las pupilas se mueven hacia la izquierda de la pantalla (Look Right)';
+    else if (st.cejas) txt = 'cejas de sorpresa (suben 1 píxel)';
+    else txt = 'ojos abiertos, mirando al frente';
+    $('#pvState').textContent = txt;
+    if (st.mirar && S.aLado) avisa = (S.aLado[bloqueado[0]] ? 1 : 0) > 0;
+    $('#pvHint').textContent = avisa
+      ? 'Aviso: en el juego el addon movería esa pupila 1 píxel y se saldría de la zona del ojo' +
+        (bloqueado.length === 1 ? ' (' + (bloqueado[0] === 'R' ? 'su ojo derecho' : 'su ojo izquierdo') + ')' : '') +
+        ', así que la mirada se vería rara. Amplía la zona del ojo o mueve la pupila; mira los botones «Cerrar ojo» para verlo.'
+      : '';
+  }
+
+  function frame(now) {
+    if (!S.playing || !S.res) { S.raf = 0; return; }
+    S.raf = requestAnimationFrame(frame);
+    if (!S.playing) return;
+    pintar(estadoEn(now - S.t0));
+  }
+  function play() {
+    if (S.raf || !S.res) return;
+    if (S.state !== 'auto') { S.raf = 0; pintar(estadoEn(0)); return; }
+    S.raf = requestAnimationFrame(frame);
+  }
+
+  /* ---------------------------------------------------------------- capas */
+  function renderLayers() {
+    [['L1', S.face], ['L2', S.prev.as], ['L3', S.prev.blink]].forEach(function (p) {
+      var cv = $('#' + p[0]), ctx = cv.getContext('2d');
+      var d = p[1], img = new ImageData(new Uint8ClampedArray(d), 8, 8);
+      ctx.imageSmoothingEnabled = false;
+      ctx.putImageData(img, 0, 0);
+    });
+  }
+
+  /** Guarda la textura final sin adornos (para descargas y para el mapa). */
+  function renderRaw() {
+    var cv = $('#rawout');
+    cv.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(S.out), 64, 64), 0, 0);
+  }
+
+  function renderAtlas() {
+    var cv = $('#atlas'), ctx = cv.getContext('2d');
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var W = 64 * 6, H = W;
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) {
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      cv.style.width = W + 'px';
+      cv.style.maxWidth = '100%';
+      cv.style.imageRendering = 'auto';
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.imageSmoothingEnabled = false;
+    if (S.out) ctx.drawImage(canvasOf(S.out, 64, 64), 0, 0, 64 * 6, 64 * 6);
+  }
+
+  /* -------------------------------------------------------------- informe */
+  function renderChips() {
+    var wrap = $('#chips'), det = buildDet();
+    wrap.innerHTML = '';
+    function chip(txt, cls) { wrap.appendChild(node('span', 'pill ' + (cls || ''), txt)); }
+    var po = det.eyes.R.pupils.length + det.eyes.L.pupils.length;
+    var br = (det.brows.R ? det.brows.R.cells.length : 0) + (det.brows.L ? det.brows.L.cells.length : 0);
+    chip(po ? po + ' píxeles de pupila' : 'sin pupilas marcadas', po ? 'alta' : 'no');
+    chip(br ? br + ' píxeles de ceja' : 'sin cejas', br ? 'alta' : '');
+    if (S.det) chip('detección: ' + S.det.confidence, S.det.confidence === 'alta' ? 'alta' : S.det.confidence === 'media' ? 'media' : 'baja');
+    else chip('sin detección automática', 'media');
+  }
+
+  function renderReport() {
+    var ul = $('#notes'), tb = $('#rep').querySelector('tbody');
+    ul.innerHTML = ''; tb.innerHTML = '';
+    function note(txt, cls) { ul.appendChild(node('li', cls || '', txt)); }
+    function row(a, b) { var tr = node('tr'); tr.appendChild(node('th', '', a)); tr.appendChild(node('td', '', b)); tb.appendChild(tr); }
+
+    if (!S.src) { note('Carga una skin para empezar.', 'warn'); return; }
+
+    if (S.det) {
+      (S.det.notes || []).forEach(function (n) { note(n, 'warn'); });
+      if (!(S.det.notes || []).length) note('Ojos y cejas localizados automáticamente. Comprueba el resultado: siempre puedes corregirlo píxel a píxel en la rejilla.', 'ok');
+    } else {
+      note('No he reconocido los ojos con seguridad. Marca a mano las pupilas (y las cejas) en la rejilla: el resto se calcula solo.', 'warn');
+    }
+    var previos = 0, x, y;
+    for (y = 0; y < 8; y++) for (x = 0; x < 8; x++) {
+      if (S.src[(y * 64 + x) * 4 + 3]) previos++;
+      if (S.src[(y * 64 + 24 + x) * 4 + 3]) previos++;
+    }
+    if (previos) {
+      var resp0 = (S.res && S.res.stats.respected) || {};
+      var guardadas = [];
+      if (resp0.back) guardadas.push('la cara trasera');
+      if (resp0.blink) guardadas.push('la cara de parpadeo');
+      if (guardadas.length) {
+        note('Las zonas de A&S ya tenían ' + previos + ' píxeles pintados y parece una skin ya hecha: se ha respetado ' +
+             guardadas.join(' y ') + ' tal cual y sólo se ha rellenado lo que faltaba.', '');
+      } else {
+        note('Las zonas de A&S ya tenían ' + previos + ' píxeles pintados: se sustituyen por las capas nuevas '
+             + '(si prefieres conservarlos, desmarca «Respetar las capas que la skin ya trae»).', 'warn');
+      }
+    }
+    if (S.res) {
+      var det0 = buildDet(), color=0;
+      ['R', 'L'].forEach(function (sd) {
+        var pe = S.res.palette.perEye[sd];
+        if (!pe) return;
+        det0.eyes[sd].pupils.forEach(function (c) {
+          var p = face8(S.face, c[0], c[1]);
+          if (pe.sclera && AS.util.dist(p, pe.sclera) < 30) color++;
+        });
+      });
+      // ¿parece haber boca? (píxeles marcadamente más oscuros que la piel en las dos filas de abajo)
+      var boca = 0, xs, ys;
+      for (ys = 6; ys < 8; ys++) for (xs = 2; xs < 6; xs++) {
+        var pp = face8(S.face, xs, ys);
+        if (pp[3] > 0 && AS.util.dist(pp, buildDet().skin) > 70 && AS.util.lum(pp) < AS.util.lum(buildDet().skin) - 40) boca++;
+      }
+      if (boca >= 2) note('Parece que tu skin tiene boca (' + boca + ' píxeles oscuros en la parte baja de la cara). Se copia tal cual a las tres capas; A&S no anima la boca, así que no hay nada más que hacer con ella.', '');
+      var hs = S.res.stats.hat;
+      if (hs && hs.enOjos) {
+        note('Tu skin pinta ' + hs.enOjos + ' píxeles en la capa de sombrero (x40-47) justo sobre la zona de los ojos y las cejas. ' +
+          'En Minecraft esa capa se ve por encima de la cara, pero con A&S las capas nuevas la tapan. ' +
+          'Si ahí tienes los ojos, la boca o una máscara: márcalos a mano en la rejilla, o marca «combinar la capa de sombrero» para que las capas nuevas muestren lo mismo que veías en Minecraft.', 'warn');
+      } else if (hs && hs.total) {
+        note('Tu skin usa la capa de sombrero (' + hs.total + ' píxeles), pero no sobre los ojos: no debería dar problemas. Con A&S esa zona de sombrero delante de la cara queda tapada por la cara trasera.', '');
+      }
+      ['eye', 'brow'].forEach(function (kind) {
+        ['R', 'L'].forEach(function (sd) {
+          var it = S.res.plan[kind].filter(function (x) { return x.side === sd; })[0];
+          if (!it || !it.estilos || it.estilos.length < 2) return;
+          note('En ' + (kind === 'eye' ? 'el ojo ' : 'la ceja ') + (sd === 'R' ? 'derecho' : 'izquierdo') +
+            ' se han usado dos tipos de cubo (' + it.estilos.join(' + ') + '). Es correcto porque cada cubo ocupa píxeles distintos, ' +
+            'pero en la plantilla conviene no mezclar tipos: compruébalo en la vista previa.', 'warn');
+        });
+      });
+      var estiloOjo = S.res.plan.eye.filter(function (i) { return i.cubes.length; }).map(function (i) { return i.style; }).join('|');
+      if (/3x2/.test(estiloOjo)) note('Con las pupilas 3x2 el addon recomienda ocultar cubos individuales o dibujar en la vista 3D. Este conversor ya lo hace: elige sólo los cubos que coinciden con tu dibujo.', '');
+      if (S.res.stats.cleaned) note('Se han borrado ' + S.res.stats.cleaned + ' píxeles de arte anterior en las zonas de los cubos (x0-2, x12-20, x36-44 del atlas), para que no se mezclen con los de esta conversión.', '');
+      if (S.res.stats.snapped && S.res.stats.snapped.length) note('Tus pupilas no caían en ninguna variante de la plantilla, así que los ojos se han ajustado: ' + S.res.stats.snapped.join(' · ') + '. Se dibujan tus propios píxeles, solo que en la posición que la plantilla sí reconoce (así el ojo se mueve en el juego). Si prefieres que se dejen donde estaban, desmarca «Ajustar a la plantilla».', 'warn');
+      if (S.res.stats.cleanedSkip) note('Tus ojos (o cejas) no encajan con ningún cubo de la plantilla, así que no se ha borrado nada ni se ha pintado nada: la skin se queda con el dibujo que ya tenía y en el juego no se moverán. Para que se muevan, mueve esos píxeles a una posición válida: en la rejilla, la hoja de estilos muestra con cuadros verdes las variantes que sí existen.', 'warn');
+      var resp = S.res.stats.respected || {};
+      var respetadas = [];
+      if (resp.back) respetadas.push('la cara trasera');
+      if (resp.blink) respetadas.push('la cara de parpadeo');
+      if (respetadas.length) note('Se ha respetado ' + respetadas.join(' y ') + ' que tu skin ya traía dibujadas: se dejan tal cual y sólo se ha rellenado lo que faltaba. Si quieres rehacerlas desde cero, desmarca «Respetar las capas que la skin ya trae».', '');
+      if (S.res.stats.blinkStyle === 'simple') note('Estilo de parpadeo «sencillo»: toda la zona del ojo se pinta con el color del párpado (el método rápido de los tutoriales). El estilo «oficial» deja ver la ceja bajada.', '');
+      if (color) note(color + ' píxel(es) que has marcado como pupila son del color de la esclerótica: en el juego no se distinguirán. Prueba «pintar el arte de los cubos con un color fijo».', 'warn');
+      (S.res.stats.unreachable || []).forEach(function (t) {
+        note('La plantilla no tiene ningún cubo para ' + t + '. Esos píxeles no se pueden convertir; prueba a moverlos a una columna válida.', 'warn');
+      });
+      if (S.res.stats.missing.length) note('Sin cubo en la plantilla: ' + S.res.stats.missing.join(', ') + '. Revisa la posición de esos píxeles.', 'warn');
+    }
+
+    var det = buildDet();
+    row('archivo', S.nom);
+    row('tamaño', '64 × 64');
+    row('modelo aparente', modelName() + ' (sólo informativo)');
+    row('color de piel', AS.util.rgb(det.skin));
+    ['R', 'L'].forEach(function (s) {
+      var lado = s === 'R' ? 'el suyo derecho' : 'el suyo izquierdo';
+      row('ojo (' + lado + ')', det.eyes[s].pupils.length
+        ? det.eyes[s].pupils.length + ' px de pupila · caja ' + JSON.stringify(det.eyes[s].box)
+        : 'sin marcar');
+      row('ceja (' + lado + ')', det.brows[s] ? det.brows[s].cells.map(function (c) { return c[0] + ':' + c[1]; }).join(' ') : 'sin marcar');
+    });
+    if (S.res) {
+      if (S.res.stats.slotList.length) S.res.stats.slotList.forEach(function (t, i) { row(i ? '' : 'cubos pintados', t); });
+      else row('cubos pintados', 'ninguno');
+      if (S.res.plan.eye.length || S.res.plan.brow.length) {
+        var lista = [];
+        S.res.plan.eye.concat(S.res.plan.brow).forEach(function (it) {
+          if (!it.cubes.length) return;
+          var est = {};
+          it.cubes.forEach(function (cu) { est[cu.style] = (est[cu.style] || 0) + 1; });
+          lista.push((S.res.plan.eye.indexOf(it) >= 0 ? 'ojo ' : 'ceja ') + it.side + ': ' +
+            Object.keys(est).map(function (k) { return k.replace(/^(2x1|3x1) (\d)$/, '$1 fila $2') + ' ×' + est[k]; }).join(', '));
+        });
+        if (lista.length) row('estilos usados', lista.join(' · '));
+      }
+      row('píxeles escritos', S.res.stats.back + ' en la cara trasera · ' + S.res.stats.blink + ' en la de parpadeo · ' + S.res.stats.slots + ' en los cubos');
+    }
+  }
+
+  /* ------------------------------------------------------------ descargas */
+  function baseName() { return (S.nom.replace(/\.[a-z0-9]+$/i, '').replace(/[^\w\-]+/g, '_') || 'skin'); }
+  function save(cv, nombre) {
+    cv.toBlob(function (b) {
+      if (!b) { say('El navegador no ha podido generar el PNG.', 'err'); return; }
+      var url = URL.createObjectURL(b), a = document.createElement('a');
+      a.href = url; a.download = nombre;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+    }, 'image/png');
+  }
+
+  /* --------------------------------------------------------------- render */
+  function render() {
+    var hay = !!S.src;
+    $('#states').classList.toggle('hidden', false);
+    $('#paso2').classList.toggle('hidden', !hay);
+    $$('[data-solo-con-skin]').forEach(function (sec) { sec.classList.toggle('hidden', !hay); });
+    $$('[data-need-skin]').forEach(function (b) { b.disabled = !hay; });
+    if (!hay) { renderReport(); return; }
+    generate();
+    paintGrid();
+    renderChips();
+    renderLayers();
+    renderRaw();
+    renderAtlas();
+    hojaRender();
+    packRender();
+    renderReport();
+    play();
+  }
+
+  /* -------------------------------------------------------------- eventos */
+  var drop = $('#drop');
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); });
+  });
+  drop.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  $('#file').addEventListener('change', function (e) { loadFile(e.target.files && e.target.files[0]); });
+  document.addEventListener('paste', function (e) {
+    var items = (e.clipboardData && e.clipboardData.items) || [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') === 0) { loadFile(items[i].getAsFile()); e.preventDefault(); return; }
+    }
+  });
+  $$('input[name=mode]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      S.mode = r.value;
+      $$('.mode').forEach(function (m) { m.classList.toggle('on', !!m.querySelector('input:checked')); });
+      paintGrid();
+    });
+  });
+  ['eyeStyle', 'browStyle', 'surprised', 'paintEye', 'paintBrow', 'forceArt', 'artColor',
+    'scleraColor', 'browColor', 'lidColor', 'autoSclera', 'autoBrow', 'autoLid',
+    'blinkStyle', 'combineHat', 'cleanSlots', 'snapCubes', 'respect'].forEach(function (id) {
+      var e = $('#' + id);
+      if (e) e.addEventListener('change', function () { render(); });
+    });
+  [['autoSclera', 'scleraColor'], ['autoBrow', 'browColor'], ['autoLid', 'lidColor'], ['forceArt', 'artColor']].forEach(function (p) {
+    var c = $('#' + p[0]), i = $('#' + p[1]);
+    if (c && i) c.addEventListener('change', function () { i.disabled = c.checked; });
+  });
+  $('#reset').addEventListener('click', function () { loadDetection(); say('Vuelto al resultado automático.'); render(); });
+  $('#clear').addEventListener('click', function () {
+    ['R', 'L'].forEach(function (s) { S.pupils[s] = []; S.brows[s] = []; S.box[s] = []; });
+    say('Todo borrado: marca otra vez los píxeles en la rejilla.');
+    render();
+  });
+  $('#fixbox').addEventListener('click', function () { S.boxTouched = false; ajustarCaja(); render(); });
+  $('#copy').addEventListener('click', function () {
+    if (!S.res) return;
+    $('#rawout').toBlob(function (b) {
+      if (!navigator.clipboard || !window.ClipboardItem) { say('Este navegador no deja copiar imágenes al portapapeles: usa «Descargar skin».', 'warn'); return; }
+      navigator.clipboard.write([new ClipboardItem({ 'image/png': b })])
+        .then(function () { say('Skin copiada al portapapeles.', 'ok'); })
+        ['catch'](function () { say('El navegador ha bloqueado el portapapeles: usa «Descargar skin».', 'warn'); });
+    });
+  });
+  $('#dlSkin').addEventListener('click', function () { save($('#rawout'), baseName() + '_as_expressions.png'); });
+  $('#dlBack').addEventListener('click', function () { save(canvasOf(S.out, 8, 8, [24, 0]), baseName() + '_backface.png'); });
+  $('#dlBlink').addEventListener('click', function () { save(canvasOf(S.out, 8, 8, [0, 0]), baseName() + '_blinkface.png'); });
+  $('#dlFace').addEventListener('click', function () { save(canvasOf(S.face, 8, 8), baseName() + '_cara.png'); });
+  $('#pvToggle').addEventListener('click', function () {
+    S.playing = !S.playing;
+    this.setAttribute('aria-pressed', String(S.playing));
+    this.textContent = S.playing ? 'Pausar la vista previa' : 'Reanudar la vista previa';
+    if (S.playing) { S.t0 = performance.now(); play(); }
+  });
+  $('#viewAS').addEventListener('click', function () { S.view = 'as'; setTabs(); play(); });
+  $('#viewVanilla').addEventListener('click', function () { S.view = 'vanilla'; setTabs(); play(); });
+  function setTabs() {
+    $('#viewAS').setAttribute('aria-pressed', String(S.view === 'as'));
+    $('#viewVanilla').setAttribute('aria-pressed', String(S.view === 'vanilla'));
+    $$('#states [data-state]').forEach(function (b) { b.disabled = S.view !== 'as'; });
+    $$('#states [data-state]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.state === S.state)); });
+  }
+  $$('#states [data-state]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      S.state = b.dataset.state;
+      S.t0 = performance.now();
+      S.raf = 0;
+      setTabs();
+      if (S.state === 'auto') { S.playing = true; $('#pvToggle').classList.remove('hidden'); play(); }
+      else { $('#pvToggle').classList.add('hidden'); pintar(estadoEn(0)); }
+    });
+  });
+
+
+  /* ====================================================================
+     Hoja de estilos: copia de la hoja oficial («EYES · LAYOUT ·
+     EYEBROWS»), pero dibujada con TU cara y marcando lo que usa tu skin.
+     Cada cuadrito es una variante de la plantilla (las mismas que trae el
+     .bbmodel): 1x1 tiene 4, 2x1 tiene 5, etc.
+     ==================================================================== */
+  var HOJA = { filas: [], botones: [], sc: 5, ancho: 0, alto: 0, escala: 2 };
+
+  function rellenarSelects() {
+    [['#eyeStyle', AS.eyeStyles], ['#browStyle', AS.browStyles]].forEach(function (cfg) {
+      var el = $(cfg[0]);
+      if (!el || el.dataset.lleno) return;
+      el.innerHTML = '';
+      var o0 = node('option', null, 'auto (el que encaje)');
+      o0.value = '';
+      el.appendChild(o0);
+      cfg[1].forEach(function (est) {
+        var o = node('option', null, est.replace(/^(2x1|3x1) (\d)$/, '$1 (fila $2) de la textura'));
+        o.value = est;
+        el.appendChild(o);
+      });
+      el.dataset.lleno = '1';
+    });
+  }
+
+  /** Pinta un cuadrito 8x8 con la cara del usuario y las celdas de la variante. */
+  function tile(x, y0, ctx, celdaR, celdaL) {
+    var e = HOJA.sc, y, xx, p;
+    ctx.fillStyle = '#0d1418';
+    ctx.fillRect(x, y0, e * 8, e * 8);
+    for (y = 0; y < 8; y++) for (xx = 0; xx < 8; xx++) {
+      p = face8(S.face, xx, y);
+      if (!p[3]) continue;
+      ctx.fillStyle = 'rgb(' + Math.round(p[0] * .45) + ',' + Math.round(p[1] * .45) + ',' + Math.round(p[2] * .45) + ')';
+      ctx.fillRect(x + xx * e, y0 + y * e, e, e);
+    }
+    var cl = [];
+    if (celdaR) celdaR.forEach(function (c) { cl.push(c); });
+    if (celdaL) celdaL.forEach(function (c) { cl.push(c); });
+    cl.forEach(function (c) {
+      p = face8(S.face, c[0], c[1]);
+      if (!p[3]) return;
+      ctx.fillStyle = 'rgb(' + p[0] + ',' + p[1] + ',' + p[2] + ')';
+      ctx.fillRect(x + c[0] * e, y0 + c[1] * e, e, e);
+      ctx.strokeStyle = 'rgba(232,180,85,.95)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x + c[0] * e + .5, y0 + c[1] * e + .5, e - 1, e - 1);
+    });
+  }
+
+
+  /* --------------------------------------------------------------------
+     Panel «LAYOUT»: tu cara 8×8 y tu textura 64×64 con lo que se ha
+     escrito (verde = blinkFace, azul = backFace, amarillo = cubos).
+     Lo dibujan la hoja de estilos (ajustes) y la vista de Descarga, así
+     que lo que se ve en la hoja es literalmente lo que sale en la descarga.
+     -------------------------------------------------------------------- */
+
+  /** La textura 64×64 con las zonas marcadas: verde = blinkFace, azul = backFace,
+      amarillo = cada cubo pintado. La usan la hoja (panel LAYOUT) y la vista de Descarga. */
+  function texturaMarcada(ctx, x, y, S, px) {
+    px = px || 4;
+    ctx.imageSmoothingEnabled = false;
+    if (S.out) ctx.drawImage(canvasOf(S.out, 64, 64), x, y, 64 * px, 64 * px);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#57c78a';
+    ctx.strokeRect(x + .5, y + .5, 8 * px - 1, 8 * px - 1);
+    ctx.strokeStyle = '#7aa2f7';
+    ctx.strokeRect(x + 24 * px + .5, y + .5, 8 * px - 1, 8 * px - 1);
+    marcasCubos(ctx, x, y, S, px);
+  }
+
+  /** La zona de los ojos y las cejas especiales: un filo por cada cubo de la plantilla. */
+  function marcasCubos(ctx, x, y, S, px) {
+    px = px || 4;
+    ctx.lineWidth = px >= 6 ? 2 : 1;
+    ctx.strokeStyle = '#e8b455';
+    (S.res ? S.res.plan.eye.concat(S.res.plan.brow) : []).forEach(function (it) {
+      it.cubes.forEach(function (cu) {
+        ctx.strokeRect(x + cu.rect[0] * px + .5, y + cu.rect[1] * px + .5, (cu.rect[2] - cu.rect[0]) * px - 1, (cu.rect[3] - cu.rect[1]) * px - 1);
+      });
+    });
+    ctx.lineWidth = 1;
+  }
+
+  var PL = { fsc: 12, atE: 4, hueco: 14, get ancho() { return this.fsc * 8 + this.hueco + 64 * this.atE; }, get alto() { return 64 * this.atE + 58; } };
+
+  function panelLayout(ctx, xLay, yLay, S) {
+    var fsc = PL.fsc, atE = PL.atE, e = fsc * 8;
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(canvasOf(S.face, 8, 8), xLay, yLay, e, e);
+    ctx.strokeStyle = 'rgba(255,255,255,.18)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(xLay + .5, yLay + .5, e - 1, e - 1);
+    // caja del ojo y de la ceja sobre la cara
+    ['R', 'L'].forEach(function (sd) {
+      var b = bbox(S.box[sd]);
+      if (b) {
+        ctx.strokeStyle = '#e8b455'; ctx.lineWidth = 2;
+        ctx.strokeRect(xLay + b[0] * fsc + 1, yLay + b[1] * fsc + 1, (b[2] - b[0] + 1) * fsc - 2, (b[3] - b[1] + 1) * fsc - 2);
+      }
+      var br = bbox(S.brows[sd]);
+      if (br) {
+        ctx.strokeStyle = '#c98b56';
+        ctx.strokeRect(xLay + br[0] * fsc + 1, yLay + br[1] * fsc + 1, (br[2] - br[0] + 1) * fsc - 2, (br[3] - br[1] + 1) * fsc - 2);
+      }
+    });
+    ctx.font = '12px system-ui,sans-serif';
+    ctx.fillStyle = '#8b9ca8';
+    ctx.fillText('tu cara 8×8', xLay, yLay + e + 16);
+    var atX = xLay + e + PL.hueco, atY = yLay;
+    texturaMarcada(ctx, atX, atY, S, atE);
+    ctx.fillStyle = '#8b9ca8';
+    ctx.font = '12px system-ui,sans-serif';
+    ctx.fillText('tu textura 64×64 con lo que se ha escrito', atX, atY + 64 * atE + 18);
+    ctx.fillStyle = '#57c78a'; ctx.fillText('■ blinkFace (x0-7)', atX, atY + 64 * atE + 36);
+    ctx.fillStyle = '#7aa2f7'; ctx.fillText('■ backFace (x24-31)', atX + 140, atY + 64 * atE + 36);
+    ctx.fillStyle = '#e8b455'; ctx.fillText('■ cubos pintados', atX, atY + 64 * atE + 52);
+  }
+
+  function hojaRender() {
+    if (!S.src) return;
+    var sc = HOJA.sc, e = sc * 8, hueco = 4, filaAlto = e + 6;
+    var etiq = 96, colOjos = etiq + 5 * (e + hueco);
+    var LAY = 96 + 14 + 64 * 4 + 90;
+    var pad = 12, cab = 30, huecoSec = 20;
+    var ancho = pad * 2 + colOjos + 26 + LAY + 26 + colOjos;
+    var alto = pad + cab + 7 * filaAlto + huecoSec + cab + 3 * filaAlto + 30;
+    HOJA.ancho = ancho; HOJA.alto = alto;
+
+    var cv = $('#hoja');
+    var es = HOJA.escala;
+    cv.width = Math.round(ancho * es);
+    cv.height = Math.round(alto * es);
+    cv.style.width = '100%';
+    cv.style.maxWidth = ancho + 'px';
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(es, 0, 0, es, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = '#0f1418';
+    ctx.fillRect(0, 0, ancho, alto);
+
+    function titulo(txt, x, y, color, tam) {
+      ctx.fillStyle = color;
+      ctx.font = 'bold ' + (tam || 17) + 'px system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+      ctx.fillText(txt, x, y);
+    }
+    function etiqueta(txt, x, y, activo) {
+      ctx.fillStyle = activo ? '#d39ff5' : '#6f8290';
+      ctx.font = (activo ? 'bold ' : '') + '15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(txt, x, y);
+      ctx.textAlign = 'left';
+    }
+
+    HOJA.filas = [];
+    var xOjos = pad + etiq, xLay = pad + colOjos + 26, xCejas = pad + colOjos + 26 + LAY + 26;
+    var y = pad + cab;
+    titulo('EYES · OJOS', pad, pad + 20, '#ffffff', 18);
+    titulo('LAYOUT · TEXTURA', xLay, pad + 20, '#ffffff', 18);
+    titulo('EYEBROWS · CEJAS', xCejas, pad + 20, '#ffffff', 18);
+
+    // ---- filas de ojos
+    AS.eyeStyles.forEach(function (estilo) {
+      var variantes = AS.CUBES.eye.filter(function (c) { return deEstilo(c, estilo) && c.side === 'R'; });
+      var variantesL = AS.CUBES.eye.filter(function (c) { return deEstilo(c, estilo) && c.side === 'L'; });
+      var activo = false;
+      var fila = { kind: 'eye', estilo: estilo, x: pad, y: y, w: colOjos, h: filaAlto };
+      variantes.forEach(function (cu, i) {
+        var cl = cu.cells, clL = variantesL[i] ? variantesL[i].cells : null;
+        var k = {};
+        cl.forEach(function (c) { k[c[0] + ',' + c[1]] = 1; });
+        if (clL) clL.forEach(function (c) { k[c[0] + ',' + c[1]] = 1; });
+        var igual = mismoConjunto(estilo, 'eye', i);
+        if (igual) activo = true;
+        tile(xOjos + i * (e + hueco), y, ctx, cl, clL);
+        if (igual) {
+          ctx.strokeStyle = '#57c78a';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(xOjos + i * (e + hueco) - 2, y - 2, e + 4, e + 4);
+        }
+      });
+      etiqueta(estilo.replace(/^(2x1|3x1) (\d)$/, '$1 fila $2'), pad + etiq - 8, y + e - 6, activo);
+      ctx.strokeStyle = 'rgba(255,255,255,.05)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(pad, y + e + 3); ctx.lineTo(ancho - pad, y + e + 3); ctx.stroke();
+      HOJA.filas.push(fila);
+      y += filaAlto;
+    });
+
+    // ---- panel LAYOUT (cara grande + atlas)
+    var yLay = pad + cab;
+    panelLayout(ctx, xLay, yLay, S);
+
+    // ---- filas de cejas
+    y = pad + cab + 7 * filaAlto + huecoSec;
+    AS.browStyles.forEach(function (estilo) {
+      var variantes = AS.CUBES.brow.filter(function (c) { return deEstilo(c, estilo) && c.side === 'R'; });
+      var variantesL = AS.CUBES.brow.filter(function (c) { return deEstilo(c, estilo) && c.side === 'L'; });
+      var activo = false;
+      variantes.forEach(function (cu, i) {
+        var cl = cu.cells, clL = variantesL[i] ? variantesL[i].cells : null;
+        var igual = mismoConjunto(estilo, 'brow', i);
+        if (igual) activo = true;
+        tile(xCejas + i * (e + hueco), y, ctx, cl, clL);
+        if (igual) {
+          ctx.strokeStyle = '#57c78a'; ctx.lineWidth = 2;
+          ctx.strokeRect(xCejas + i * (e + hueco) - 2, y + 1, e + 4, e + 4);
+        }
+      });
+      etiqueta(estilo, xCejas - 8, y + e - 6, activo);
+      HOJA.filas.push({ kind: 'brow', estilo: estilo, x: xCejas - etiq, y: y, w: etiq + 5 * (e + hueco), h: filaAlto });
+      y += filaAlto;
+    });
+
+    // ---- resumen de coincidencias
+    var coincideOjos = [], coincideCejas = [];
+    AS.eyeStyles.forEach(function (est) {
+      var n = AS.CUBES.eye.filter(function (c) { return deEstilo(c, est) && c.side === 'R'; }).length;
+      for (var i = 0; i < n; i++) if (mismoConjunto(est, 'eye', i)) { coincideOjos.push(est.replace(/^(2x1|3x1) (\d)$/, '$1 fila $2')); break; }
+    });
+    AS.browStyles.forEach(function (est) {
+      var n = AS.CUBES.brow.filter(function (c) { return deEstilo(c, est) && c.side === 'R'; }).length;
+      for (var i = 0; i < n; i++) if (mismoConjunto(est, 'brow', i)) { coincideCejas.push(est); break; }
+    });
+    var info = $('#hojaInfo');
+    if (info) {
+      info.textContent = (S.pupils.R.length || S.pupils.L.length)
+        ? 'Coincide con: ojos ' + (coincideOjos.join(', ') || 'ningún tipo') + ' · cejas ' + (coincideCejas.join(', ') || 'ningún tipo') + '.'
+        : 'Marca las pupilas en la rejilla para ver qué tipos coinciden.';
+    }
+
+    // ---- pie
+    var elegido = $('#eyeStyle').value || 'automático';
+    ctx.fillStyle = '#6f8290';
+    ctx.font = '13px system-ui,sans-serif';
+    ctx.fillText('Hoja generada por el conversor de A&S Expresiones · ' + (S.nom || 'skin') + ' · tipo de ojo: ' + elegido, pad, alto - 26);
+    ctx.fillText('En verde, las variantes de la plantilla que coinciden con lo que has marcado. Pulsa una fila para forzar ese tipo.', pad, alto - 10);
+
+    // ---- interacción: pulsar una fila fuerza ese tipo
+    if (!cv.dataset.listo) {
+      cv.dataset.listo = '1';
+      cv.style.cursor = 'pointer';
+      cv.addEventListener('click', function (ev) {
+        var r = cv.getBoundingClientRect();
+        var px = (ev.clientX - r.left) / r.width * HOJA.ancho;
+        var py = (ev.clientY - r.top) / r.height * HOJA.alto;
+        var f = HOJA.filas.filter(function (q) { return py >= q.y && py <= q.y + q.h && px >= q.x && px <= q.x + q.w; })[0];
+        if (!f) return;
+        var sel = $(f.kind === 'eye' ? '#eyeStyle' : '#browStyle');
+        sel.value = (sel.value === f.estilo) ? '' : f.estilo;
+        render();
+      });
+    }
+  }
+
+  /** ¿Este cubo pertenece a este tipo? (las cejas se llaman «2x1 3», etc.) */
+  function deEstilo(cu, estilo) {
+    return cu.style === estilo || cu.style.indexOf(estilo + ' ') === 0;
+  }
+
+  /** ¿La variante nº idx de este tipo coincide exactamente con lo marcado?
+      Se comparan los conjuntos completos (las dos mitades de la cara), porque
+      en la plantilla los nombres «izquierda/derecha» de pupilas y cejas no
+      usan el mismo criterio: cada cubo ocupa los píxeles que ocupa. */
+  function mismoConjunto(estilo, kind, idx) {
+    var fam = kind === 'eye' ? AS.CUBES.eye : AS.CUBES.brow;
+    var marcado = {};
+    var total = 0;
+    ['R', 'L'].forEach(function (sd) {
+      var cells = kind === 'eye' ? S.pupils[sd] : S.brows[sd];
+      cells.forEach(function (c) { marcado[c[0] + ',' + c[1]] = 1; total++; });
+    });
+    if (!total) return false;
+    var cubo = {};
+    var n = 0;
+    ['R', 'L'].forEach(function (sd) {
+      var lista = fam.filter(function (c) { return deEstilo(c, estilo) && c.side === sd; });
+      if (!lista[idx]) return;
+      lista[idx].cells.forEach(function (c) { cubo[c[0] + ',' + c[1]] = 1; n++; });
+    });
+    if (n !== total) return false;
+    for (var k in marcado) if (!cubo[k]) return false;
+    return true;
+  }
+  /* ------------------------------------------------- pack de varias skins */
+  // Estructura copiada del pack oficial («Actions & Stuff Expressions Skins»):
+  //   manifest.json + skins.json + texts/{en_US,es_ES}.lang + texts/languages.json + *.png
+  var PACK_KEY = 'as_pack_v1';
+  var MODELOS = [
+    { v: 'geometry.humanoid.custom', t: 'clásico (Steve)' },
+    { v: 'geometry.humanoid.customSlim', t: 'delgado (Alex)' }
+  ];
+
+  function slugify(t) {
+    var s = String(t == null ? '' : t);
+    if (s.normalize) s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    s = s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    if (!s) s = 'skin';
+    if (/^[0-9]/.test(s)) s = 's_' + s;
+    return s.slice(0, 30);
+  }
+  function uuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    var b = new Uint8Array(16);
+    (window.crypto || { getRandomValues: function (a) { for (var i = 0; i < a.length; i++) a[i] = Math.floor(Math.random() * 256); return a; } }).getRandomValues(b);
+    b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+    var h = [].map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+  }
+  function b64Bytes(dataUrl) {
+    var b64 = String(dataUrl).split(',')[1] || '';
+    var bin = atob(b64), out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  function cargarImg(dataUrl) {
+    return new Promise(function (res) {
+      var im = new Image();
+      im.onload = function () { res(im); };
+      im.onerror = function () { res(null); };
+      im.src = dataUrl;
+    });
+  }
+  function packMsg(t, k) { var el = $('#packMsg'); el.textContent = t || ''; el.className = 'status' + (k ? ' ' + k : ''); }
+
+  function packCargar() {
+    try {
+      var j = JSON.parse(localStorage.getItem(PACK_KEY) || 'null');
+      if (j && j.skins && j.skins.length) S.pack = j.skins;
+      if (j && j.name) { S.packName = j.name; $('#packName').value = j.name; }
+      if (j && j.file) { S.packFile = j.file; $('#packFile').value = j.file; }
+    } catch (e) { }
+  }
+  function packGuardar() {
+    try {
+      localStorage.setItem(PACK_KEY, JSON.stringify({ name: S.packName, file: S.packFile, skins: S.pack }));
+      return true;
+    } catch (e) {
+      packMsg('No he podido guardar la lista en este navegador (¿modo privado?). Puedes seguir añadiendo skins, pero se perderán al cerrar.', 'warn');
+      return false;
+    }
+  }
+
+  function packAdd() {
+    if (!S.out) return;
+    var base = (S.nom || 'skin').replace(/\.[a-z0-9]+$/i, '');
+    var disp = base.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim() || 'Skin';
+    var slug = slugify(base), n = 2;
+    while (S.pack.some(function (p) { return p.slug === slug; })) slug = slugify(base).slice(0, 27) + '_' + (n++);
+    S.pack.push({
+      id: 'k' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      slug: slug, display: disp,
+      geometry: modelName().indexOf('delgado') >= 0 ? 'geometry.humanoid.customSlim' : 'geometry.humanoid.custom',
+      png: $('#rawout').toDataURL('image/png'),
+      face: canvasOf(S.face, 8, 8).toDataURL('image/png')
+    });
+    packGuardar();
+    packRender();
+    packMsg('«' + disp + '» añadida al pack (' + S.pack.length + (S.pack.length === 1 ? ' skin' : ' skins') + ').', 'ok');
+  }
+
+  function packRender() {
+    var ul = $('#packList');
+    ul.innerHTML = '';
+    $('#packVacio').classList.toggle('hidden', S.pack.length > 0);
+    $('#packAddName').textContent = S.nom ? '«' + S.nom.replace(/\.[a-z0-9]+$/i, '') + '»' : 'la skin convertida';
+    S.pack.forEach(function (p, i) {
+      var li = node('li');
+      var img = node('img');
+      img.src = p.face; img.alt = '';
+      li.appendChild(img);
+      var nom = node('input');
+      nom.type = 'text'; nom.value = p.display; nom.setAttribute('aria-label', 'Nombre de la skin ' + (i + 1));
+      nom.addEventListener('change', function () { p.display = nom.value.trim() || p.slug; packGuardar(); packMsg('Nombre cambiado a «' + p.display + '».', 'ok'); });
+      li.appendChild(nom);
+      var sel = node('select');
+      sel.setAttribute('aria-label', 'Modelo de la skin ' + (i + 1));
+      MODELOS.forEach(function (m) { var o = node('option', null, m.t); o.value = m.v; if (p.geometry === m.v) o.selected = true; sel.appendChild(o); });
+      sel.addEventListener('change', function () { p.geometry = sel.value; packGuardar(); });
+      li.appendChild(sel);
+      function mini(txt, label, fn) {
+        var b = node('button', 'mini', txt);
+        b.type = 'button'; b.setAttribute('aria-label', label); b.title = label;
+        b.addEventListener('click', fn);
+        li.appendChild(b);
+      }
+      mini('↑', 'Subir ' + p.display, function () { if (i > 0) { var a = S.pack.splice(i, 1)[0]; S.pack.splice(i - 1, 0, a); packGuardar(); packRender(); } });
+      mini('↓', 'Bajar ' + p.display, function () { if (i < S.pack.length - 1) { var a = S.pack.splice(i, 1)[0]; S.pack.splice(i + 1, 0, a); packGuardar(); packRender(); } });
+      mini('✕', 'Quitar ' + p.display + ' del pack', function () {
+        S.pack.splice(i, 1); packGuardar(); packRender();
+        packMsg('«' + p.display + '» quitada del pack.', 'warn');
+      });
+      var s = node('span', 'n', (i + 1) + '/' + S.pack.length);
+      li.appendChild(s);
+      ul.appendChild(li);
+    });
+  }
+
+  /** Icono del pack: las primeras caras convertidas sobre fondo oscuro. */
+  function packIcono() {
+    var c = document.createElement('canvas');
+    c.width = 128; c.height = 128;
+    var x = c.getContext('2d');
+    x.imageSmoothingEnabled = false;
+    x.fillStyle = '#121a20'; x.fillRect(0, 0, 128, 128);
+    x.strokeStyle = '#57c78a'; x.lineWidth = 4; x.strokeRect(2, 2, 124, 124);
+    var cuantas = Math.min(4, S.pack.length);
+    var celdas = cuantas === 1 ? [[32, 32, 64]] : cuantas <= 4 ? [[16, 16, 48], [64, 16, 48], [16, 64, 48], [64, 64, 48]].slice(0, cuantas) : [];
+    return Promise.all(S.pack.slice(0, cuantas).map(function (p) { return cargarImg(p.face); })).then(function (ims) {
+      ims.forEach(function (im, i) {
+        if (!im) return;
+        var g = celdas[i];
+        x.drawImage(im, g[0], g[1], g[2], g[2]);
+        x.strokeStyle = 'rgba(0,0,0,.55)'; x.lineWidth = 1; x.strokeRect(g[0] + .5, g[1] + .5, g[2] - 1, g[2] - 1);
+      });
+      return b64Bytes(c.toDataURL('image/png'));
+    });
+  }
+
+  function packArchivos(soloPng) {
+    var pname = slugify(S.packName) || 'mis_skins';
+    if (/^[0-9]/.test(pname)) pname = 'p_' + pname;
+    var archivos = S.pack.map(function (p) { return { name: p.slug + '.png', data: b64Bytes(p.png) }; });
+    if (soloPng) return archivos;
+    var manifest = {
+      format_version: 1,
+      header: { name: S.packName || 'Mis skins', version: [1, 0, 0], uuid: uuid() },
+      modules: [{ version: [1, 0, 0], type: 'skin_pack', uuid: uuid() }]
+    };
+    var lang = ['skinpack.' + pname + '=' + (S.packName || 'Mis skins')]
+      .concat(S.pack.map(function (p) { return 'skin.' + pname + '.' + p.slug + '=' + p.display; })).join('\n') + '\n';
+    archivos.unshift(
+      { name: 'manifest.json', data: JSON.stringify(manifest, null, 2) },
+      { name: 'skins.json', data: JSON.stringify({ serialize_name: pname, localization_name: pname, skins: S.pack.map(function (p) { return { localization_name: p.slug, geometry: p.geometry, texture: p.slug + '.png', type: 'free' }; }) }, null, 2) },
+      { name: 'texts/en_US.lang', data: lang },
+      { name: 'texts/es_ES.lang', data: lang },
+      { name: 'texts/languages.json', data: '["en_US","es_ES"]' }
+    );
+    return archivos;
+  }
+
+  function descargarBytes(bytes, nombre, tipo) {
+    var url = URL.createObjectURL(new Blob([bytes], { type: tipo || 'application/octet-stream' }));
+    var a = document.createElement('a');
+    a.href = url; a.download = nombre;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 6000);
+  }
+
+  function packDescargar(soloPng) {
+    if (!S.pack.length) { packMsg('Añade al menos una skin a la lista.', 'warn'); return; }
+    packMsg('Preparando el archivo…');
+    var base = slugify(S.packFile || S.packName) || 'mis_skins';
+    Promise.resolve(soloPng ? null : packIcono())
+      .then(function (icono) {
+        var archivos = packArchivos(soloPng);
+        if (soloPng) {
+          archivos.unshift({
+            name: 'LEEME.txt',
+            data: 'Skins convertidas con el conversor de Actions & Stuff Expresiones.\n' +
+              'Para jugar: en Minecraft pulsa «Nueva skin» y sube el PNG que quieras (64x64).\n' +
+              'Si prefieres un pack de skins de una sola vez, usa el botón «Descargar .mcpack».\n'
+          });
+        } else if (icono) {
+          archivos.unshift({ name: 'pack_icon.png', data: icono });
+        }
+        return ASZip.create(archivos).then(function (bytes) {
+          descargarBytes(bytes, base + (soloPng ? '_png.zip' : '.mcpack'));
+          packMsg('Listo: ' + S.pack.length + (S.pack.length === 1 ? ' skin' : ' skins') + ' en ' + base + (soloPng ? '_png.zip' : '.mcpack') +
+            '. Ábrelo con Minecraft para instalarlo.', 'ok');
+        });
+      })['catch'](function (e) {
+        packMsg('No he podido crear el archivo: ' + (e && e.message ? e.message : e), 'err');
+      });
+  }
+
+  /* -------------------------------------- imagen del resultado (descarga) */
+  $('#dlImagen').addEventListener('click', function () {
+    if (!S.src) return;
+    renderAtlas();
+    save($('#atlas'), baseName() + '_resultado.png');
+  });
+
+  /* -------------------------------------------- hoja de estilos (descarga) */
+  $('#hojaDl').addEventListener('click', function () {
+    if (!S.src) return;
+    hojaRender();
+    $('#hoja').toBlob(function (b) {
+      if (!b) { say('El navegador no ha podido generar el PNG.', 'err'); return; }
+      var url = URL.createObjectURL(b), a = document.createElement('a');
+      a.href = url; a.download = baseName() + '_hoja_estilos.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+    }, 'image/png');
+  });
+
+  /* -------------------------------------------- plantilla oficial (imagen) */
+  (function () {
+    var img = $('#guiaOficial');
+    if (img && window.AS_LAYOUT) img.src = window.AS_LAYOUT;
+  })();
+
+  /* -------------------------------------------------------------- ejemplos */
+  (function ejemplos() {
+    var cont = $('#examples');
+    if (!cont || !EXAMPLES.length) return;
+    EXAMPLES.forEach(function (ex) {
+      var b = node('button');
+      b.type = 'button';
+      b.title = ex.tip || ex.nom;
+      b.setAttribute('aria-label', 'Cargar ejemplo: ' + (ex.tip || ex.nom));
+      var cv = document.createElement('canvas');
+      cv.width = 8; cv.height = 8;
+      b.appendChild(cv);
+      var img = new Image();
+      img.onload = function () {
+        var c2 = document.createElement('canvas');
+        c2.width = 64; c2.height = 64;
+        var x2 = c2.getContext('2d');
+        x2.drawImage(img, 0, 0, 64, 64);
+        cv.getContext('2d').putImageData(x2.getImageData(8, 8, 8, 8), 0, 0);
+      };
+      img.src = ex.src;
+      b.addEventListener('click', function () { loadFromUri(ex.src, ex.nom); });
+      cont.appendChild(b);
+    });
+  })();
+
+  /* ------------------------------------------------------------- pack init */
+  $('#packAdd').addEventListener('click', packAdd);
+  $('#packClear').addEventListener('click', function () {
+    if (!S.pack.length) return;
+    if (!window.confirm('¿Vaciar la lista de ' + S.pack.length + ' skins del pack?')) return;
+    S.pack = []; packGuardar(); packRender();
+    packMsg('Lista vaciada.', 'warn');
+  });
+  $('#packName').addEventListener('change', function () { S.packName = this.value.trim() || 'Mis skins'; packGuardar(); });
+  $('#packFile').addEventListener('change', function () { S.packFile = this.value.trim() || 'mis_skins'; packGuardar(); });
+  $('#packDl').addEventListener('click', function () { packDescargar(false); });
+  $('#packZip').addEventListener('click', function () { packDescargar(true); });
+  packCargar();
+  packRender();
+
+  /* ----------------------------------------------------------------- init */
+  rellenarSelects();
+  setTabs();
+  S.t0 = performance.now();
+  $('#pvState').textContent = 'sin skin cargada';
+  render();
+  say('Arrastra una skin de 64×64, pégala con Ctrl+V o prueba un ejemplo.');
+})();
+
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a45634f39a33fe6a',t:'MTc5MTEzODA5Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
