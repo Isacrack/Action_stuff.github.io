@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2IiBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iIzEyMTYxYSIvPjxyZWN0IHg9IjEiIHk9IjIiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMiIgZmlsbD0iIzU1NTczZSIvPjxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIyIiBmaWxsPSIjM2Y0MTJjIi8+PHJlY3QgeD0iMiIgeT0iNyIgd2lkdGg9IjEyIiBoZWlnaHQ9IjYiIGZpbGw9IiNiM2JmYTYiLz48cmVjdCB4PSIzIiB5PSI0IiB3aWR0aD0iNCIgaGVpZ2h0PSIzIiBmaWxsPSIjZmZmZmZmIi8+PHJlY3QgeD0iNSIgeT0iNCIgd2lkdGg9IjIiIGhlaWdodD0iMyIgZmlsbD0iIzI3YmJkYyIvPjxyZWN0IHg9IjkiIHk9IjUiIHdpZHRoPSI0IiBoZWlnaHQ9IjIiIGZpbGw9IiMxZDI0MTgiLz48cmVjdCB4PSI3IiB5PSI5IiB3aWR0aD0iMiIgaGVpZ2h0PSIyIiBmaWxsPSIjMmIyZjIwIi8+PHJlY3QgeD0iMSIgeT0iMiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjEiIGZpbGw9IiMxMjE2MWEiLz48cmVjdCB4PSIxIiB5PSIxNCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjEiIGZpbGw9IiMxMjE2MWEiLz48L3N2Zz4=">
 <title>Conversor de skins · Actions &amp; Stuff Expresiones</title>
 <style>/* Conversor de skins «Actions & Stuff — Expresiones» — hoja de estilos */
 :root{
@@ -192,13 +193,13 @@ details.ayuda li{margin-bottom:5px}
 
   <header class="top">
     <h1>Conversor de skins · <span>Actions &amp; Stuff Expresiones</span></h1>
-    <p>Convierte una skin de Minecraft <strong>64×64</strong> en una skin con las capas que necesita el addon
+    <p>Convierte una skin de Minecraft (<strong>64×64</strong>, y también <strong>128×128</strong> o <strong>256×256</strong>) en una skin con las capas que necesita el addon
       <em>Actions &amp; Stuff</em>: la <strong>cara de parpadeo</strong>, la <strong>cara trasera</strong> y los
       <strong>cubos de ojos y cejas</strong> que colocan la plantilla oficial.</p>
     <div class="badges">
       <span class="badge">Todo en tu navegador · <b>no se sube nada</b></span>
-      <span class="badge">Entrada: <b>64×64</b> (Java o Bedrock)</span>
-      <span class="badge">Salida: <b>PNG 64×64</b> o <b>pack .mcpack</b></span>
+      <span class="badge">Entrada: <b>64×64</b>, <b>128×128</b> o <b>256×256</b></span>
+      <span class="badge">Salida: <b>PNG del mismo tamaño</b> o <b>pack .mcpack</b></span>
       <span class="badge">PC / <b>Bedrock 1.21+</b></span>
     </div>
   </header>
@@ -211,7 +212,7 @@ details.ayuda li{margin-bottom:5px}
       <p><strong>Arrastra aquí el archivo .png</strong> o<br>pégalo con <kbd>Ctrl</kbd>+<kbd>V</kbd> (⌘+V en Mac)</p>
       <label class="btn pri" for="file">Elegir archivo…</label>
       <input id="file" type="file" accept="image/png,image/*" class="sr">
-      <p class="mono">Debe ser 64×64. Las skins antiguas de 64×32 no tienen las zonas de A&amp;S.</p>
+      <p class="mono">Cuadrada: 64×64 (lo normal), 128×128 o 256×256. Las antiguas de 64×32 no tienen las zonas de A&amp;S.<br>En 128 y 256 la cara es la misma pero con el doble o el cuádruple de detalle: se analiza en 64×64 y se guarda en su tamaño.</p>
     </div>
     <div class="row" id="examples" style="margin-top:12px"></div>
     <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -375,7 +376,7 @@ details.ayuda li{margin-bottom:5px}
   <!-- 5 · DESCARGA -->
   <section class="card hidden" data-solo-con-skin aria-labelledby="t5">
     <h2 id="t5"><span class="num">5</span> Descarga</h2>
-    <p class="hint">El PNG de 64×64 es lo que se sube a Minecraft (skin clásica de Bedrock). A la derecha lo ves tal
+    <p class="hint">El PNG es lo que se sube a Minecraft (skin clásica de Bedrock), en el tamaño con el que lo cargaste. A la derecha lo ves tal
       cual queda, limpio, sin marcas ni colores añadidos: <strong>la skin es el primero</strong>; la imagen del resultado
       es solo para mirarla, <em>no</em> vale para subirla al juego (es más grande y no es una skin).</p>
     <div class="cols">
@@ -412,7 +413,7 @@ details.ayuda li{margin-bottom:5px}
         </details>
       </div>
       <div class="atlas">
-        <canvas id="atlas" width="384" height="384" aria-label="Tu skin convertida, 64×64, tal cual queda"></canvas>
+        <canvas id="atlas" width="384" height="384" aria-label="Tu skin convertida, tal cual queda"></canvas>
         <canvas id="rawout" width="64" height="64" class="sr" aria-hidden="true"></canvas>
       </div>
     </div>
@@ -933,14 +934,15 @@ if (typeof module === 'object' && module.exports) module.exports = AS_STYLES;
   // píxeles opacos) y se parece a la cara de la skin (>= 40 de 64 idénticos).
   // Medido en las 31 skins oficiales: parecidos de 46 a 62 y todas pintadas;
   // una zona vacía da 0.  (El ejemplo bufferfish trae la cara trasera sin pintar.)
-  function alreadyHasLayer(src, face, ox, oy) {
+  function alreadyHasLayer(src, face, ox, oy, minSame) {
+    if (minSame === undefined || minSame === null) minSame = 40;
     var painted = 0, same = 0;
     for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) {
       var i = ((oy + y) * 64 + (ox + x)) * 4, j = (y * 8 + x) * 4;
       if (src[i + 3] > 0) painted++;
       if (src[i] === face[j] && src[i + 1] === face[j + 1] && src[i + 2] === face[j + 2] && src[i + 3] === face[j + 3]) same++;
     }
-    return { ok: painted >= 56 && same >= 40, same: same };
+    return { ok: painted >= 56 && same >= minSame, same: same };
   }
 
   // -------------------------------------------------------------- generador
@@ -979,7 +981,7 @@ if (typeof module === 'object' && module.exports) module.exports = AS_STYLES;
     function copyFace(ox, oy) { for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) put(ox + x, oy + y, pxOf(face, x, y)); }
 
     // ---- 1. backFace (x24-31, y0-7): cara sin pupila ni ceja ----
-    var hasBack = alreadyHasLayer(src, face0, 24, 0);
+    var hasBack = alreadyHasLayer(src, face0, 24, 0, opt.minSame);
     var respectBack = opt.respect !== false && hasBack.ok;
     stats.respected.back = respectBack;
     if (!respectBack) {
@@ -1004,7 +1006,7 @@ if (typeof module === 'object' && module.exports) module.exports = AS_STYLES;
       : 'Cara base (x24-31, y0-7): el ojo se rellena de esclerótica y la ceja desaparece' });
 
     // ---- 2. blinkFace (x0-7, y0-7): ceja bajada 1 píxel + párpado ----
-    var hasBlink = alreadyHasLayer(src, face0, 0, 0);
+    var hasBlink = alreadyHasLayer(src, face0, 0, 0, opt.minSame);
     var respectBlink = opt.respect !== false && hasBlink.ok && opt.blinkStyle !== 'simple';
     stats.respected.blink = respectBlink;
     if (!respectBlink) {
@@ -1303,8 +1305,75 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     return out;
   }
 
+  /* ------------------------------------------- 64 <-> resolución original */
+  // La cara (8x8) y las capas de A&S son las mismas en cualquier tamaño: en una
+  // skin de 128x128 la cara ocupa 16x16 píxeles y cada píxel de la rejilla de 8x8
+  // son 2x2.  Para analizar y decidir, se baja a 64x64 promediando cada bloque; para
+  // guardar, se vuelve a subir el resultado y se devuelven tal cual las zonas que se
+  // hayan respetado, de modo que no se pierde el detalle original.
+
+  /** Baja una imagen de w×w (64/128/256) a 64×64 promediando bloques. */
+  function bajarA64(hi, w) {
+    var k = w / 64, out = new Uint8ClampedArray(64 * 64 * 4);
+    if (k === 1) { out.set(hi); return out; }
+    for (var y = 0; y < 64; y++) for (var x = 0; x < 64; x++) {
+      var r = 0, g = 0, b = 0, a = 0, n = 0, peso = 0;
+      for (var dy = 0; dy < k; dy++) for (var dx = 0; dx < k; dx++) {
+        var i = (((y * k + dy) * w) + (x * k + dx)) * 4;
+        var al = hi[i + 3];
+        r += hi[i] * al; g += hi[i + 1] * al; b += hi[i + 2] * al;
+        peso += al; a += al; n++;
+      }
+      var di = (y * 64 + x) * 4;
+      if (peso) { out[di] = r / peso; out[di + 1] = g / peso; out[di + 2] = b / peso; }
+      out[di + 3] = a / n;
+    }
+    return out;
+  }
+
+  /** Sube un 64×64 a w×w repitiendo cada píxel en bloques k×k. */
+  function subirDe64(bajo, w) {
+    var k = w / 64;
+    if (k === 1) return new Uint8ClampedArray(bajo);
+    var out = new Uint8ClampedArray(w * w * 4);
+    for (var y = 0; y < 64; y++) for (var x = 0; x < 64; x++) {
+      var si = (y * 64 + x) * 4;
+      for (var dy = 0; dy < k; dy++) for (var dx = 0; dx < k; dx++) {
+        var di = (((y * k + dy) * w) + (x * k + dx)) * 4;
+        out[di] = bajo[si]; out[di + 1] = bajo[si + 1];
+        out[di + 2] = bajo[si + 2]; out[di + 3] = bajo[si + 3];
+      }
+    }
+    return out;
+  }
+
+  /** Copia una zona de la imagen original (en texeles de 8x8) al resultado. */
+  function devolverZona(hi, w, tx, ty, tw, th, destino) {
+    var k = w / 64;
+    for (var y = 0; y < th * k; y++) for (var x = 0; x < tw * k; x++) {
+      var si = ((ty * k + y) * w) + (tx * k + x);
+      var di = ((ty * k + y) * w) + (tx * k + x);
+      destino[di * 4] = hi[si * 4]; destino[di * 4 + 1] = hi[si * 4 + 1];
+      destino[di * 4 + 2] = hi[si * 4 + 2]; destino[di * 4 + 3] = hi[si * 4 + 3];
+    }
+  }
+
+  /** La skin de salida: a la resolución original si venía en 128/256, con las zonas
+   *  respetadas tal como las traía el usuario. */
+  function composicion() {
+    if (!S.out) return null;
+    var k = S.escala || 1;
+    if (k === 1 || !S.alta) return { data: S.out, w: 64, h: 64 };
+    var w = 64 * k, out = subirDe64(S.out, w);
+    var resp = (S.res && S.res.stats && S.res.stats.respected) || {};
+    if (resp.blink) devolverZona(S.alta, w, 0, 0, 8, 8, out);
+    if (resp.back) devolverZona(S.alta, w, 24, 0, 8, 8, out);
+    return { data: out, w: w, h: w };
+  }
+
   /* --------------------------------------------------------------- estado */
   var S = {
+    escala: 1, alta: null,
     nom: '', src: null, face: null, det: null,
     pupils: { R: [], L: [] }, brows: { R: [], L: [] }, box: { R: [], L: [] }, boxTouched: false,
     mode: 'pup', out: null, res: null, prev: null, hat: null,
@@ -1331,27 +1400,38 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     fr.readAsDataURL(f);
   }
 
+  var TAMANOS = [64, 128, 256];   // 64 = clásico · 128 y 256 = el doble y el cuádruple de detalle
+
   function accept(img, name) {
-    if (img.width !== 64 || img.height !== 64) {
-      say(img.width === 64 && img.height === 32
-        ? 'Esa skin es del formato antiguo 64×32: no tiene las zonas donde van las capas de A&S. Necesitas una skin 64×64.'
-        : 'Tamaño ' + img.width + '×' + img.height + ': Minecraft usa skins de 64×64 (o 64×32, que aquí no sirve).', 'err');
+    var w = img.width, h = img.height;
+    if (w !== h || TAMANOS.indexOf(w) < 0) {
+      say(w === 64 && h === 32
+        ? 'Esa skin es del formato antiguo 64×32: no tiene las zonas donde van las capas de A&S. Necesitas una skin cuadrada de 64×64, 128×128 o 256×256.'
+        : 'Tamaño ' + w + '×' + h + ': aquí valen las skins cuadradas de 64×64 (lo normal), 128×128 y 256×256.',
+        'err');
       return;
     }
+    // se guarda la imagen original tal cual, sin reescalarla
     var c = document.createElement('canvas');
-    c.width = 64; c.height = 64;
+    c.width = w; c.height = h;
     var ctx = c.getContext('2d');
     ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, 64, 64);
-    ctx.drawImage(img, 0, 0, 64, 64);
-    S.src = ctx.getImageData(0, 0, 64, 64).data;
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(img, 0, 0, w, h);
+    S.alta = ctx.getImageData(0, 0, w, h).data;
+    S.escala = w / 64;
+    S.src = bajarA64(S.alta, w);          // la rejilla de 64 que usan el análisis y los cubos
     S.nom = name || 'skin.png';
     S.face = AS.faceOf(S.src);
     S.hat = AS.hatOf(S.src);
     S.det = AS.analyzeFace(S.face);
     loadDetection();
-    say('«' + S.nom + '» cargada · 64×64 · modelo aparente: ' + modelName() +
+    say('«' + S.nom + '» cargada · ' + w + '×' + h +
+      (S.escala > 1 ? ' (se analiza en 64×64 y se guarda a ' + w + '×' + h + ')' : '') +
+      ' · modelo aparente: ' + modelName() +
       (S.det ? ' · ojos localizados' : ' · ojos NO localizados, márcalos a mano'), S.det ? 'ok' : 'warn');
+    var b = $('#dlSkin');
+    if (b) b.textContent = 'Descargar skin convertida (' + w + '×' + w + ')';
     render();
   }
 
@@ -1422,6 +1502,9 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
   function generate() {
     if (!S.src) { S.out = null; S.res = null; S.prev = null; return; }
     var det = buildDet(), os = options();
+    // En 128/256 el detalle propio de la zona desplaza la media de cada bloque, así que
+    // basta con que la zona esté pintada: es arte deliberado del usuario y se respeta.
+    os.minSame = (S.escala || 1) > 1 ? 0 : 40;
     var plan = AS.planStyles(det, os);
     if (!$('#paintEye').checked) plan.eye = [];
     if (!$('#paintBrow').checked) plan.brow = [];
@@ -1677,8 +1760,11 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
 
   /** Guarda la textura final sin adornos (para descargas y para el mapa). */
   function renderRaw() {
-    var cv = $('#rawout');
-    cv.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(S.out), 64, 64), 0, 0);
+    var cv = $('#rawout'), comp = composicion();
+    if (!comp) return;
+    var w = comp.w;
+    if (cv.width !== w || cv.height !== w) { cv.width = w; cv.height = w; }
+    cv.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(comp.data), w, w), 0, 0);
   }
 
   function renderAtlas() {
@@ -1695,7 +1781,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
-    if (S.out) ctx.drawImage(canvasOf(S.out, 64, 64), 0, 0, 64 * 6, 64 * 6);
+    if (S.out) { var comp = composicion(); ctx.drawImage(canvasOf(comp.data, comp.w, comp.h), 0, 0, 64 * 6, 64 * 6); }
   }
 
   /* -------------------------------------------------------------- informe */
@@ -1797,7 +1883,9 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
 
     var det = buildDet();
     row('archivo', S.nom);
-    row('tamaño', '64 × 64');
+    var ancho = 64 * (S.escala || 1);
+    row('tamaño', ancho + ' × ' + ancho + (ancho > 64
+      ? ' (se analiza en 64×64 y se guarda a ' + ancho + '×' + ancho + ')' : ''));
     row('modelo aparente', modelName() + ' (sólo informativo)');
     row('color de piel', AS.util.rgb(det.skin));
     ['R', 'L'].forEach(function (s) {
@@ -1909,9 +1997,23 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     });
   });
   $('#dlSkin').addEventListener('click', function () { save($('#rawout'), baseName() + '_as_expressions.png'); });
-  $('#dlBack').addEventListener('click', function () { save(canvasOf(S.out, 8, 8, [24, 0]), baseName() + '_backface.png'); });
-  $('#dlBlink').addEventListener('click', function () { save(canvasOf(S.out, 8, 8, [0, 0]), baseName() + '_blinkface.png'); });
-  $('#dlFace').addEventListener('click', function () { save(canvasOf(S.face, 8, 8), baseName() + '_cara.png'); });
+  /** Recorta una zona (en texeles de 8x8) de la skin de salida, a su resolución. */
+  function recorteSalida(tx, ty) {
+    var comp = composicion(), k = comp.w / 64, n = 8 * k;
+    var out = new Uint8ClampedArray(n * n * 4);
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+      var si = (((ty * k) + y) * comp.w) + (tx * k) + x, di = (y * n + x) * 4;
+      out[di] = comp.data[si * 4]; out[di + 1] = comp.data[si * 4 + 1];
+      out[di + 2] = comp.data[si * 4 + 2]; out[di + 3] = comp.data[si * 4 + 3];
+    }
+    var c = document.createElement('canvas');
+    c.width = n; c.height = n;
+    c.getContext('2d').putImageData(new ImageData(out, n, n), 0, 0);
+    return c;
+  }
+  $('#dlBack').addEventListener('click', function () { save(recorteSalida(24, 0), baseName() + '_backface.png'); });
+  $('#dlBlink').addEventListener('click', function () { save(recorteSalida(0, 0), baseName() + '_blinkface.png'); });
+  $('#dlFace').addEventListener('click', function () { save(recorteSalida(8, 8), baseName() + '_cara.png'); });
   $('#pvToggle').addEventListener('click', function () {
     S.playing = !S.playing;
     this.setAttribute('aria-pressed', String(S.playing));
@@ -2001,7 +2103,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
   function texturaMarcada(ctx, x, y, S, px) {
     px = px || 4;
     ctx.imageSmoothingEnabled = false;
-    if (S.out) ctx.drawImage(canvasOf(S.out, 64, 64), x, y, 64 * px, 64 * px);
+    if (S.out) { var comp2 = composicion(); ctx.drawImage(canvasOf(comp2.data, comp2.w, comp2.h), x, y, 64 * px, 64 * px); }
     ctx.lineWidth = 1;
     ctx.strokeStyle = '#57c78a';
     ctx.strokeRect(x + .5, y + .5, 8 * px - 1, 8 * px - 1);
@@ -2399,7 +2501,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
           archivos.unshift({
             name: 'LEEME.txt',
             data: 'Skins convertidas con el conversor de Actions & Stuff Expresiones.\n' +
-              'Para jugar: en Minecraft pulsa «Nueva skin» y sube el PNG que quieras (64x64).\n' +
+              'Para jugar: en Minecraft pulsa «Nueva skin» y sube el PNG que quieras (64x64, 128x128 o 256x256).\n' +
               'Si prefieres un pack de skins de una sola vez, usa el botón «Descargar .mcpack».\n'
           });
         } else if (icono) {
@@ -2488,9 +2590,9 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
   S.t0 = performance.now();
   $('#pvState').textContent = 'sin skin cargada';
   render();
-  say('Arrastra una skin de 64×64, pégala con Ctrl+V o prueba un ejemplo.');
+  say('Arrastra una skin de 64×64 (o 128×128 / 256×256), pégala con Ctrl+V o prueba un ejemplo.');
 })();
 
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a45634f39a33fe6a',t:'MTc5MTEzODA5Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a45d03aae95f981f',t:'MTc5MTIwOTQ3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
