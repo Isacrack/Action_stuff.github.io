@@ -1,0 +1,83 @@
+CONVERSOR DE SKINS · ACTIONS & STUFF EXPRESIONES
+================================================
+Convierte una skin de Minecraft (PNG cuadrado de 64x64, 128x128 o 256x256) en una skin compatible con el addon
+Actions & Stuff — Expresiones de Oreville Studios (1.5 / 1.10 / 1.11).
+
+QUÉ HAY EN ESTA CARPETA
+-----------------------
+1) conversor_actions_stuff_expresiones_FINAL.html   <- LA HERRAMIENTA (lo más fácil)
+   Un solo archivo. Se abre con doble clic en el navegador (Chrome, Edge, Firefox).
+   No necesita internet ni instalar nada: se arrastra la skin, se revisa, se mira la
+   animación y se descarga la skin convertida o un pack .mcpack de varias.
+   Vale cualquier skin cuadrada: 64x64 (lo normal), 128x128 o 256x256. El icono de la
+   pestaña (la carita del lobo) viene dibujado dentro del propio archivo.
+   Nota: ábrelo en una pestaña normal del navegador, no dentro de una vista previa
+   incrustada (ahí el navegador bloquea las descargas y el portapapeles).
+
+2) VERSIÓN PYTHON CON VENTANA
+   conversor_actions_stuff_gui.py   -> la ventana
+   conversor_actions_stuff.py       -> el motor (tiene que ir SIEMPRE al lado del anterior)
+   Se abre con:      python conversor_actions_stuff_gui.py
+   En Windows también: pythonw conversor_actions_stuff_gui.py   (sin consola detrás)
+   La ventana es con tkinter, que ya viene con Python: no hay que instalar nada más.
+   Hace lo mismo que el HTML: abrir skin, ver cómo queda, simular los estados (cerrar
+   cada ojo, mirar a los lados), tocar los ajustes y los colores, informe, guardar la
+   skin y montar el pack .mcpack.
+   Novedad: la casilla «Respetar las capas que la skin ya trae» (marcada por defecto).
+   Si tu skin ya venía con la cara de parpadeo o la cara trasera dibujadas (por
+   ejemplo, una skin que ya se convirtió antes), se dejan tal cual y sólo se rellena
+   lo que falte; el informe lo dice. Desmárcala para rehacerlas desde cero, o usa
+   --no-respetar en la versión de consola.
+   Además, en el panel de la derecha tiene la sección «Descargas oficiales de Oreville
+   (gratis)»: baja la plantilla oficial (.zip) y el pack oficial de 33 skins (.mcpack)
+   con un botón, sin buscar enlaces, y abre las páginas oficiales en el navegador.
+   (Si no hay internet, avisa y abre las páginas para bajarlo a mano.)
+
+3) VERSIÓN PYTHON DE CONSOLA (sin ventana)
+   python conversor_actions_stuff.py mi_skin.png              -> mi_skin_as.png
+   python conversor_actions_stuff.py mi_skin.png --info       -> informe completo
+   python conversor_actions_stuff.py *.png -d salida --pack mis_skins.mcpack
+   python conversor_actions_stuff.py --estilos                -> tipos de ojo y ceja
+   python conversor_actions_stuff.py --enlaces                -> descargas oficiales
+   (Ponlo en una carpeta aparte con la ventana si no quieres tanta cosa junta.)
+
+4) SI NO TIENES PYTHON
+   instalar_python.cmd   -> Windows: doble clic. Descarga Python 3.12.10 de python.org,
+                            lo instala sólo para tu usuario, lo añade al PATH y se
+                            autocomprueba ejecutando el conversor.
+                            (Si Windows se queja: clic derecho -> Propiedades -> Desbloquear)
+   instalar_python.sh    -> Linux/macOS: bash instalar_python.sh
+
+CÓMO SE USA EN EL JUEGO
+-----------------------
+   1. Convierte la skin y guarda el PNG (sale en su tamaño: 64x64, 128x128 o 256x256)
+      con el botón "Descargar skin convertida".
+   2. Minecraft: Ajustes -> Perfil -> Skins -> Subir skin.  (skin CLÁSICA, no del creador
+      de personajes)
+   3. En el addon: Create Character -> Modelo clásico -> Owned Skins.
+   4. Si no pestañea:
+        - Actions & Stuff 1.5 o superior
+        - Ajustes -> Recursos -> Actions & Stuff -> engranaje -> "Enable Expressions" ACTIVADO
+        - Vibrant Visuals DESACTIVADO
+        - la skin debe ser una skin clásica subida (las del marketplace no valen)
+
+DESCARGAS OFICIALES DE OREVILLE (gratis)
+----------------------------------------
+   Pack de skins con expresiones (.mcpack, 33 skins de ejemplo):
+     https://orevillestudios.com/api/downloads/actions-and-stuff-expressions-skins-1-0-0
+   Plantilla del creador (.zip: .bbmodel de Blockbench + hoja de estilos + Read Me):
+     https://orevillestudios.com/api/downloads/actions-stuff-expressions-template
+   Guía oficial: https://guides.orevillestudios.com/actions-and-stuff-expressions
+   El addon Actions & Stuff (el de las animaciones) es de PAGO: se compra en el
+   Marketplace de Minecraft desde el propio juego. Aquí no se incluye.
+
+TODO LO QUE ESCRIBE EN LA SKIN
+------------------------------
+   · backFace  (x24-31, y0-7): la cara sin pupila (rellena de esclerótica) y sin cejas.
+   · blinkFace (x0-7,  y0-7): la cara con la ceja bajada 1 píxel y el ojo cerrado.
+   · cubos de ojos y cejas: los cubos de la plantilla oficial que coinciden con tu dibujo.
+
+Comprobado: las tres versiones (HTML, ventana y consola) dan exactamente el mismo
+resultado, píxel a píxel, con las 33 skins de ejemplo oficiales.
+
+Este proyecto no está afiliado a Oreville Studios ni a Mojang.
