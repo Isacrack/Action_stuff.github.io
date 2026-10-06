@@ -11,7 +11,6 @@ Todo ocurre en tu ordenador: la imagen nunca se sube a ningún sitio.
 
 - `conversor_actions_stuff_expresiones_FINAL.html` — la herramienta (un solo archivo).
 - `ENTREGA_copiar_o_descargar.html` — página con el código para copiar o descargar.
-- `conversor_actions_stuff.py` / `conversor_actions_stuff_gui.py` — versiones de Python (consola y ventana).
 - `conversor_AS_expresiones_TODO.zip` — todo junto.
 
 Las descargas oficiales de Oreville (pack de skins y plantilla de Blockbench) están en
