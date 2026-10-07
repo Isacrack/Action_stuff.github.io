@@ -263,6 +263,28 @@ details.ayuda li{margin-bottom:5px}
 .jpasos li{margin:6px 0}
 .jpasos a{color:var(--ac)}
 .jnom{color:var(--tx3); font-size:.86rem}
+/* ---- EL JUGADOR EN 3D: se puede girar arrastrando y gira solo ---- */
+.escena3d{position:relative; width:100%; max-width:520px; height:380px; margin:0 auto;
+  perspective:1000px; cursor:grab; touch-action:none; user-select:none; -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent}
+.escena3d.arrastrando{cursor:grabbing}
+.escena3d .muñeco3d{position:absolute; left:0; top:0; right:0; bottom:0; transform-origin:50% 50%;
+  will-change:transform; pointer-events:none}
+.escena3d .rot3d{position:absolute; left:50%; top:50%; transform-style:preserve-3d; will-change:transform}
+.escena3d .ensamblaje{position:absolute; left:0; top:0; right:0; bottom:0; transform-style:preserve-3d}
+.escena3d .parte3d{position:absolute; left:50%; top:50%; transform-style:preserve-3d}
+.escena3d .cara3d{position:absolute; left:50%; top:50%; backface-visibility:hidden}
+.escena3d .cara3d canvas{display:block; width:100%; height:100%; image-rendering:pixelated;
+  image-rendering:crisp-edges; background:transparent; border-radius:0; outline:0;
+  box-shadow:none; filter:none; image-rendering:-moz-crisp-edges}
+.escena3d .rot-cabeza{display:none}
+.escena3d.solo-cabeza .rot-cabeza{display:block}
+.escena3d.solo-cabeza .rot-jugador{display:none}
+.escena3d .variante-fina{display:none}
+.escena3d.brazos-finos .variante-normal{display:none}
+.escena3d.brazos-finos .variante-fina{display:block}
+.escena3d.sin-capas .capa-ext{display:none}
+@media (max-width:640px){ .escena3d{height:320px} }
 </style>
 </head>
 <body>
@@ -284,10 +306,25 @@ details.ayuda li{margin-bottom:5px}
       <span class="badge">Entrada: <b>64×64</b>, <b>128×128</b> o <b>256×256</b></span>
       <span class="badge">Java: <b>Fresh Moves + EMF/ETF</b></span>
       <span class="badge">Bedrock: <b>PC 1.21+</b></span>
+      <span class="badge" id="marcaVersion">3D: <b>cuadrado y nítido</b> · v2</span>
     </div>
   </header>
 
   <div class="tabpane" id="pJ" role="tabpanel" aria-labelledby="tbJ" tabindex="0">
+      <div class="screen">
+        <div class="escena3d" id="j3dEscena" title="Arrastra y el muñeco te sigue · la rueda del ratón acerca · doble clic vuelve de frente"></div>
+        <p class="cap" id="j3dCap">Tu skin en <b>3D de verdad</b>: arrástralo para girarlo (subes el ratón y la cara mira hacia arriba), déjalo girar solo y mueve la rueda para acercarlo. Si prefieres el otro sentido, pulsa el botón de al lado.</p>
+        <div class="row" style="justify-content:center">
+          <button class="btn sm" id="j3dGira" type="button" aria-pressed="true">Dejar de girar</button>
+          <button class="btn sm" id="j3dFrente" type="button">Volver de frente</button>
+          <button class="btn sm" id="j3dModo" type="button">Ver solo la cabeza</button>
+          <button class="btn sm" id="j3dInvertir" type="button" aria-pressed="false">Poner: ratón arriba = cara abajo</button>
+          <button class="btn sm" id="j3dFino" type="button" aria-pressed="false">Brazos delgados</button>
+          <button class="btn sm" id="j3dCapas" type="button" aria-pressed="true">Pintar la 2ª capa</button>
+          <button class="btn sm" id="j3dMenos" type="button">Alejar</button>
+          <button class="btn sm" id="j3dMas" type="button">Acercar</button>
+        </div>
+      </div>
   <!-- ==================== LENGÜETA JAVA ==================== -->
   <section class="card jintro" aria-labelledby="j1">
     <h2 id="j1"><span class="num">Java</span> Ojos animados en Java (pack Fresh Moves)</h2>
@@ -478,6 +515,20 @@ details.ayuda li{margin-bottom:5px}
   </div><!-- /pJ -->
 
   <div class="tabpane hidden" id="pB" role="tabpanel" aria-labelledby="tbB" tabindex="0">
+      <div class="screen">
+        <div class="escena3d" id="b3dEscena" title="Arrastra y el muñeco te sigue · la rueda del ratón acerca · doble clic vuelve de frente"></div>
+        <p class="cap" id="b3dCap">Tu skin en <b>3D de verdad</b>: arrástralo para girarlo (subes el ratón y la cara mira hacia arriba), déjalo girar solo y mueve la rueda para acercarlo. Si prefieres el otro sentido, pulsa el botón de al lado.</p>
+        <div class="row" style="justify-content:center">
+          <button class="btn sm" id="b3dGira" type="button" aria-pressed="true">Dejar de girar</button>
+          <button class="btn sm" id="b3dFrente" type="button">Volver de frente</button>
+          <button class="btn sm" id="b3dModo" type="button">Ver solo la cabeza</button>
+          <button class="btn sm" id="b3dInvertir" type="button" aria-pressed="false">Poner: ratón arriba = cara abajo</button>
+          <button class="btn sm" id="b3dFino" type="button" aria-pressed="false">Brazos delgados</button>
+          <button class="btn sm" id="b3dCapas" type="button" aria-pressed="true">Pintar la 2ª capa</button>
+          <button class="btn sm" id="b3dMenos" type="button">Alejar</button>
+          <button class="btn sm" id="b3dMas" type="button">Acercar</button>
+        </div>
+      </div>
   <!-- 1 · CARGA -->
   <section class="card" aria-labelledby="t1">
     <h2 id="t1"><span class="num">1</span> Carga tu skin</h2>
@@ -788,9 +839,18 @@ details.ayuda li{margin-bottom:5px}
         <a class="btn pri" href="https://orevillestudios.com/api/downloads/actions-stuff-expressions-template"
            download="Actions &amp; Stuff Expressions Template.zip">⤓ Plantilla OFICIAL (.zip: .bbmodel + hoja de estilos)</a>
       </div>
+      <div class="row">
+        <a class="btn" href="Pack_Oficial_AS_Expresiones.mcpack" download>⤓ Pack oficial guardado aquí (.mcpack)</a>
+        <a class="btn" href="Pack_Oficial_AS_Expresiones.zip" download>⤓ Pack oficial guardado aquí (.zip, para descomprimir)</a>
+        <a class="btn" href="Plantilla_Oficial_AS_Expresiones.zip" download>⤓ Plantilla oficial guardada aquí (.zip)</a>
+      </div>
+      <p class="auto" style="margin:0 0 6px">Esas tres son las copias que van <strong>con esta herramienta</strong>, en la misma carpeta que el
+        <span class="mono">index.html</span>: descargan al instante y sin internet. Si abres el
+        <span class="mono">index.html</span> sin esa carpeta, los botones de arriba (los de la web de Oreville) siguen
+        funcionando igual.</p>
       <p class="auto" style="margin:0 0 6px">La <strong>plantilla</strong> trae el <span class="mono">.bbmodel</span> para
-        Blockbench, la hoja de estilos y un Read Me: es lo que usa este conversor por dentro (los dos archivos son idénticos,
-        comprobado byte a byte), así que con ella puedes hacerlo a mano si quieres.</p>
+        Blockbench, la hoja de estilos y un Read Me: es lo que usa este conversor por dentro (el pack y la plantilla son los
+        archivos oficiales, tal cual se publican), así que con ellos puedes hacerlo a mano si quieres.</p>
       <p class="auto" style="margin:0">El <strong>addon</strong> <em>Actions &amp; Stuff</em> (el de las animaciones) es de pago y se compra
         en el Marketplace de Minecraft: búscalo dentro del juego como «Actions &amp; Stuff» (Oreville Studios).
         Este conversor no lo incluye ni lo distribuye.</p>
@@ -2003,7 +2063,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
 
   /* --------------------------------------------------------------- estado */
   var S = {
-    escala: 1, alta: null,
+    escala: 1, alta: null, img3d: null,
     nom: '', src: null, face: null, det: null,
     pupils: { R: [], L: [] }, brows: { R: [], L: [] }, box: { R: [], L: [] }, boxTouched: false,
     mode: 'pup', out: null, res: null, prev: null, hat: null,
@@ -2045,6 +2105,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     S.tab = id;
     if (id === 'tbB' && S.anim.enPausa) { S.anim.enPausa = false; anArranca(); }
     if (id === 'tbJ') jVistaArranca(); else jVistaPara();
+    if (typeof J3D !== 'undefined') J3D.forEach(function (p) { if (p.tab === id) j3dAuto(p); else j3dPara(p); });
     if (foco) $('#' + id).focus();
     if (!navEl) navEl = document.querySelector('.tabsnav');
     if (navEl && navEl.getBoundingClientRect().top < 0) navEl.scrollIntoView({ block: 'start' });
@@ -2099,6 +2160,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     ctx.drawImage(img, 0, 0, w, h);
     S.alta = ctx.getImageData(0, 0, w, h).data;
     S.escala = w / 64;
+    S.img3d = null;           // el muñeco 3D se vuelve a pintar con la skin nueva
     S.src = bajarA64(S.alta, w);          // la rejilla de 64 que usan el análisis y los cubos
     S.nom = name || 'skin.png';
     S.face = AS.faceOf(S.src);
@@ -4248,6 +4310,490 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     $('#jDl').addEventListener('click', jDescargar);
   })();
 
+  /* ==========================================================================
+     ESCENA3D · el jugador en 3D (cabeza, torso, brazos y piernas) y la cabeza
+     sola para verla de cerca. Se gira arrastrando y gira sola.
+     --------------------------------------------------------------------------
+     Reparto oficial de las caras de cada cubo en la textura de la skin
+     (en rejilla de 64; w = ancho, h = alto, d = fondo):
+
+        arriba    (u+d,        v)      w x d
+        abajo     (u+d+w,      v)      w x d
+        derecha   (u,          v+d)    d x h     <- el lado derecho del jugador
+        frente    (u+d,        v+d)    w x h
+        izquierda (u+d+w,      v+d)    d x h
+        atras     (u+d+w+d,    v+d)    w x h
+
+     Los brazos delgados (Alex) usan la misma fórmula con w = 3 en vez de 4:
+     así la rejilla queda 4+3+4+3 = 14 columnas, que es como la dibujan las
+     skins de Alex. "y" es el centro de la pieza contando desde lo alto de la
+     cabeza: 4 = cabeza, 14 = torso y brazos, 26 = piernas (32 = los pies).
+     ========================================================================== */
+  var ESCENA3D = (function () {
+    'use strict';
+
+    var PIEZAS = {
+      cabeza:    { u: 0,  v: 0,  w: 8, h: 8,  d: 8, x: 0,    y: 4,  z: 0 },
+      sombrero:  { u: 32, v: 0,  w: 8, h: 8,  d: 8, x: 0,    y: 4,  z: 0, infl: 0.5,  capa: true },
+      torso:     { u: 16, v: 16, w: 8, h: 12, d: 4, x: 0,    y: 14, z: 0 },
+      chaleco:   { u: 16, v: 32, w: 8, h: 12, d: 4, x: 0,    y: 14, z: 0, infl: 0.25, capa: true },
+      brazoDer:  { u: 40, v: 16, w: 4, h: 12, d: 4, x: -6,   y: 14, z: 0 },
+      mangaDer:  { u: 40, v: 32, w: 4, h: 12, d: 4, x: -6,   y: 14, z: 0, infl: 0.25, capa: true },
+      brazoIzq:  { u: 32, v: 48, w: 4, h: 12, d: 4, x: 6,    y: 14, z: 0 },
+      mangaIzq:  { u: 48, v: 48, w: 4, h: 12, d: 4, x: 6,    y: 14, z: 0, infl: 0.25, capa: true },
+      piernaDer: { u: 0,  v: 16, w: 4, h: 12, d: 4, x: -2,   y: 26, z: 0 },
+      pantDer:   { u: 0,  v: 32, w: 4, h: 12, d: 4, x: -2,   y: 26, z: 0, infl: 0.25, capa: true },
+      piernaIzq: { u: 16, v: 48, w: 4, h: 12, d: 4, x: 2,    y: 26, z: 0 },
+      pantIzq:   { u: 0,  v: 48, w: 4, h: 12, d: 4, x: 2,    y: 26, z: 0, infl: 0.25, capa: true }
+    };
+    var ORDEN = ['cabeza', 'sombrero', 'torso', 'chaleco', 'brazoDer', 'mangaDer',
+                 'brazoIzq', 'mangaIzq', 'piernaDer', 'pantDer', 'piernaIzq', 'pantIzq'];
+    var SOLO_CABEZA = ['cabeza', 'sombrero'];
+    var ES_BRAZO = { brazoDer: 1, mangaDer: 1, brazoIzq: 1, mangaIzq: 1 };
+    var ANCHO = { jugador: 16, cabeza: 8 };     // ancho total del modelo (para centrar el giro)
+    var ALTO = { jugador: 32, cabeza: 8 };      // alto total del modelo
+
+    function e(tag, cls) { var d = document.createElement(tag); if (cls) d.className = cls; return d; }
+    function copia(o) { var r = {}, k; for (k in o) if (o.hasOwnProperty(k)) r[k] = o[k]; return r; }
+    function mid(v) { return (Math.round(v * 100) / 100) + 'px'; }
+
+    /** Las 6 caras de una pieza, cada una en su sitio del cubo. */
+    /* Cuántos píxeles de lienzo por píxel de pantalla: en pantallas «retina» y con
+       el zum hay que dibujar más grande, si no el navegador agranda y sale borroso. */
+    function resolucionBase() {
+      var d = window.devicePixelRatio || 1;
+      return Math.max(1, Math.min(3, d));
+    }
+    function ajusta(m) {
+      var r = Math.max(1, Math.min(3.5, (m.res || 1) * (m.zoom || 1)));
+      m.resEfectiva = r;
+      return r;
+    }
+
+    function cubo(p, K, centroY, res) {
+      var caja = e('div', 'parte3d' + (p.capa ? ' capa-ext' : '') + (p.variante ? ' variante-' + (p.fina ? 'fina' : 'normal') : ''));
+      var W = p.w * K, H = p.h * K, D = p.d * K;
+      caja.style.width = mid(W); caja.style.height = mid(H);
+      caja.style.marginLeft = mid(-W / 2); caja.style.marginTop = mid(-H / 2);
+      var inf = p.infl || 0;
+      caja.style.transform = 'translate3d(' + mid(p.x * K) + ',' + mid((p.y - centroY) * K) + ',' + mid(p.z * K) + ')'
+        + (inf ? ' scale3d(' + ((p.w + 2 * inf) / p.w) + ',' + ((p.h + 2 * inf) / p.h) + ',' + ((p.d + 2 * inf) / p.d) + ')' : '');
+
+      var reparto = [
+        ['arriba',    p.u + p.d,             p.v,       p.w, p.d, 'rotateX(90deg)',  H / 2],
+        ['abajo',     p.u + p.d + p.w,       p.v,       p.w, p.d, 'rotateX(-90deg)', H / 2],
+        ['derecha',   p.u,                   p.v + p.d, p.d, p.h, 'rotateY(-90deg)', W / 2],
+        ['izquierda', p.u + p.d + p.w,       p.v + p.d, p.d, p.h, 'rotateY(90deg)',  W / 2],
+        ['frente',    p.u + p.d,             p.v + p.d, p.w, p.h, '',                D / 2],
+        ['atras',     p.u + p.d + p.w + p.d, p.v + p.d, p.w, p.h, 'rotateY(180deg)', D / 2]
+      ];
+      var caras = {};
+      reparto.forEach(function (f) {
+        var c = e('div', 'cara3d ' + f[0]);
+        var cv = document.createElement('canvas');
+        cv.width = Math.max(1, Math.round(f[3] * K * res));
+        cv.height = Math.max(1, Math.round(f[4] * K * res));
+        c.style.width = mid(f[3] * K); c.style.height = mid(f[4] * K);
+        c.style.marginLeft = mid(-f[3] * K / 2); c.style.marginTop = mid(-f[4] * K / 2);
+        c.style.transform = (f[5] ? f[5] + ' ' : '') + 'translateZ(' + mid(f[6]) + ')';
+        c.appendChild(cv);
+        caja.appendChild(c);
+        caras[f[0]] = { cv: cv, sx: f[1], sy: f[2], sw: f[3], sh: f[4] };
+      });
+      caja._caras = caras;
+      caja._nombre = '';
+      caja._K = K;
+      return caja;
+    }
+
+    function ensamblaje(cual, K, conVariantes, res) {
+      var piezas = {};
+      var nombres = cual === 'jugador' ? ORDEN : SOLO_CABEZA;
+      var ens = e('div', 'ensamblaje');
+      nombres.forEach(function (n) {
+        var p = copia(PIEZAS[n]);
+        if (conVariantes && ES_BRAZO[n]) { p.variante = true; p.fina = false; }   // brazos: hay dos anchos
+        piezas[n] = cubo(p, K, ALTO[cual] / 2, res);
+        piezas[n]._nombre = n;
+        ens.appendChild(piezas[n]);
+        if (conVariantes && ES_BRAZO[n]) {
+          var fino = copia(PIEZAS[n]);
+          fino.w = 3;                                   // brazo delgado (Alex)
+          fino.x = p.x > 0 ? 6.5 : -6.5;
+          fino.variante = true; fino.fina = true;
+          piezas[n + ':fino'] = cubo(fino, K, ALTO[cual] / 2, res);
+          piezas[n + ':fino']._nombre = n + ':fino';
+          ens.appendChild(piezas[n + ':fino']);
+        }
+      });
+      return { el: ens, piezas: piezas };
+    }
+
+    /** Crea el muñeco dentro de la escena: jugador entero + cabeza sola. */
+    function modelo(escenaEl, opciones) {
+      var o = opciones || {};
+      var m = {
+        escena: escenaEl,
+        px: o.px || 8,
+        pxCabeza: o.pxCabeza || 16,
+        modo: o.modo || 'jugador',
+        delgado: !!o.delgado,
+        conCapas: o.capas !== false,
+        zoom: o.zoom || 1,
+        res: resolucionBase(),
+        resEfectiva: 1,
+        _tex: null, _esc: 1, _caraImg: null
+      };
+      m.resEfectiva = ajusta(m);
+      m.el = e('div', 'muñeco3d');
+      m.modelos = {};
+      ['jugador', 'cabeza'].forEach(function (cual) {
+        var K = cual === 'jugador' ? m.px : m.pxCabeza;
+        var armado = ensamblaje(cual, K, cual === 'jugador', m.resEfectiva);
+        var rot = e('div', 'rot3d rot-' + cual);
+        rot.style.width = mid(ANCHO[cual] * K);
+        rot.style.height = mid(ALTO[cual] * K);
+        rot.style.marginLeft = mid(-ANCHO[cual] * K / 2);
+        rot.style.marginTop = mid(-ALTO[cual] * K / 2);
+        rot.appendChild(armado.el);
+        m.modelos[cual] = { rot: rot, ens: armado.el, piezas: armado.piezas };
+        m.el.appendChild(rot);
+      });
+      m.caras = { jugador: m.modelos.jugador.piezas.cabeza._caras.frente.cv,
+                  cabeza: m.modelos.cabeza.piezas.cabeza._caras.frente.cv };
+      escenaEl.appendChild(m.el);
+      modo(m, m.modo);
+      delgado(m, m.delgado);
+      capas(m, m.conCapas);
+      return m;
+    }
+
+    /** 'jugador' (el muñeco entero) o 'cabeza' (primer plano de la cara). */
+    function modo(m, cual) {
+      m.modo = cual === 'cabeza' ? 'cabeza' : 'jugador';
+      m.escena.classList.toggle('solo-cabeza', m.modo === 'cabeza');
+      return m;
+    }
+    /** Brazos delgados (Alex) o normales (Steve). */
+    function delgado(m, si) {
+      m.delgado = !!si;
+      m.escena.classList.toggle('brazos-finos', m.delgado);
+      return m;
+    }
+    /** Segunda capa (sombrero, chaleco, mangas y pantalones). */
+    function capas(m, si) {
+      m.conCapas = si !== false;
+      m.escena.classList.toggle('sin-capas', !m.conCapas);
+      return m;
+    }
+    /** Acercar o alejar la vista (0,5 a 2,5). */
+    function zoom(m, z) {
+      m.zoom = Math.max(0.5, Math.min(2.6, z));
+      m.el.style.transform = 'scale(' + m.zoom + ')';
+      var quiero = ajusta(m);
+      if (Math.abs(quiero - (m._pintado || 0)) > 0.15) dibujaGrande(m);
+      return m;
+    }
+
+    /* Vuelve a poner el tamaño de los lienzos a la resolución que toca y repinta
+       (los mismos lienzos: no se crea ninguno nuevo, así todo sigue enganchado) */
+    function dibujaGrande(m) {
+      var r = ajusta(m);
+      m._pintado = r;
+      Object.keys(m.modelos).forEach(function (cual) {
+        var piezas = m.modelos[cual].piezas;
+        Object.keys(piezas).forEach(function (k2) {
+          var caja = piezas[k2], caras = caja._caras, K = caja._K || 8;
+          Object.keys(caras).forEach(function (n) {
+            var f = caras[n];
+            f.cv.width = Math.max(1, Math.round(f.sw * K * r));
+            f.cv.height = Math.max(1, Math.round(f.sh * K * r));
+          });
+        });
+      });
+      if (m._tex) vestir(m, m._tex, m._esc);
+      if (m._caraImg) cara(m, m._caraImg);
+      return m;
+    }
+    /** ¿Se ve borroso en esta pantalla? (lo usa la herramienta) */
+    function nitidez(m) { return m.resEfectiva; }
+    /** Colocar la cabeza en un ángulo (grados). */
+    function gira(m, rx, ry) {
+      m.rx = rx; m.ry = ry;
+      var t = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+      Object.keys(m.modelos).forEach(function (c) { m.modelos[c].rot.style.transform = t; });
+      return m;
+    }
+
+    /** Pinta todas las caras con la skin. tex = imagen o lienzo; esc = 1 (64), 2 (128) o 4 (256). */
+    function vestir(m, tex, esc) {
+      if (esc) m.esc = esc;
+      m._tex = tex;
+      var k = m.esc || 1;
+      Object.keys(m.modelos).forEach(function (cual) {
+        var piezas = m.modelos[cual].piezas;
+        Object.keys(piezas).forEach(function (k2) {
+          var caras = piezas[k2]._caras;
+          Object.keys(caras).forEach(function (n) {
+            var f = caras[n];
+            var ctx = f.cv.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+            ctx.clearRect(0, 0, f.cv.width, f.cv.height);
+            ctx.drawImage(tex, f.sx * k, f.sy * k, f.sw * k, f.sh * k, 0, 0, f.cv.width, f.cv.height);
+          });
+        });
+      });
+      return m;
+    }
+
+    /** Copia la cara animada (la del plano) sobre la cara delantera de la cabeza. */
+    function cara(m, img) {
+      if (!img) return m;
+      m._caraImg = img;
+      Object.keys(m.caras).forEach(function (cual) {
+        var cv = m.caras[cual];
+        var ctx = cv.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        ctx.drawImage(img, 0, 0, img.width || 8, img.height || 8, 0, 0, cv.width, cv.height);
+      });
+      return m;
+    }
+
+    /* ¿Los brazos son delgados (Alex)? Se nota en que las dos últimas columnas
+       de cada brazo no se usan. Si la skin no trae brazos, se dice que no.
+       leer(x, y) devuelve [r, g, b, a] de la rejilla de 64. */
+    function detectarDelgado(leer) {
+      function lleno(x0, x1, y0, y1) {
+        for (var y = y0; y < y1; y++) for (var x = x0; x < x1; x++) if (leer(x, y)[3] > 8) return true;
+        return false;
+      }
+      function vacio(x0, x1, y0, y1) {
+        for (var y = y0; y < y1; y++) for (var x = x0; x < x1; x++) if (leer(x, y)[3] > 8) return false;
+        return true;
+      }
+      var hayBrazo = lleno(40, 54, 20, 32) && lleno(32, 46, 52, 64);
+      return hayBrazo && vacio(54, 56, 16, 32) && vacio(46, 48, 48, 64);
+    }
+
+    return {
+      PIEZAS: PIEZAS, ORDEN: ORDEN,
+      modelo: modelo, vestir: vestir, cara: cara, modo: modo, delgado: delgado,
+      capas: capas, zoom: zoom, gira: gira, detectarDelgado: detectarDelgado,
+      dibujaGrande: dibujaGrande, nitidez: nitidez
+    };
+  })();
+
+  /* ---------------------------------------------------------------- mandos */
+  var J3D = [
+    { id: 'j', tab: 'tbJ', base: '#jVistaFx' },
+    { id: 'b', tab: 'tbB', base: '#preview' }
+  ];
+  J3D.forEach(function (p) {
+    var pantallaChica = window.innerWidth <= 640;
+    p.rx = -12; p.ry = -28;
+    p.zoomJ = pantallaChica ? 0.95 : 1.2; p.zoomC = pantallaChica ? 1.3 : 1.5; p.z = p.zoomJ;
+    p.girando = true; p.arrastrando = false; p.montado = false; p.raf = 0;
+    p.x0 = 0; p.y0 = 0; p.mu = null;
+    p.caraArriba = j3dRecuerdaArriba();     // por defecto: subir el ratón levanta la cara
+  });
+  function j3dDame(p, que) { return document.getElementById(p.id + '3d' + que); }
+  /* ¿Qué pasa al subir el ratón? Por defecto la cara mira hacia ARRIBA (como si
+     agarraras el muñeco y lo levantaras). El botón le da la vuelta y se recuerda.
+     Si el navegador no deja guardarlo, no pasa nada: se queda en el de fábrica. */
+  function j3dRecuerdaArriba() {
+    try { var v = localStorage.getItem('giro3d_arriba'); return v === null ? false : v === '1'; } catch (e) { return false; }
+  }
+  function j3dGuardaArriba(v) { try { localStorage.setItem('giro3d_arriba', v ? '1' : '0'); } catch (e) { } }
+
+  function j3dPinta(p) { if (p.mu) ESCENA3D.gira(p.mu, p.rx, p.ry); }
+  function j3dFrente(p) {
+    p.rx = -6; p.ry = 0; p.girando = false;
+    j3dPinta(p); j3dPara(p); j3dBotones(p);
+  }
+  function j3dZoom(p, z) {
+    if (!p.mu) return;
+    p.z = Math.max(0.6, Math.min(2.6, z));
+    ESCENA3D.zoom(p.mu, p.z);
+    if (p.mu.modo === 'cabeza') p.zoomC = p.z; else p.zoomJ = p.z;
+  }
+
+  function j3dMonta(p) {
+    var esc = j3dDame(p, 'Escena');
+    if (!esc || p.montado) return;
+    p.montado = true;
+    p.mu = ESCENA3D.modelo(esc, { px: 8, pxCabeza: 16, modo: 'jugador' });
+    ESCENA3D.zoom(p.mu, p.zoomJ);
+    j3dPinta(p);
+    ESCENA3D.cara(p.mu, document.querySelector(p.base));
+
+    esc.addEventListener('pointerdown', function (e) {
+      if (!S.src) return;
+      p.arrastrando = true; p.x0 = e.clientX; p.y0 = e.clientY;
+      esc.classList.add('arrastrando');
+      if (esc.setPointerCapture) { try { esc.setPointerCapture(e.pointerId); } catch (err) { } }
+      e.preventDefault();
+    });
+    esc.addEventListener('pointermove', function (e) {
+      if (!p.arrastrando) return;
+      p.ry += (e.clientX - p.x0) * 0.8;
+      var dy = (e.clientY - p.y0) * 0.6;
+      p.rx = Math.max(-89, Math.min(89, p.rx + (p.caraArriba ? dy : -dy)));
+      p.x0 = e.clientX; p.y0 = e.clientY;
+      j3dPinta(p);
+    });
+    ['pointerup', 'pointercancel'].forEach(function (t) {
+      esc.addEventListener(t, function () {
+        if (!p.arrastrando) return;
+        p.arrastrando = false;
+        esc.classList.remove('arrastrando');
+        if (p.girando) j3dAuto(p);
+      });
+    });
+    esc.addEventListener('dblclick', function () { j3dFrente(p); });
+    esc.addEventListener('wheel', function (e) {
+      if (!S.src) return;
+      e.preventDefault();
+      j3dZoom(p, p.z + (e.deltaY < 0 ? 0.15 : -0.15));
+    }, { passive: false });
+
+    var b = j3dDame(p, 'Gira');
+    if (b) b.addEventListener('click', function () {
+      p.girando = !p.girando;
+      j3dBotones(p);
+      if (p.girando) j3dAuto(p); else j3dPara(p);
+    });
+    var f = j3dDame(p, 'Frente');
+    if (f) f.addEventListener('click', function () { j3dFrente(p); });
+    var m = j3dDame(p, 'Modo');
+    if (m) m.addEventListener('click', function () {
+      var nuevo = p.mu.modo === 'jugador' ? 'cabeza' : 'jugador';
+      ESCENA3D.modo(p.mu, nuevo);
+      j3dZoom(p, nuevo === 'cabeza' ? p.zoomC : p.zoomJ);
+      j3dBotones(p);
+    });
+    var fi = j3dDame(p, 'Fino');
+    if (fi) fi.addEventListener('click', function () {
+      ESCENA3D.delgado(p.mu, !p.mu.delgado);
+      j3dBotones(p);
+    });
+    var ca = j3dDame(p, 'Capas');
+    if (ca) ca.addEventListener('click', function () {
+      ESCENA3D.capas(p.mu, !p.mu.conCapas);
+      j3dBotones(p);
+    });
+    var iv = j3dDame(p, 'Invertir');
+    if (iv) iv.addEventListener('click', function () {
+      p.caraArriba = !p.caraArriba;
+      j3dGuardaArriba(p.caraArriba);
+      j3dBotones(p);
+    });
+    var me = j3dDame(p, 'Menos');
+    if (me) me.addEventListener('click', function () { j3dZoom(p, p.z - 0.15); });
+    var ma = j3dDame(p, 'Mas');
+    if (ma) ma.addEventListener('click', function () { j3dZoom(p, p.z + 0.15); });
+    j3dBotones(p);
+  }
+
+  function j3dBotones(p) {
+    var g = j3dDame(p, 'Gira');
+    if (g) {
+      g.setAttribute('aria-pressed', String(p.girando));
+      g.textContent = p.girando ? 'Dejar de girar' : 'Que gire sola';
+    }
+    if (!p.mu) return;
+    var m = j3dDame(p, 'Modo');
+    if (m) m.textContent = p.mu.modo === 'jugador' ? 'Ver solo la cabeza' : 'Ver el jugador entero';
+    var iv = j3dDame(p, 'Invertir');
+    if (iv) {
+      iv.setAttribute('aria-pressed', String(!!p.caraArriba));
+      iv.textContent = p.caraArriba ? 'Poner: ratón arriba = cara arriba' : 'Poner: ratón arriba = cara abajo';
+    }
+    var fi = j3dDame(p, 'Fino');
+    if (fi) fi.setAttribute('aria-pressed', String(p.mu.delgado));
+    var ca = j3dDame(p, 'Capas');
+    if (ca) ca.setAttribute('aria-pressed', String(p.mu.conCapas));
+  }
+
+  /** La skin que se subió, como imagen (para pintar el muñeco). */
+  function j3dImagen() {
+    if (!S.alta) return null;
+    if (S.img3d && S.img3d._ref === S.alta) return S.img3d;
+    var w = (S.escala || 1) * 64;
+    var cv = document.createElement('canvas');
+    cv.width = w; cv.height = w;
+    var ctx = cv.getContext('2d');
+    var d = ctx.createImageData(w, w);
+    for (var i = 0; i < d.data.length; i++) d.data[i] = S.alta[i];
+    ctx.putImageData(d, 0, 0);
+    cv._ref = S.alta;
+    S.img3d = cv;
+    return cv;
+  }
+
+  function j3dVestir(p) {
+    if (!p.mu || !S.src) return;
+    var img = j3dImagen();
+    if (img) ESCENA3D.vestir(p.mu, img, S.escala || 1);
+    ESCENA3D.delgado(p.mu, ESCENA3D.detectarDelgado(function (x, y) { return at(S.src, x, y); }));
+    j3dCara(p);
+    j3dBotones(p);
+  }
+  function j3dCara(p) {
+    var base = document.querySelector(p.base);
+    if (p.mu && base) ESCENA3D.cara(p.mu, base);
+  }
+
+  function j3dFrame() {
+    var vivo = false;
+    J3D.forEach(function (p) {
+      if (!p.mu || S.tab !== p.tab || !p.girando || p.arrastrando || !S.src) { p.raf = 0; return; }
+      p.ry += 0.3;
+      if (p.ry > 180) p.ry -= 360;
+      j3dPinta(p);
+      vivo = true;
+    });
+    if (vivo) J3D[0].raf = requestAnimationFrame(j3dFrame);
+  }
+  function j3dAuto(p) {
+    if (!p.mu || !p.girando || !S.src) return;
+    if (!J3D.some(function (q) { return q.raf; })) requestAnimationFrame(j3dFrame);
+    p.raf = 1;
+  }
+  function j3dPara(p) { p.raf = 0; }
+
+  /* --- enganches: cada vez que se pinta la cara plana, se repinta el muñeco --- */
+  var jVistaDibujaBase = jVistaDibuja;
+  jVistaDibuja = function () {
+    jVistaDibujaBase.apply(null, arguments);
+    var p = j3dDame(J3D[0], 'Escena') ? J3D[0] : null;
+    if (p) j3dCara(p);
+  };
+  var pintarCaraBase = pintarCara;
+  pintarCara = function () {
+    pintarCaraBase.apply(null, arguments);
+    j3dCara(J3D[1]);
+  };
+  var renderJavaBase = renderJava;
+  renderJava = function () {
+    renderJavaBase.apply(null, arguments);
+    var p = J3D[0];
+    j3dMonta(p);
+    j3dVestir(p);
+    j3dAuto(p);
+  };
+
+  /* se monta una vez al arrancar (y al primer render de Bedrock) */
+  J3D.forEach(function (p) { j3dMonta(p); });
+  var renderBase = render;
+  render = function () {
+    renderBase.apply(null, arguments);
+    J3D.forEach(function (p) {
+      if (!p.montado) j3dMonta(p);
+      j3dVestir(p);
+    });
+  };
+
   /* ------------------------------------------------------- lengüetas: mandos */
   (function () {
     TABS.forEach(function (t) {
@@ -4281,8 +4827,19 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
   renderTabs();
   render();
   say('Arrastra una skin de 64×64 (o 128×128 / 256×256), pégala con Ctrl+V o prueba un ejemplo.');
+
+  /* Al abrir la herramienta se pone sola una skin de ejemplo (del pack oficial)
+     para que todo se vea en marcha desde el primer segundo: la cara, el
+     animador y el muñeco 3D girando. Sube la tuya y se cambia. */
+  if (!S.src && EXAMPLES.length) {
+    var ej = EXAMPLES[0];
+    loadFromUri(ej.src, ej.nom);
+    setTimeout(function () {
+      if (S.src) say('Te he puesto una skin de ejemplo (' + ej.nom + ', del pack oficial de Oreville) para que veas la herramienta y el jugador 3D en marcha. Arrastra la tuya encima cuando quieras cambiarla.', 'ok');
+    }, 400);
+  }
 })();
 
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a46d30b84db71644',t:'MTc5MTM3OTA5MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
