@@ -10,8 +10,7 @@ dentro del juego. No hay que instalar nada: se abre en el navegador, funciona co
 > aparece tu propio muñeco en 3D con sus colores de verdad. Si solo quieres ver cómo funciona,
 > en la lengüeta Bedrock tienes 4 skins de ejemplo oficiales para probar con un clic.
 
-**Pruébala aquí:** https://isacrack.github.io/Action_stuff.github.io/
-
+**Pruébala aquí:** https://isacrack.github.io/Skines-con-expresiones/
 También puedes descargar el repositorio y abrir `index.html` con doble clic: funciona igual,
 sin servidor y sin conexión a internet.
 
