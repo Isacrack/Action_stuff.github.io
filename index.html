@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2IiBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iIzEyMTYxYSIvPjxyZWN0IHg9IjEiIHk9IjIiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMiIgZmlsbD0iIzU1NTczZSIvPjxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIyIiBmaWxsPSIjM2Y0MTJjIi8+PHJlY3QgeD0iMiIgeT0iNyIgd2lkdGg9IjEyIiBoZWlnaHQ9IjYiIGZpbGw9IiNiM2JmYTYiLz48cmVjdCB4PSIzIiB5PSI0IiB3aWR0aD0iNCIgaGVpZ2h0PSIzIiBmaWxsPSIjZmZmZmZmIi8+PHJlY3QgeD0iNSIgeT0iNCIgd2lkdGg9IjIiIGhlaWdodD0iMyIgZmlsbD0iIzI3YmJkYyIvPjxyZWN0IHg9IjkiIHk9IjUiIHdpZHRoPSI0IiBoZWlnaHQ9IjIiIGZpbGw9IiMxZDI0MTgiLz48cmVjdCB4PSI3IiB5PSI5IiB3aWR0aD0iMiIgaGVpZ2h0PSIyIiBmaWxsPSIjMmIyZjIwIi8+PHJlY3QgeD0iMSIgeT0iMiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjEiIGZpbGw9IiMxMjE2MWEiLz48cmVjdCB4PSIxIiB5PSIxNCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjEiIGZpbGw9IiMxMjE2MWEiLz48L3N2Zz4=">
-<title>Conversor de skins · Java (Fresh Moves) y Bedrock (Actions &amp; Stuff)</title>
+<title>Conversor de skins · Bedrock (Actions &amp; Stuff)</title>
 <style>/* Conversor de skins «Actions & Stuff — Expresiones» — hoja de estilos */
 :root{
   --bg:#0f1418; --bg2:#161d23; --card:#1c252c; --card2:#222e36; --line:#2f3d47;
@@ -326,26 +326,24 @@ canvas, img, #hoja,
 <div class="wrap">
   <!-- lengüetas: sólo dos, y arriba del todo -->
   <div class="tabsnav" role="tablist" aria-label="Mundos de la herramienta">
-    <button class="tabb activa" type="button" role="tab" id="tbJ" aria-controls="pJ" aria-selected="true">Java · ojos animados (Fresh Moves)</button>
-    <button class="tabb" type="button" role="tab" id="tbB" aria-controls="pB" aria-selected="false">Bedrock · Actions &amp; Stuff</button>
+    <button class="tabb activa" type="button" role="tab" id="tbB" aria-controls="pB" aria-selected="true">Bedrock · Actions &amp; Stuff</button>
   </div>
 
   <header class="top">
-    <h1>Conversor de skins · <span>Java y Bedrock</span></h1>
-    <p>Dos mundos en un solo archivo, con la barra de lengüetas arriba del todo: la lengüeta <strong>Java</strong>
-      prepara tu skin para los <strong>ojos animados de Fresh Moves</strong> (mods EMF/ETF) y la lengüeta
-      <strong>Bedrock</strong> la convierte en las capas del addon <em>Actions &amp; Stuff — Expresiones</em>
-      (cara de parpadeo, cara trasera y cubos de ojos y cejas de la plantilla oficial).</p>
+    <h1>Conversor de skins · <span>Bedrock · Actions &amp; Stuff</span></h1>
+    <p>Esta es la carpeta <strong>Bedrock</strong>: convierte tu skin en las capas del addon
+      <em>Actions &amp; Stuff — Expresiones</em> (cara de parpadeo, cara trasera y cubos de ojos y cejas
+      de la plantilla oficial). La parte de Java está en su propia carpeta: <b>java/index.html</b>.
+      El <b>index.html</b> de la raíz tiene las dos lengüetas juntas.</p>
     <div class="badges">
       <span class="badge">Todo en tu navegador · <b>no se sube nada</b></span>
       <span class="badge">Entrada: <b>64×64</b>, <b>128×128</b> o <b>256×256</b></span>
-      <span class="badge">Java: <b>Fresh Moves + EMF/ETF</b></span>
       <span class="badge">Bedrock: <b>PC 1.21+</b></span>
-      <span class="badge" id="marcaVersion">3D y piel: <b>cuadrado y nítido</b> · v5</span>
+      <span class="badge" id="marcaVersion">3D y piel: <b>cuadrado y nítido</b> · v6</span>
     </div>
   </header>
 
-  <div class="tabpane" id="pJ" role="tabpanel" aria-labelledby="tbJ" tabindex="0">
+  <div class="tabpane hidden" id="pJ" role="tabpanel" aria-labelledby="tbJ" tabindex="0">
         <!-- ==================== LENGÜETA JAVA ==================== -->
   <section class="card jintro" aria-labelledby="j1">
     <h2 id="j1"><span class="num">Java</span> Ojos animados en Java (pack Fresh Moves)</h2>
@@ -513,12 +511,11 @@ canvas, img, #hoja,
           <b>Aquí verás tu skin en 3D</b>
           <span>Sube tu skin en el paso <b>J1</b>, justo arriba, y aparecerá aquí girando, con sus colores de verdad.</span>
         </div>
-        <p class="cap" id="j3dCap">Tu skin en <b>3D de verdad</b>: arrástralo para girarlo (subes el ratón y la cara mira hacia abajo), déjalo girar solo y mueve la rueda para acercarlo. Si prefieres el otro sentido, pulsa el botón de al lado.</p>
+        <p class="cap" id="j3dCap">Tu skin en <b>3D de verdad</b>: arrástralo para girarlo (subes el ratón y la cara mira hacia arriba), déjalo girar solo y mueve la rueda para acercarlo.</p>
         <div class="row mandos3d" style="justify-content:center">
           <button class="btn sm" id="j3dGira" type="button" data-need-skin aria-pressed="true">Dejar de girar</button>
           <button class="btn sm" id="j3dFrente" type="button" data-need-skin>Volver de frente</button>
           <button class="btn sm" id="j3dModo" type="button" data-need-skin>Ver solo la cabeza</button>
-          <button class="btn sm" id="j3dInvertir" type="button" data-need-skin aria-pressed="true">Giro: subir el ratón = cara abajo</button>
           <button class="btn sm" id="j3dFino" type="button" data-need-skin aria-pressed="false">Brazos delgados</button>
           <button class="btn sm" id="j3dCapas" type="button" data-need-skin aria-pressed="true">Pintar la 2ª capa</button>
           <button class="btn sm" id="j3dMenos" type="button" data-need-skin>Alejar</button>
@@ -690,12 +687,11 @@ canvas, img, #hoja,
           <b>Aquí verás tu skin en 3D</b>
           <span>Sube tu skin (o elige una de ejemplo) en el paso <b>1</b>, justo arriba, y aparecerá aquí girando, con sus colores de verdad.</span>
         </div>
-        <p class="cap" id="b3dCap">Tu skin en <b>3D de verdad</b>: arrástralo para girarlo (subes el ratón y la cara mira hacia abajo), déjalo girar solo y mueve la rueda para acercarlo. Si prefieres el otro sentido, pulsa el botón de al lado.</p>
+        <p class="cap" id="b3dCap">Tu skin en <b>3D de verdad</b>: arrástralo para girarlo (subes el ratón y la cara mira hacia arriba), déjalo girar solo y mueve la rueda para acercarlo.</p>
         <div class="row mandos3d" style="justify-content:center">
           <button class="btn sm" id="b3dGira" type="button" data-need-skin aria-pressed="true">Dejar de girar</button>
           <button class="btn sm" id="b3dFrente" type="button" data-need-skin>Volver de frente</button>
           <button class="btn sm" id="b3dModo" type="button" data-need-skin>Ver solo la cabeza</button>
-          <button class="btn sm" id="b3dInvertir" type="button" data-need-skin aria-pressed="true">Giro: subir el ratón = cara abajo</button>
           <button class="btn sm" id="b3dFino" type="button" data-need-skin aria-pressed="false">Brazos delgados</button>
           <button class="btn sm" id="b3dCapas" type="button" data-need-skin aria-pressed="true">Pintar la 2ª capa</button>
           <button class="btn sm" id="b3dMenos" type="button" data-need-skin>Alejar</button>
@@ -889,9 +885,9 @@ canvas, img, #hoja,
            download="Actions &amp; Stuff Expressions Template.zip">⤓ Plantilla OFICIAL (.zip: .bbmodel + hoja de estilos)</a>
       </div>
       <div class="row">
-        <a class="btn" href="bedrock/Pack_Oficial_AS_Expresiones.mcpack" download>⤓ Pack oficial guardado aquí (.mcpack)</a>
-        <a class="btn" href="bedrock/Pack_Oficial_AS_Expresiones.zip" download>⤓ Pack oficial guardado aquí (.zip, para descomprimir)</a>
-        <a class="btn" href="bedrock/Plantilla_Oficial_AS_Expresiones.zip" download>⤓ Plantilla oficial guardada aquí (.zip)</a>
+        <a class="btn" href="Pack_Oficial_AS_Expresiones.mcpack" download>⤓ Pack oficial guardado aquí (.mcpack)</a>
+        <a class="btn" href="Pack_Oficial_AS_Expresiones.zip" download>⤓ Pack oficial guardado aquí (.zip, para descomprimir)</a>
+        <a class="btn" href="Plantilla_Oficial_AS_Expresiones.zip" download>⤓ Plantilla oficial guardada aquí (.zip)</a>
       </div>
       <p class="auto" style="margin:0 0 6px">Esas tres son las copias que van <strong>con esta herramienta</strong>, en la misma carpeta que el
         <span class="mono">index.html</span>: descargan al instante y sin internet. Si abres el
@@ -2129,7 +2125,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
   //  Los pasos 1-3 (cargar, revisar y ajustes) van juntos; los 6-7 (descargar y pack)
   //  también.  Las lengüetas que necesitan skin se bloquean hasta que haya una.
   //  Dos mundos: Java (pJ) y Bedrock (pB).  La barra va arriba del todo.
-  var TABS = [['tbJ', 'pJ'], ['tbB', 'pB']];
+  var TABS = [['tbB', 'pB']];
   var TABS_SKIN = {};                               // ya no se bloquea ninguna lengüeta
   var HINTS = { hint2: 1, hint3: 1, hint4: 1, hint5: 1 };
 
@@ -4647,16 +4643,10 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     p.zoomJ = pantallaChica ? 0.95 : 1.2; p.zoomC = pantallaChica ? 1.3 : 1.5; p.z = p.zoomJ;
     p.girando = true; p.arrastrando = false; p.montado = false; p.raf = 0;
     p.x0 = 0; p.y0 = 0; p.mu = null;
-    p.giroSubirAbajo = j3dRecuerdaGiro();   // por defecto: subir el ratón baja la cara
   });
   function j3dDame(p, que) { return document.getElementById(p.id + '3d' + que); }
-  /* ¿Qué pasa al subir el ratón? AL REVÉS, como se pidió: SUBES el ratón y la cara
-     mira hacia ABAJO (el muñeco "va para abajo"). El botón le da la vuelta y se
-     acuerda. Si el navegador no deja guardarlo, no pasa nada: se queda de fábrica. */
-  function j3dRecuerdaGiro() {
-    try { var v = localStorage.getItem('giro3d_subir_abajo'); return v === null ? true : v === '1'; } catch (e) { return true; }
-  }
-  function j3dGuardaGiro(v) { try { localStorage.setItem('giro3d_subir_abajo', v ? '1' : '0'); } catch (e) { } }
+  /* El giro, como se pidió y PARA SIEMPRE: SUBES el ratón y la cara mira hacia
+     ARRIBA. Ya no hay botón para cambiarlo. */
 
   function j3dPinta(p) { if (p.mu) ESCENA3D.gira(p.mu, p.rx, p.ry); }
   function j3dFrente(p) {
@@ -4690,7 +4680,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
       if (!p.arrastrando) return;
       p.ry += (e.clientX - p.x0) * 0.8;
       var dy = (e.clientY - p.y0) * 0.6;
-      p.rx = Math.max(-89, Math.min(89, p.rx + (p.giroSubirAbajo ? dy : -dy)));
+      p.rx = Math.max(-89, Math.min(89, p.rx - dy));
       p.x0 = e.clientX; p.y0 = e.clientY;
       j3dPinta(p);
     });
@@ -4734,12 +4724,6 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
       ESCENA3D.capas(p.mu, !p.mu.conCapas);
       j3dBotones(p);
     });
-    var iv = j3dDame(p, 'Invertir');
-    if (iv) iv.addEventListener('click', function () {
-      p.giroSubirAbajo = !p.giroSubirAbajo;
-      j3dGuardaGiro(p.giroSubirAbajo);
-      j3dBotones(p);
-    });
     var me = j3dDame(p, 'Menos');
     if (me) me.addEventListener('click', function () { j3dZoom(p, p.z - 0.15); });
     var ma = j3dDame(p, 'Mas');
@@ -4756,11 +4740,6 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
     if (!p.mu) return;
     var m = j3dDame(p, 'Modo');
     if (m) m.textContent = p.mu.modo === 'jugador' ? 'Ver solo la cabeza' : 'Ver el jugador entero';
-    var iv = j3dDame(p, 'Invertir');
-    if (iv) {
-      iv.setAttribute('aria-pressed', String(!!p.giroSubirAbajo));
-      iv.textContent = p.giroSubirAbajo ? 'Giro: subir el ratón = cara abajo' : 'Giro: subir el ratón = cara arriba';
-    }
     var fi = j3dDame(p, 'Fino');
     if (fi) fi.setAttribute('aria-pressed', String(p.mu.delgado));
     var ca = j3dDame(p, 'Capas');
@@ -4878,7 +4857,7 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
   S.t0 = performance.now();
   $('#pvState').textContent = 'sin skin cargada';
   $('#anState').textContent = 'sin skin cargada';
-  setTab('tbJ');
+  setTab('tbB');
   renderTabs();
   render();
   say('Arrastra una skin de 64×64 (o 128×128 / 256×256), pégala con Ctrl+V o prueba un ejemplo.');
@@ -4888,5 +4867,5 @@ window.AS_LAYOUT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAABUCAMAAA
 })();
 
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a47d73dacc975716',t:'MTc5MTU0OTYxMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
